@@ -129,6 +129,26 @@
                     <div class="progress-indicator no-progress" id="numberline-progress"><div class="progress-text">🆕 התחל תרגול חדש</div></div>
                     <button class="start-button numberline" onclick="showSection('numberline')">🚀 התחל תרגול</button>
                 </div>
+
+                <!-- Card 4: שברים -->
+                <div class="exercise-card card-fraction">
+                    <div class="card-icon">🍰</div>
+                    <div class="card-title">שברים</div>
+                    <div class="card-description">השוואת שברים, חיבור שברים, צמצום, המרה לעשרוני</div>
+                    <div class="card-topics">שברים פשוטים, חיבור, צמצום, המרות</div>
+                    <div class="progress-indicator no-progress" id="fraction-progress"><div class="progress-text">🆕 התחל תרגול חדש</div></div>
+                    <button class="start-button fraction" onclick="showSection('fraction')">🚀 התחל תרגול</button>
+                </div>
+
+                <!-- Card 5: חילוק -->
+                <div class="exercise-card card-division">
+                    <div class="card-icon">➗</div>
+                    <div class="card-title">חילוק</div>
+                    <div class="card-description">חילוק פשוט, חילוק עם שארית, תרגילי חילוק, תרגילי מילה</div>
+                    <div class="card-topics">חילוק בסיסי, שאריות, תרגילי מילה</div>
+                    <div class="progress-indicator no-progress" id="division-progress"><div class="progress-text">🆕 התחל תרגול חדש</div></div>
+                    <button class="start-button division" onclick="showSection('division')">🚀 התחל תרגול</button>
+                </div>
             </div>
 
             <div class="footer">
@@ -381,6 +401,150 @@
         </div>
     </div>
 
+    <!-- FRACTION SECTION -->
+    <div id="fraction-section" class="section">
+        <button class="home-btn" onclick="showSection('home')">🏠 חזרה לדף הבית</button>
+        <div class="tool-container">
+            <div class="tool-header">
+                <h1>🍰 תרגול שברים - אמה</h1>
+            </div>
+
+            <div class="stats-bar">
+                <div>
+                    <span>ניקוד: <strong><span id="fraction-score">0</span></strong></span>
+                </div>
+                <div>
+                    <span class="level-indicator" id="fraction-level">בינוני</span>
+                </div>
+                <div>
+                    <span>רצף: <strong><span id="fraction-streak">0</span></strong></span>
+                </div>
+            </div>
+
+            <div class="main-content">
+                <div class="exercise-area">
+                    <div class="question" id="fraction-question">לחצי על "שאלה חדשה" כדי להתחיל! 🚀</div>
+
+                    <div class="answer-area">
+                        <input type="text" class="answer-input" id="fraction-answer-input" placeholder="התשובה שלך" style="display: none;">
+                        <div class="choice-buttons" id="fraction-choice-buttons" style="display: none;"></div>
+                    </div>
+
+                    <div style="text-align: center;">
+                        <button class="check-btn" id="fraction-check-btn" onclick="checkFractionAnswer()" style="display: none;">בדוק תשובה</button>
+                        <button class="check-btn" id="fraction-new-question-btn" onclick="generateFractionQuestion()">שאלה חדשה</button>
+                    </div>
+
+                    <div class="feedback hidden" id="fraction-feedback"></div>
+                </div>
+
+                <div class="sidebar">
+                    <div class="sidebar-title">📊 סטטיסטיקות</div>
+                    <div class="progress-section">
+                        <div class="progress-item">
+                            <span>שאלות:</span>
+                            <span><span id="fraction-total-questions">0</span></span>
+                        </div>
+                        <div class="progress-item">
+                            <span>נכונות:</span>
+                            <span><span id="fraction-correct-answers">0</span> (<span id="fraction-percentage">0</span>%)</span>
+                        </div>
+                        <div class="progress-item">
+                            <span>רצף נוכחי:</span>
+                            <span id="fraction-current-streak">0</span>
+                        </div>
+                        <div class="progress-item">
+                            <span>רצף הטוב ביותר:</span>
+                            <span id="fraction-best-streak">0</span>
+                        </div>
+                        <div class="progress-item">
+                            <span>רמה נוכחית:</span>
+                            <span id="fraction-current-level">בינוני</span>
+                        </div>
+                    </div>
+
+                    <div class="control-buttons">
+                        <button class="control-btn" onclick="showPauseSummary('fraction')">⏸️ עצור תרגול</button>
+                        <button class="control-btn" onclick="exportModuleReport('fraction')" style="background: #ff9800; color: white;">📊 ייצוא דוח</button>
+                        <button class="control-btn" onclick="showResetOptions('fraction')" style="background: #f44336; color: white;">🔄 איפוס</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- DIVISION SECTION -->
+    <div id="division-section" class="section">
+        <button class="home-btn" onclick="showSection('home')">🏠 חזרה לדף הבית</button>
+        <div class="tool-container">
+            <div class="tool-header">
+                <h1>➗ תרגול חילוק - אמה</h1>
+            </div>
+
+            <div class="stats-bar">
+                <div>
+                    <span>ניקוד: <strong><span id="division-score">0</span></strong></span>
+                </div>
+                <div>
+                    <span class="level-indicator" id="division-level">בינוני</span>
+                </div>
+                <div>
+                    <span>רצף: <strong><span id="division-streak">0</span></strong></span>
+                </div>
+            </div>
+
+            <div class="main-content">
+                <div class="exercise-area">
+                    <div class="question" id="division-question">לחצי על "שאלה חדשה" כדי להתחיל! 🚀</div>
+
+                    <div class="answer-area">
+                        <input type="text" class="answer-input" id="division-answer-input" placeholder="התשובה שלך" style="display: inline-block;">
+                    </div>
+
+                    <div style="text-align: center;">
+                        <button class="check-btn" id="division-check-btn" onclick="checkDivisionAnswer()" style="display: none;">בדוק תשובה</button>
+                        <button class="check-btn" id="division-new-question-btn" onclick="generateDivisionQuestion()">שאלה חדשה</button>
+                    </div>
+
+                    <div class="feedback hidden" id="division-feedback"></div>
+                </div>
+
+                <div class="sidebar">
+                    <div class="sidebar-title">📊 סטטיסטיקות</div>
+                    <div class="progress-section">
+                        <div class="progress-item">
+                            <span>שאלות:</span>
+                            <span><span id="division-total-questions">0</span></span>
+                        </div>
+                        <div class="progress-item">
+                            <span>נכונות:</span>
+                            <span><span id="division-correct-answers">0</span> (<span id="division-percentage">0</span>%)</span>
+                        </div>
+                        <div class="progress-item">
+                            <span>רצף נוכחי:</span>
+                            <span id="division-current-streak">0</span>
+                        </div>
+                        <div class="progress-item">
+                            <span>רצף הטוב ביותר:</span>
+                            <span id="division-best-streak">0</span>
+                        </div>
+                        <div class="progress-item">
+                            <span>רמה נוכחית:</span>
+                            <span id="division-current-level">בינוני</span>
+                        </div>
+                    </div>
+
+                    <div class="control-buttons">
+                        <button class="control-btn" onclick="showPauseSummary('division')">⏸️ עצור תרגול</button>
+                        <button class="control-btn" onclick="exportModuleReport('division')" style="background: #ff9800; color: white;">📊 ייצוא דוח</button>
+                        <button class="control-btn" onclick="showResetOptions('division')" style="background: #f44336; color: white;">🔄 איפוס</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <script>
         // Global state
         let currentSection = 'home';
@@ -431,16 +595,51 @@
             lastSaved: null,
         };
 
+        let fractionState = {
+            level: 'בינוני',
+            totalQuestions: 0,
+            correctAnswers: 0,
+            currentStreak: 0,
+            bestStreak: 0,
+            consecutiveCorrect: 0,
+            consecutiveWrong: 0,
+            currentQuestion: null,
+            currentAnswer: null,
+            sessionHistory: [],
+            startTime: Date.now(),
+            lastSaved: null,
+        };
+
+        let divisionState = {
+            level: 'בינוני',
+            totalQuestions: 0,
+            correctAnswers: 0,
+            currentStreak: 0,
+            bestStreak: 0,
+            consecutiveCorrect: 0,
+            consecutiveWrong: 0,
+            currentQuestion: null,
+            currentAnswer: null,
+            sessionHistory: [],
+            startTime: Date.now(),
+            lastSaved: null,
+        };
+
         // Expose state objects to window for feature patches
         window.decimalState = decimalState;
         window.multiplicationState = multiplicationState;
         window.numberlineState = numberlineState;
+        window.fractionState = fractionState;
+        window.divisionState = divisionState;
 
         // Section management
         function showSection(sectionName) {
-            // Hide all sections
-            const sections = ['home', 'decimal', 'multiplication', 'numberline'];
-            sections.forEach(section => {
+            // Hide all sections - include both hardcoded and registry modules
+            const hardcodedSections = ['home', 'decimal', 'multiplication', 'numberline', 'fraction', 'division'];
+            const registrySections = window.ModuleRegistry ? window.ModuleRegistry.getAllModules() : [];
+            const allSections = [...new Set([...hardcodedSections, ...registrySections])];
+
+            allSections.forEach(section => {
                 const element = document.getElementById(`${section}-section`);
                 if (element) {
                     element.classList.remove('active');
@@ -469,13 +668,24 @@
             loadProgress(toolName);
             updateStats(toolName);
 
-            // Generate first question
+            // Generate first question - hardcoded modules
             if (toolName === 'decimal') {
                 generateDecimalQuestion();
             } else if (toolName === 'multiplication') {
                 generateMultiplicationQuestion();
             } else if (toolName === 'numberline') {
                 generateNumberlineQuestion();
+            } else if (toolName === 'fraction') {
+                generateFractionQuestion();
+            } else if (toolName === 'division') {
+                generateDivisionQuestion();
+            }
+            // Fallback: Check module registry
+            else if (window.ModuleRegistry && window.ModuleRegistry.isRegistered(toolName)) {
+                const module = window.ModuleRegistry.get(toolName);
+                if (module && module.generateQuestion) {
+                    module.generateQuestion();
+                }
             }
         }
 
@@ -484,13 +694,21 @@
             const keys = {
                 decimal: 'emmaDecimalProgress',
                 multiplication: 'emmaMultiplicationProgress',
-                numberline: 'emmaNumberLineProgress'
+                numberline: 'emmaNumberLineProgress',
+                fraction: 'emmaFractionProgress',
+                division: 'emmaDivisionProgress',
+                // Add registry keys as fallback
+                ...(window.ModuleRegistry ? window.ModuleRegistry.getAllStorageKeys() : {})
             };
 
             const states = {
                 decimal: decimalState,
                 multiplication: multiplicationState,
-                numberline: numberlineState
+                numberline: numberlineState,
+                fraction: fractionState,
+                division: divisionState,
+                // Add registry states as fallback
+                ...(window.ModuleRegistry ? window.ModuleRegistry.getAllStates() : {})
             };
 
             const saved = localStorage.getItem(keys[toolName]);
@@ -524,13 +742,21 @@
             const keys = {
                 decimal: 'emmaDecimalProgress',
                 multiplication: 'emmaMultiplicationProgress',
-                numberline: 'emmaNumberLineProgress'
+                numberline: 'emmaNumberLineProgress',
+                fraction: 'emmaFractionProgress',
+                division: 'emmaDivisionProgress',
+                // Add registry keys as fallback
+                ...(window.ModuleRegistry ? window.ModuleRegistry.getAllStorageKeys() : {})
             };
 
             const states = {
                 decimal: decimalState,
                 multiplication: multiplicationState,
-                numberline: numberlineState
+                numberline: numberlineState,
+                fraction: fractionState,
+                division: divisionState,
+                // Add registry states as fallback
+                ...(window.ModuleRegistry ? window.ModuleRegistry.getAllStates() : {})
             };
 
             try {
@@ -587,7 +813,9 @@
             const states = {
                 decimal: decimalState,
                 multiplication: multiplicationState,
-                numberline: numberlineState
+                numberline: numberlineState,
+                // Add registry states as fallback
+                ...(window.ModuleRegistry ? window.ModuleRegistry.getAllStates() : {})
             };
 
             const state = states[toolName];
@@ -1016,7 +1244,9 @@
             const states = {
                 decimal: decimalState,
                 multiplication: multiplicationState,
-                numberline: numberlineState
+                numberline: numberlineState,
+                // Add registry states as fallback
+                ...(window.ModuleRegistry ? window.ModuleRegistry.getAllStates() : {})
             };
             return states[toolName];
         }
@@ -1529,13 +1759,17 @@
                 const keys = {
                     decimal: 'emmaDecimalProgress',
                     multiplication: 'emmaMultiplicationProgress',
-                    numberline: 'emmaNumberLineProgress'
+                    numberline: 'emmaNumberLineProgress',
+                    // Add registry keys as fallback
+                    ...(window.ModuleRegistry ? window.ModuleRegistry.getAllStorageKeys() : {})
                 };
-                
+
                 const states = {
                     decimal: decimalState,
                     multiplication: multiplicationState,
-                    numberline: numberlineState
+                    numberline: numberlineState,
+                    // Add registry states as fallback
+                    ...(window.ModuleRegistry ? window.ModuleRegistry.getAllStates() : {})
                 };
                 
                 const state = states[toolName];
@@ -1583,13 +1817,15 @@
 
         function resetToolProgress(toolName, storageKey) {
             localStorage.removeItem(storageKey);
-            
+
             const states = {
                 decimal: decimalState,
                 multiplication: multiplicationState,
-                numberline: numberlineState
+                numberline: numberlineState,
+                // Add registry states as fallback
+                ...(window.ModuleRegistry ? window.ModuleRegistry.getAllStates() : {})
             };
-            
+
             const state = states[toolName];
             state.level = 'בינוני';
             state.totalQuestions = 0;
@@ -1741,11 +1977,16 @@ ${'='.repeat(50)}
 
         // HOME PAGE FUNCTIONS
         function loadAllProgress() {
-            const tools = ['decimal', 'multiplication', 'numberline'];
+            const hardcodedTools = ['decimal', 'multiplication', 'numberline'];
+            const registryTools = window.ModuleRegistry ? window.ModuleRegistry.getAllModules() : [];
+            const tools = [...new Set([...hardcodedTools, ...registryTools])];
+
             const keys = {
                 decimal: 'emmaDecimalProgress',
                 multiplication: 'emmaMultiplicationProgress',
-                numberline: 'emmaNumberLineProgress'
+                numberline: 'emmaNumberLineProgress',
+                // Add registry keys as fallback
+                ...(window.ModuleRegistry ? window.ModuleRegistry.getAllStorageKeys() : {})
             };
 
             let totalQuestions = 0;
@@ -2068,11 +2309,13 @@ ${'='.repeat(70)}
             const decimalData = JSON.parse(localStorage.getItem('emmaDecimalProgress') || '{}');
             const multiplicationData = JSON.parse(localStorage.getItem('emmaMultiplicationProgress') || '{}');
             const numberlineData = JSON.parse(localStorage.getItem('emmaNumberLineProgress') || '{}');
+            const fractionData = JSON.parse(localStorage.getItem('emmaFractionProgress') || '{}');
+            const divisionData = JSON.parse(localStorage.getItem('emmaDivisionProgress') || '{}');
 
             const totalStats = {
-                totalQuestions: (decimalData.totalQuestions || 0) + (multiplicationData.totalQuestions || 0) + (numberlineData.totalQuestions || 0),
-                correctAnswers: (decimalData.correctAnswers || 0) + (multiplicationData.correctAnswers || 0) + (numberlineData.correctAnswers || 0),
-                totalTime: (decimalData.totalTime || 0) + (multiplicationData.totalTime || 0) + (numberlineData.totalTime || 0)
+                totalQuestions: (decimalData.totalQuestions || 0) + (multiplicationData.totalQuestions || 0) + (numberlineData.totalQuestions || 0) + (fractionData.totalQuestions || 0) + (divisionData.totalQuestions || 0),
+                correctAnswers: (decimalData.correctAnswers || 0) + (multiplicationData.correctAnswers || 0) + (numberlineData.correctAnswers || 0) + (fractionData.correctAnswers || 0) + (divisionData.correctAnswers || 0),
+                totalTime: (decimalData.totalTime || 0) + (multiplicationData.totalTime || 0) + (numberlineData.totalTime || 0) + (fractionData.totalTime || 0) + (divisionData.totalTime || 0)
             };
 
             // Create full state object
@@ -2085,7 +2328,9 @@ ${'='.repeat(70)}
                 modules: {
                     decimal: decimalData,
                     multiplication: multiplicationData,
-                    numberline: numberlineData
+                    numberline: numberlineData,
+                    fraction: fractionData,
+                    division: divisionData
                 },
                 metadata: {
                     browser: navigator.userAgent,
@@ -2827,10 +3072,13 @@ ${'='.repeat(70)}
 
     <!-- Feature 6: Module Registry System -->
     <script src="js/features/module-registry.js"></script>
+    <!-- New Module Scripts -->
+    <script src="js/modules/fraction_module.js"></script>
+    <script src="js/modules/division_module.js"></script>
 
     <!-- Feature 4: Navigation System (Previous/Next/Skip) -->
     <script>
-(function(){console.log("🚀 Loading Navigation Feature Patch...");if(!document.querySelector("style[data-nav-patch]")){const navCSS=document.createElement("style");navCSS.setAttribute("data-nav-patch","true");navCSS.textContent=`.question-navigation{margin:20px 0;padding:15px;background:#f5f7fa;border-radius:10px}.nav-buttons{display:flex;gap:10px;justify-content:center;margin-bottom:10px}.nav-btn{font-size:14pt;font-weight:600;padding:10px 20px;border:2px solid #2196f3;background:white;border-radius:8px;cursor:pointer;font-family:"Noto Sans Hebrew",Arial,sans-serif;transition:all 0.3s ease}.nav-btn:hover:not(:disabled){background:#e3f2fd}.nav-btn:disabled{opacity:0.5;cursor:not-allowed}.skip-btn{border-color:#ff9800;color:#ff9800}.question-indicator{text-align:center;font-size:12pt;font-weight:600;color:#666}.skipped-counter{color:#ff9800;font-weight:700}`;document.head.appendChild(navCSS)}function extendStates(){[window.decimalState,window.multiplicationState,window.numberlineState].forEach(state=>{if(state&&!state.questionBank){state.questionBank=[];state.currentQuestionIndex=0;state.skippedQuestions=[];state.answeredQuestions=[];state.questionStatus={}}})}function injectNavigationUI(){["decimal","multiplication","numberline"].forEach(tool=>{const answerArea=document.querySelector(`#${tool}-section .answer-area`);if(!answerArea||document.getElementById(`nav-container-${tool}`))return;const navHTML=`<div class="question-navigation" id="nav-container-${tool}"><div class="nav-buttons"><button class="nav-btn" id="prev-btn-${tool}">◄ הקודם</button><button class="nav-btn skip-btn" id="skip-btn-${tool}">⏭️ דלג</button><button class="nav-btn" id="next-btn-${tool}">הבא ►</button></div><div class="question-indicator">שאלה <span id="current-q-${tool}">1</span> | נענו: <span id="answered-count-${tool}">0</span> | דולגו: <span id="skipped-count-${tool}" class="skipped-counter">0</span></div></div>`;answerArea.insertAdjacentHTML("afterend",navHTML);document.getElementById(`prev-btn-${tool}`).onclick=()=>window.goToPrevious(tool);document.getElementById(`skip-btn-${tool}`).onclick=()=>window.skipQuestion(tool);document.getElementById(`next-btn-${tool}`).onclick=()=>window.goToNext(tool)})}window.goToPrevious=function(toolName){const state=getState(toolName);if(state.currentQuestionIndex>0){state.currentQuestionIndex--;displayQuestionFromBank(toolName);window.updateNavigationUI(toolName)}};window.goToNext=function(toolName){const state=getState(toolName);if(state.currentQuestionIndex<state.questionBank.length-1){state.currentQuestionIndex++;displayQuestionFromBank(toolName)}else{if(toolName==="decimal"&&typeof window.generateDecimalQuestion==="function")window.generateDecimalQuestion();else if(toolName==="multiplication"&&typeof window.generateMultiplicationQuestion==="function")window.generateMultiplicationQuestion();else if(toolName==="numberline"&&typeof window.generateNumberlineQuestion==="function")window.generateNumberlineQuestion()}window.updateNavigationUI(toolName)};window.skipQuestion=function(toolName){const state=getState(toolName);let currentQ=state.questionBank[state.currentQuestionIndex];if(!currentQ&&state.currentQuestion){currentQ={id:Date.now()+Math.random(),question:state.currentQuestion.question||"",questionText:state.currentQuestion.question||"",correctAnswer:state.currentAnswer,type:state.currentQuestion.type||"input",choices:state.currentQuestion.choices||[]};state.questionBank.push(currentQ);state.currentQuestionIndex=state.questionBank.length-1}if(!currentQ)return;if(!currentQ.id)currentQ.id=Date.now()+Math.random();if(!state.skippedQuestions.includes(currentQ.id))state.skippedQuestions.push(currentQ.id);state.questionStatus[currentQ.id]="skipped";const feedback=document.getElementById(`${toolName}-feedback`);if(feedback){feedback.className="feedback";feedback.style.background="#fff3e0";feedback.style.color="#e65100";feedback.style.border="3px solid #ff9800";feedback.innerHTML="⏭️ דילגת על השאלה<br>זה בסדר! נחזור אליה אחר כך";feedback.classList.remove("hidden")}if(typeof window.saveProgress==="function")window.saveProgress(toolName);window.updateNavigationUI(toolName);setTimeout(()=>window.goToNext(toolName),1000)};window.updateNavigationUI=function(toolName){const state=getState(toolName);const currentEl=document.getElementById(`current-q-${toolName}`);const answeredEl=document.getElementById(`answered-count-${toolName}`);const skippedEl=document.getElementById(`skipped-count-${toolName}`);if(currentEl)currentEl.textContent=state.currentQuestionIndex+1;if(answeredEl)answeredEl.textContent=state.answeredQuestions.length;if(skippedEl)skippedEl.textContent=state.skippedQuestions.length;const prevBtn=document.getElementById(`prev-btn-${toolName}`);if(prevBtn)prevBtn.disabled=state.currentQuestionIndex===0};function displayQuestionFromBank(toolName){const state=getState(toolName);if(!state.questionBank||state.questionBank.length===0)return;const question=state.questionBank[state.currentQuestionIndex];if(!question)return;state.currentQuestion=question;state.currentAnswer=question.correctAnswer;document.getElementById(`${toolName}-question`).textContent=question.questionText||question.question;const inputElement=document.getElementById(`${toolName}-answer-input`);const choicesContainer=document.getElementById(`${toolName}-choice-buttons`);if(inputElement)inputElement.style.display="none";if(choicesContainer){choicesContainer.style.display="none";choicesContainer.innerHTML=""}if(question.type==="input"||question.type==="visual-input"){if(inputElement){inputElement.style.display="inline-block";inputElement.value="";inputElement.focus()}}else if((question.type==="choice"||question.type==="visual-choice")&&question.choices){if(choicesContainer){choicesContainer.style.display="flex";question.choices.forEach(choice=>{const btn=document.createElement("button");btn.className="choice-btn";btn.textContent=choice;btn.onclick=function(){if(toolName==="decimal"&&typeof window.selectDecimalChoice==="function")window.selectDecimalChoice(choice,this);else if(toolName==="numberline"&&typeof window.selectNumberlineChoice==="function")window.selectNumberlineChoice(choice,this);getState(toolName).selectedChoice=choice};choicesContainer.appendChild(btn)})}}const checkBtn=document.getElementById(`${toolName}-check-btn`);const newBtn=document.getElementById(`${toolName}-new-question-btn`);if(checkBtn)checkBtn.style.display="inline-block";if(newBtn)newBtn.style.display="none";const feedback=document.getElementById(`${toolName}-feedback`);if(feedback)feedback.className="feedback hidden";if(toolName==="numberline"&&(question.type==="visual"||question.type==="visual-input"||question.type==="visual-choice")){if(typeof window.displayNumberLine==="function")window.displayNumberLine(question)}window.updateNavigationUI(toolName)}function wrapGenerateFunctions(){["decimal","multiplication","numberline"].forEach(toolName=>{const funcName=`generate${toolName.charAt(0).toUpperCase()+toolName.slice(1)}Question`;if(typeof window[funcName]==="function"){const original=window[funcName];window[funcName]=function(){original.call(this);addCurrentQuestionToBank(toolName)}}})}function addCurrentQuestionToBank(toolName){const state=getState(toolName);if(!state.currentQuestion)return;const questionObj={id:Date.now()+Math.random(),question:state.currentQuestion.question||"",questionText:state.currentQuestion.question||"",correctAnswer:state.currentAnswer,type:state.currentQuestion.type||"input",choices:state.currentQuestion.choices||[],range:state.currentQuestion.range,arrowPosition:state.currentQuestion.arrowPosition,targetNum:state.currentQuestion.targetNum};state.questionBank.push(questionObj);state.currentQuestionIndex=state.questionBank.length-1;window.updateNavigationUI(toolName)}function wrapCheckAnswerFunctions(){["decimal","multiplication","numberline"].forEach(toolName=>{const funcName=`check${toolName.charAt(0).toUpperCase()+toolName.slice(1)}Answer`;if(typeof window[funcName]==="function"){const original=window[funcName];window[funcName]=function(){const result=original.call(this);const state=getState(toolName);const currentQ=state.questionBank[state.currentQuestionIndex];if(currentQ&&currentQ.id&&state.correctAnswers>(state._prevCorrectAnswers||0)){if(!state.answeredQuestions.includes(currentQ.id))state.answeredQuestions.push(currentQ.id);state.questionStatus[currentQ.id]="answered";window.updateNavigationUI(toolName)}state._prevCorrectAnswers=state.correctAnswers;return result}}})}function wrapSaveLoadFunctions(){if(typeof window.saveProgress==="function"){const originalSave=window.saveProgress;window.saveProgress=function(toolName){const state=getState(toolName);const navData={questionBank:state.questionBank||[],currentQuestionIndex:state.currentQuestionIndex||0,skippedQuestions:state.skippedQuestions||[],answeredQuestions:state.answeredQuestions||[],questionStatus:state.questionStatus||{}};Object.assign(state,navData);return originalSave.call(this,toolName)}}if(typeof window.loadProgress==="function"){const originalLoad=window.loadProgress;window.loadProgress=function(toolName){const result=originalLoad.call(this,toolName);const state=getState(toolName);if(state){state.questionBank=state.questionBank||[];state.currentQuestionIndex=state.currentQuestionIndex||0;state.skippedQuestions=state.skippedQuestions||[];state.answeredQuestions=state.answeredQuestions||[];state.questionStatus=state.questionStatus||{};window.updateNavigationUI(toolName)}return result}}}function getState(toolName){const states={decimal:window.decimalState,multiplication:window.multiplicationState,numberline:window.numberlineState};return states[toolName]}function init(){try{extendStates();injectNavigationUI();wrapGenerateFunctions();wrapCheckAnswerFunctions();wrapSaveLoadFunctions();console.log("✅ Navigation Feature Patch Loaded Successfully!");["decimal","multiplication","numberline"].forEach(tool=>{if(getState(tool))window.updateNavigationUI(tool)})}catch(error){console.error("❌ Navigation patch failed:",error)}}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init);else init()})();
+(function(){console.log("🚀 Loading Navigation Feature Patch...");if(!document.querySelector("style[data-nav-patch]")){const navCSS=document.createElement("style");navCSS.setAttribute("data-nav-patch","true");navCSS.textContent=`.question-navigation{margin:20px 0;padding:15px;background:#f5f7fa;border-radius:10px}.nav-buttons{display:flex;gap:10px;justify-content:center;margin-bottom:10px}.nav-btn{font-size:14pt;font-weight:600;padding:10px 20px;border:2px solid #2196f3;background:white;border-radius:8px;cursor:pointer;font-family:"Noto Sans Hebrew",Arial,sans-serif;transition:all 0.3s ease}.nav-btn:hover:not(:disabled){background:#e3f2fd}.nav-btn:disabled{opacity:0.5;cursor:not-allowed}.skip-btn{border-color:#ff9800;color:#ff9800}.question-indicator{text-align:center;font-size:12pt;font-weight:600;color:#666}.skipped-counter{color:#ff9800;font-weight:700}`;document.head.appendChild(navCSS)}function extendStates(){[window.decimalState,window.multiplicationState,window.numberlineState,window.fractionState,window.divisionState].forEach(state=>{if(state&&!state.questionBank){state.questionBank=[];state.currentQuestionIndex=0;state.skippedQuestions=[];state.answeredQuestions=[];state.questionStatus={}}})}function injectNavigationUI(){["decimal","multiplication","numberline","fraction","division"].forEach(tool=>{const answerArea=document.querySelector(`#${tool}-section .answer-area`);if(!answerArea||document.getElementById(`nav-container-${tool}`))return;const navHTML=`<div class="question-navigation" id="nav-container-${tool}"><div class="nav-buttons"><button class="nav-btn" id="prev-btn-${tool}">◄ הקודם</button><button class="nav-btn skip-btn" id="skip-btn-${tool}">⏭️ דלג</button><button class="nav-btn" id="next-btn-${tool}">הבא ►</button></div><div class="question-indicator">שאלה <span id="current-q-${tool}">1</span> | נענו: <span id="answered-count-${tool}">0</span> | דולגו: <span id="skipped-count-${tool}" class="skipped-counter">0</span></div></div>`;answerArea.insertAdjacentHTML("afterend",navHTML);document.getElementById(`prev-btn-${tool}`).onclick=()=>window.goToPrevious(tool);document.getElementById(`skip-btn-${tool}`).onclick=()=>window.skipQuestion(tool);document.getElementById(`next-btn-${tool}`).onclick=()=>window.goToNext(tool)})}window.goToPrevious=function(toolName){const state=getState(toolName);if(state.currentQuestionIndex>0){state.currentQuestionIndex--;displayQuestionFromBank(toolName);window.updateNavigationUI(toolName)}};window.goToNext=function(toolName){const state=getState(toolName);if(state.currentQuestionIndex<state.questionBank.length-1){state.currentQuestionIndex++;displayQuestionFromBank(toolName)}else{if(toolName==="decimal"&&typeof window.generateDecimalQuestion==="function")window.generateDecimalQuestion();else if(toolName==="multiplication"&&typeof window.generateMultiplicationQuestion==="function")window.generateMultiplicationQuestion();else if(toolName==="numberline"&&typeof window.generateNumberlineQuestion==="function")window.generateNumberlineQuestion();else if(toolName==="fraction"&&typeof window.generateFractionQuestion==="function")window.generateFractionQuestion();else if(toolName==="division"&&typeof window.generateDivisionQuestion==="function")window.generateDivisionQuestion()}window.updateNavigationUI(toolName)};window.skipQuestion=function(toolName){const state=getState(toolName);let currentQ=state.questionBank[state.currentQuestionIndex];if(!currentQ&&state.currentQuestion){currentQ={id:Date.now()+Math.random(),question:state.currentQuestion.question||"",questionText:state.currentQuestion.question||"",correctAnswer:state.currentAnswer,type:state.currentQuestion.type||"input",choices:state.currentQuestion.choices||[]};state.questionBank.push(currentQ);state.currentQuestionIndex=state.questionBank.length-1}if(!currentQ)return;if(!currentQ.id)currentQ.id=Date.now()+Math.random();if(!state.skippedQuestions.includes(currentQ.id))state.skippedQuestions.push(currentQ.id);state.questionStatus[currentQ.id]="skipped";const feedback=document.getElementById(`${toolName}-feedback`);if(feedback){feedback.className="feedback";feedback.style.background="#fff3e0";feedback.style.color="#e65100";feedback.style.border="3px solid #ff9800";feedback.innerHTML="⏭️ דילגת על השאלה<br>זה בסדר! נחזור אליה אחר כך";feedback.classList.remove("hidden")}if(typeof window.saveProgress==="function")window.saveProgress(toolName);window.updateNavigationUI(toolName);setTimeout(()=>window.goToNext(toolName),1000)};window.updateNavigationUI=function(toolName){const state=getState(toolName);const currentEl=document.getElementById(`current-q-${toolName}`);const answeredEl=document.getElementById(`answered-count-${toolName}`);const skippedEl=document.getElementById(`skipped-count-${toolName}`);if(currentEl)currentEl.textContent=state.currentQuestionIndex+1;if(answeredEl)answeredEl.textContent=state.answeredQuestions.length;if(skippedEl)skippedEl.textContent=state.skippedQuestions.length;const prevBtn=document.getElementById(`prev-btn-${toolName}`);if(prevBtn)prevBtn.disabled=state.currentQuestionIndex===0};function displayQuestionFromBank(toolName){const state=getState(toolName);if(!state.questionBank||state.questionBank.length===0)return;const question=state.questionBank[state.currentQuestionIndex];if(!question)return;state.currentQuestion=question;state.currentAnswer=question.correctAnswer;document.getElementById(`${toolName}-question`).textContent=question.questionText||question.question;const inputElement=document.getElementById(`${toolName}-answer-input`);const choicesContainer=document.getElementById(`${toolName}-choice-buttons`);if(inputElement)inputElement.style.display="none";if(choicesContainer){choicesContainer.style.display="none";choicesContainer.innerHTML=""}if(question.type==="input"||question.type==="visual-input"){if(inputElement){inputElement.style.display="inline-block";inputElement.value="";inputElement.focus()}}else if((question.type==="choice"||question.type==="visual-choice")&&question.choices){if(choicesContainer){choicesContainer.style.display="flex";question.choices.forEach(choice=>{const btn=document.createElement("button");btn.className="choice-btn";btn.textContent=choice;btn.onclick=function(){if(toolName==="decimal"&&typeof window.selectDecimalChoice==="function")window.selectDecimalChoice(choice,this);else if(toolName==="numberline"&&typeof window.selectNumberlineChoice==="function")window.selectNumberlineChoice(choice,this);else if(toolName==="fraction"&&typeof window.selectFractionChoice==="function")window.selectFractionChoice(choice,this);getState(toolName).selectedChoice=choice};choicesContainer.appendChild(btn)})}}const checkBtn=document.getElementById(`${toolName}-check-btn`);const newBtn=document.getElementById(`${toolName}-new-question-btn`);if(checkBtn)checkBtn.style.display="inline-block";if(newBtn)newBtn.style.display="none";const feedback=document.getElementById(`${toolName}-feedback`);if(feedback)feedback.className="feedback hidden";if(toolName==="numberline"&&(question.type==="visual"||question.type==="visual-input"||question.type==="visual-choice")){if(typeof window.displayNumberLine==="function")window.displayNumberLine(question)}window.updateNavigationUI(toolName)}function wrapGenerateFunctions(){["decimal","multiplication","numberline","fraction","division"].forEach(toolName=>{const funcName=`generate${toolName.charAt(0).toUpperCase()+toolName.slice(1)}Question`;if(typeof window[funcName]==="function"){const original=window[funcName];window[funcName]=function(){original.call(this);addCurrentQuestionToBank(toolName)}}})}function addCurrentQuestionToBank(toolName){const state=getState(toolName);if(!state.currentQuestion)return;const questionObj={id:Date.now()+Math.random(),question:state.currentQuestion.question||"",questionText:state.currentQuestion.question||"",correctAnswer:state.currentAnswer,type:state.currentQuestion.type||"input",choices:state.currentQuestion.choices||[],range:state.currentQuestion.range,arrowPosition:state.currentQuestion.arrowPosition,targetNum:state.currentQuestion.targetNum};state.questionBank.push(questionObj);state.currentQuestionIndex=state.questionBank.length-1;window.updateNavigationUI(toolName)}function wrapCheckAnswerFunctions(){["decimal","multiplication","numberline","fraction","division"].forEach(toolName=>{const funcName=`check${toolName.charAt(0).toUpperCase()+toolName.slice(1)}Answer`;if(typeof window[funcName]==="function"){const original=window[funcName];window[funcName]=function(){const result=original.call(this);const state=getState(toolName);const currentQ=state.questionBank[state.currentQuestionIndex];if(currentQ&&currentQ.id&&state.correctAnswers>(state._prevCorrectAnswers||0)){if(!state.answeredQuestions.includes(currentQ.id))state.answeredQuestions.push(currentQ.id);state.questionStatus[currentQ.id]="answered";window.updateNavigationUI(toolName)}state._prevCorrectAnswers=state.correctAnswers;return result}}})}function wrapSaveLoadFunctions(){if(typeof window.saveProgress==="function"){const originalSave=window.saveProgress;window.saveProgress=function(toolName){const state=getState(toolName);const navData={questionBank:state.questionBank||[],currentQuestionIndex:state.currentQuestionIndex||0,skippedQuestions:state.skippedQuestions||[],answeredQuestions:state.answeredQuestions||[],questionStatus:state.questionStatus||{}};Object.assign(state,navData);return originalSave.call(this,toolName)}}if(typeof window.loadProgress==="function"){const originalLoad=window.loadProgress;window.loadProgress=function(toolName){const result=originalLoad.call(this,toolName);const state=getState(toolName);if(state){state.questionBank=state.questionBank||[];state.currentQuestionIndex=state.currentQuestionIndex||0;state.skippedQuestions=state.skippedQuestions||[];state.answeredQuestions=state.answeredQuestions||[];state.questionStatus=state.questionStatus||{};window.updateNavigationUI(toolName)}return result}}}function getState(toolName){const states={decimal:window.decimalState,multiplication:window.multiplicationState,numberline:window.numberlineState,fraction:window.fractionState,division:window.divisionState};return states[toolName]}function init(){try{extendStates();injectNavigationUI();wrapGenerateFunctions();wrapCheckAnswerFunctions();wrapSaveLoadFunctions();console.log("✅ Navigation Feature Patch Loaded Successfully!");["decimal","multiplication","numberline","fraction","division"].forEach(tool=>{if(getState(tool))window.updateNavigationUI(tool)})}catch(error){console.error("❌ Navigation patch failed:",error)}}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init);else init()})();
     </script>
 
 </body></html>
