@@ -120,6 +120,16 @@
                     <button class="start-button multiplication" onclick="showSection('multiplication')">🚀 התחל תרגול</button>
                 </div>
 
+                <!-- Card 2.5: סדר פעולות חשבון - NEW! -->
+                <div class="exercise-card card-order">
+                    <div class="card-icon">🧮</div>
+                    <div class="card-title">סדר פעולות חשבון 🆕</div>
+                    <div class="card-description">למד למה סדר הפעולות חשוב דרך בעיות מילוליות</div>
+                    <div class="card-topics">סוגריים, כפל/חילוק, חיבור/חיסור | השילוש הפדגוגי</div>
+                    <div class="progress-indicator no-progress" id="order-progress"><div class="progress-text">🆕 התחל תרגול חדש</div></div>
+                    <button class="start-button order" onclick="showSection('order')">🚀 התחל תרגול</button>
+                </div>
+
                 <!-- Card 3: ישר המספרים -->
                 <div class="exercise-card card-numberline">
                     <div class="card-icon">📏</div>
@@ -194,6 +204,9 @@
             <div class="main-content">
                 <div class="exercise-area">
                     <div class="question" id="decimal-question">מהי הספרה החסרה? 7_4</div>
+
+                    <!-- Visual Model Container -->
+                    <div id="decimal-visual-container" style="display: none;"></div>
 
                     <div class="answer-area">
                         <input type="number" class="answer-input" id="decimal-answer-input" placeholder="התשובה שלך" style="display: inline-block;">
@@ -313,6 +326,96 @@
                         <button class="control-btn" onclick="viewDetailedHistory('multiplication')" style="background: #9c27b0; color: white;">📋 יומן מפורט</button>
                         <button class="control-btn" onclick="backupProgress('multiplication')" style="background: #ff9800; color: white;">💾 גיבוי נתונים</button>
                         <button class="control-btn" onclick="showResetOptions('multiplication')" style="background: #f44336; color: white;">🔄 איפוס</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ORDER OF OPERATIONS SECTION -->
+    <div id="order-section" class="section">
+        <button class="home-btn" onclick="showSection('home')">🏠 חזרה לדף הבית</button>
+        <div class="tool-container">
+            <div class="tool-header order">
+                <h1>🧮 סדר פעולות חשבון - אמה</h1>
+                <p style="font-size: 12pt; margin-top: 10px;">למד למה סדר הפעולות חשוב דרך בעיות מילוליות!</p>
+            </div>
+
+            <div class="stats-bar order">
+                <div>
+                    <span>ניקוד: <strong><span id="order-score">0/0</span></strong></span>
+                </div>
+                <div>
+                    <span class="level-indicator level-easy" id="order-level">קל</span>
+                </div>
+                <div>
+                    <span>רצף: <strong><span id="order-streak">0</span></strong></span>
+                </div>
+            </div>
+
+            <div class="main-content">
+                <div class="exercise-area">
+                    <div class="question order" id="order-question">חשב: (5 + 3) × 2</div>
+
+                    <!-- Expression hint for word problems -->
+                    <div id="order-expression-hint" style="display: none; text-align: center; font-size: 11pt; color: #666; margin: 10px 0; font-style: italic;"></div>
+
+                    <div class="answer-area">
+                        <input type="number" class="answer-input" id="order-answer-input" placeholder="התשובה שלך" style="display: inline-block;">
+                    </div>
+
+                    <div style="text-align: center;">
+                        <button class="check-btn order" id="order-check-btn" onclick="checkOrderAnswer()" style="display: inline-block;">בדוק תשובה</button>
+                        <button class="check-btn order" id="order-new-question-btn" onclick="generateOrderQuestion()" style="display: none;">שאלה חדשה</button>
+                    </div>
+
+                    <div class="feedback hidden" id="order-feedback">✅ מעולה! תשובה נכונה!</div>
+                </div>
+
+                <div class="sidebar">
+                    <div class="sidebar-title">📊 סטטיסטיקות</div>
+                    <div class="progress-section">
+                        <div class="progress-item">
+                            <span>שאלות:</span>
+                            <span><span id="order-total-questions">0</span></span>
+                        </div>
+                        <div class="progress-item">
+                            <span>נכונות:</span>
+                            <span><span id="order-correct-answers">0</span> (<span id="order-percentage">0</span>%)</span>
+                        </div>
+                        <div class="progress-item">
+                            <span>רצף נוכחי:</span>
+                            <span id="order-current-streak">0</span>
+                        </div>
+                        <div class="progress-item">
+                            <span>רצף הטוב ביותר:</span>
+                            <span id="order-best-streak">0</span>
+                        </div>
+                        <div class="progress-item">
+                            <span>רמה נוכחית:</span>
+                            <span id="order-current-level">קל</span>
+                        </div>
+                    </div>
+
+                    <div class="sidebar-section">
+                        <h3 style="font-size: 14pt; margin-bottom: 10px;">📚 כללי סדר הפעולות</h3>
+                        <div style="font-size: 11pt; text-align: right; line-height: 1.8;">
+                            <p><strong>1. סוגריים ראשון</strong><br>פותרים את מה שבתוך הסוגריים לפני הכל</p>
+                            <p><strong>2. כפל וחילוק</strong><br>פותרים משמאל לימין</p>
+                            <p><strong>3. חיבור וחיסור</strong><br>פותרים משמאל לימין</p>
+                            <p style="margin-top: 15px; padding: 10px; background: #e3f2fd; border-radius: 8px;">
+                                💡 <strong>למה זה חשוב?</strong><br>
+                                בעיות מילוליות מחייבות סדר מסוים - קודם צריך לחשב את מה שחסר, ורק אחר כך לחלק או לחבר!
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="control-buttons">
+                        <button class="control-btn" onclick="pauseOrderExercise()" style="display:none;">⏸️ עצור תרגול</button>
+                        <button class="control-btn" onclick="exportOrderReport()" style="background: #4caf50; color: white; display:none;">📊 ייצוא דוח</button>
+                        <button class="control-btn" onclick="viewDetailedHistory('order')" style="background: #9c27b0; color: white; display:none;">📋 יומן מפורט</button>
+                        <button class="control-btn" onclick="backupProgress('order')" style="background: #ff9800; color: white; display:none;">💾 גיבוי נתונים</button>
+                        <button class="control-btn" onclick="showResetOptions('order')" style="background: #f44336; color: white; display:none;">🔄 איפוס</button>
                     </div>
                 </div>
             </div>
@@ -849,14 +952,16 @@
             let question = {};
             let answer;
 
-            // Generate number based on level
+            // Generate number based on level (extended to 10,000 per pedagogical report)
             function getRandomNumber() {
                 if (decimalState.level === 'קל') {
-                    return Math.floor(Math.random() * 90) + 10; // 10-99
+                    return Math.floor(Math.random() * 90) + 10; // 10-99 (two-digit)
                 } else if (decimalState.level === 'בינוני') {
-                    return Math.floor(Math.random() * 400) + 100; // 100-499
-                } else {
-                    return Math.floor(Math.random() * 500) + 500; // 500-999
+                    return Math.floor(Math.random() * 900) + 100; // 100-999 (three-digit)
+                } else if (decimalState.level === 'קשה') {
+                    return Math.floor(Math.random() * 9000) + 1000; // 1,000-9,999 (four-digit)
+                } else { // מאתגר - challenging (up to 10,000)
+                    return Math.floor(Math.random() * 10) * 1000; // 1,000, 2,000, ... 10,000
                 }
             }
 
@@ -867,19 +972,22 @@
                     const digits = num.toString().split('').map(Number);
                     const position = Math.floor(Math.random() * digits.length);
                     const placeValues = [];
-                    
+
                     for (let i = 0; i < digits.length; i++) {
                         const placeValue = digits[i] * Math.pow(10, digits.length - 1 - i);
                         if (i === position) {
                             placeValues.push('?');
                             answer = placeValue;
                         } else {
-                            placeValues.push(placeValue);
+                            // Format large numbers with commas for readability
+                            placeValues.push(placeValue.toLocaleString('en-US'));
                         }
                     }
-                    
+
+                    // Format number with comma for readability (e.g., 4,521)
+                    const formattedNum = num.toLocaleString('en-US');
                     question = {
-                        question: `${num} = ${placeValues.join(' + ')}`,
+                        question: `${formattedNum} = ${placeValues.join(' + ')}`,
                         type: 'input'
                     };
                     break;
@@ -889,9 +997,11 @@
                     const digitPos = Math.floor(Math.random() * digitStr.length);
                     const digit = parseInt(digitStr[digitPos]);
                     const value = digit * Math.pow(10, digitStr.length - 1 - digitPos);
-                    
+
+                    // Format number with comma for readability
+                    const formattedNumForDigit = num.toLocaleString('en-US');
                     question = {
-                        question: `מה ערך הספרה ${digit} במספר ${num}?`,
+                        question: `מה ערך הספרה ${digit} במספר ${formattedNumForDigit}?`,
                         type: 'input'
                     };
                     answer = value;
@@ -899,8 +1009,9 @@
 
                 case 'nextPrevious':
                     const isNext = Math.random() < 0.5;
+                    const formattedNumNext = num.toLocaleString('en-US');
                     question = {
-                        question: isNext ? `מהו המספר העוקב של ${num}?` : `מהו המספר הקודם של ${num}?`,
+                        question: isNext ? `מהו המספר העוקב של ${formattedNumNext}?` : `מהו המספר הקודם של ${formattedNumNext}?`,
                         type: 'input'
                     };
                     answer = isNext ? num + 1 : num - 1;
@@ -914,8 +1025,11 @@
                     else if (num > num2) correctSymbol = '>';
                     else correctSymbol = '=';
 
+                    // Format numbers with commas
+                    const formattedNum1 = num.toLocaleString('en-US');
+                    const formattedNum2 = num2.toLocaleString('en-US');
                     question = {
-                        question: `${num} ___ ${num2}`,
+                        question: `${formattedNum1} ___ ${formattedNum2}`,
                         type: 'choice',
                         choices: ['<', '=', '>']
                     };
@@ -936,7 +1050,7 @@
                     const missingDigit = numStr[missingPos];
                     const numWithMissing = numStr.substring(0, missingPos) + '_' + numStr.substring(missingPos + 1);
 
-                    // Calculate place value of missing digit (100, 10, or 1)
+                    // Calculate place value of missing digit (1000, 100, 10, or 1)
                     const placeValue = Math.pow(10, numDigits - 1 - missingPos);
 
                     // Generate random offset scaled by place value
@@ -947,27 +1061,34 @@
                     } else if (placeValue === 10) {
                         // Tens digit: offset 10-50
                         offset = Math.floor(Math.random() * 41) + 10;
-                    } else {
+                    } else if (placeValue === 100) {
                         // Hundreds digit: offset 100-400
                         offset = Math.floor(Math.random() * 301) + 100;
+                    } else {
+                        // Thousands digit: offset 1000-3000
+                        offset = Math.floor(Math.random() * 2001) + 1000;
                     }
 
                     // Calculate bounds with random offset
                     let lowerBound = num - offset;
                     let upperBound = num + offset;
 
-                    // Constrain to appropriate digit count (e.g., 100-999 for 3-digit numbers)
+                    // Constrain to appropriate digit count (e.g., 1000-9999 for 4-digit numbers)
                     const minNum = Math.pow(10, numDigits - 1);
                     const maxNum = Math.pow(10, numDigits) - 1;
                     lowerBound = Math.max(lowerBound, minNum);
                     upperBound = Math.min(upperBound, maxNum);
+
+                    // Format bounds with commas for readability
+                    const formattedLowerBound = lowerBound.toLocaleString('en-US');
+                    const formattedUpperBound = upperBound.toLocaleString('en-US');
 
                     // Force LTR direction for number pattern to prevent RTL/LTR scrambling
                     // Unicode LEFT-TO-RIGHT EMBEDDING (U+202A) + POP DIRECTIONAL FORMATTING (U+202C)
                     const ltrNumPattern = '\u202A' + numWithMissing + '\u202C';
 
                     question = {
-                        question: `מהי הספרה החסרה? ${ltrNumPattern}\n(המספר נמצא בין ${lowerBound} ל-${upperBound})`,
+                        question: `מהי הספרה החסרה? ${ltrNumPattern}\n(המספר נמצא בין ${formattedLowerBound} ל-${formattedUpperBound})`,
                         type: 'input',
                         // Store metadata for range validation
                         missingPos: missingPos,
@@ -992,7 +1113,17 @@
 
             // Display question
             document.getElementById('decimal-question').textContent = question.question;
-            
+
+            // Display visual model for certain question types
+            const visualContainer = 'decimal-visual-container';
+            if (type === 'decomposition' || type === 'digitValue') {
+                // Show base-10 blocks for decomposition and digit value questions
+                displayBase10Blocks(num, visualContainer);
+            } else {
+                // Hide visual for other question types
+                hideVisualModel(visualContainer);
+            }
+
             // Setup answer interface
             if (question.type === 'input') {
                 document.getElementById('decimal-answer-input').style.display = 'inline-block';
@@ -1269,6 +1400,262 @@
         function hideCelebration() {
             document.getElementById('celebration').style.display = 'none';
             document.getElementById('overlay').style.display = 'none';
+        }
+
+        // ========== VISUAL MODEL FUNCTIONS ==========
+        // These functions create visual representations for the pedagogical triad
+
+        /**
+         * Display base-10 blocks for a given number
+         * @param {number} num - The number to visualize (up to 10,000)
+         * @param {string} containerId - The ID of the container element
+         */
+        function displayBase10Blocks(num, containerId) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+
+            // Calculate place values
+            const thousands = Math.floor(num / 1000);
+            const hundreds = Math.floor((num % 1000) / 100);
+            const tens = Math.floor((num % 100) / 10);
+            const ones = num % 10;
+
+            let html = '<div class="base10-container">';
+
+            // Thousands blocks
+            if (thousands > 0) {
+                html += '<div class="base10-group">';
+                html += '<div class="base10-blocks">';
+                for (let i = 0; i < thousands; i++) {
+                    html += '<div class="thousand-block"></div>';
+                }
+                html += '</div>';
+                html += `<div class="base10-label">אלפים (${thousands * 1000})</div>`;
+                html += '</div>';
+            }
+
+            // Hundreds blocks
+            if (hundreds > 0) {
+                html += '<div class="base10-group">';
+                html += '<div class="base10-blocks">';
+                for (let i = 0; i < hundreds; i++) {
+                    html += '<div class="hundred-block">';
+                    // Add mini units to show 10x10 grid
+                    for (let j = 0; j < 100; j++) {
+                        html += '<div class="mini-unit"></div>';
+                    }
+                    html += '</div>';
+                }
+                html += '</div>';
+                html += `<div class="base10-label">מאות (${hundreds * 100})</div>`;
+                html += '</div>';
+            }
+
+            // Tens blocks
+            if (tens > 0) {
+                html += '<div class="base10-group">';
+                html += '<div class="base10-blocks">';
+                for (let i = 0; i < tens; i++) {
+                    html += '<div class="ten-block">';
+                    // Add mini units to show column of 10
+                    for (let j = 0; j < 10; j++) {
+                        html += '<div class="mini-unit"></div>';
+                    }
+                    html += '</div>';
+                }
+                html += '</div>';
+                html += `<div class="base10-label">עשרות (${tens * 10})</div>`;
+                html += '</div>';
+            }
+
+            // Ones blocks
+            if (ones > 0) {
+                html += '<div class="base10-group">';
+                html += '<div class="base10-blocks">';
+                for (let i = 0; i < ones; i++) {
+                    html += '<div class="one-block"></div>';
+                }
+                html += '</div>';
+                html += `<div class="base10-label">יחידות (${ones})</div>`;
+                html += '</div>';
+            }
+
+            html += '</div>';
+            container.innerHTML = html;
+            container.style.display = 'block';
+        }
+
+        /**
+         * Display area model for multiplication (demonstrates distributive property)
+         * @param {number} factor1 - First factor
+         * @param {number} factor2 - Second factor (will be decomposed)
+         * @param {string} containerId - The ID of the container element
+         */
+        function displayAreaModel(factor1, factor2, containerId) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+
+            // Decompose factor2 into place values
+            const tens = Math.floor(factor2 / 10) * 10;
+            const ones = factor2 % 10;
+
+            let html = '<div class="area-model-container">';
+            html += '<div class="area-model-title">מודל שטח - חוק הפילוג</div>';
+            html += '<div class="area-model">';
+
+            // Show tens rectangle if applicable
+            if (tens > 0) {
+                const area1 = factor1 * tens;
+                const height = Math.min(factor1 * 10, 120);
+                const width = Math.min(tens * 3, 100);
+                html += `<div class="area-rectangle primary" style="width: ${width}px; height: ${height}px;">`;
+                html += `${factor1} × ${tens}<br>= ${area1}`;
+                html += '</div>';
+            }
+
+            // Show ones rectangle
+            if (ones > 0) {
+                const area2 = factor1 * ones;
+                const height = Math.min(factor1 * 10, 120);
+                const width = Math.min(ones * 8, 60);
+                html += `<div class="area-rectangle secondary" style="width: ${width}px; height: ${height}px;">`;
+                html += `${factor1} × ${ones}<br>= ${area2}`;
+                html += '</div>';
+            }
+
+            html += '</div>';
+
+            // Show calculation
+            const total = factor1 * factor2;
+            if (tens > 0 && ones > 0) {
+                html += `<div class="area-dimensions">${factor1} × ${factor2} = ${factor1} × (${tens} + ${ones})</div>`;
+                html += `<div class="area-calculation">= (${factor1} × ${tens}) + (${factor1} × ${ones}) = ${factor1 * tens} + ${factor1 * ones} = ${total}</div>`;
+            } else {
+                html += `<div class="area-calculation">${factor1} × ${factor2} = ${total}</div>`;
+            }
+
+            html += '</div>';
+            container.innerHTML = html;
+            container.style.display = 'block';
+        }
+
+        /**
+         * Display array model for multiplication
+         * @param {number} rows - Number of rows
+         * @param {number} cols - Number of columns
+         * @param {string} containerId - The ID of the container element
+         */
+        function displayArrayModel(rows, cols, containerId) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+
+            // Limit size for visual clarity
+            const maxRows = Math.min(rows, 10);
+            const maxCols = Math.min(cols, 10);
+            const showEllipsis = rows > maxRows || cols > maxCols;
+
+            let html = '<div class="array-model-container">';
+            html += `<div class="area-model-title">מודל מערך: ${rows} × ${cols}</div>`;
+            html += `<div class="array-model" style="grid-template-columns: repeat(${maxCols}, 1fr); grid-template-rows: repeat(${maxRows}, 1fr);">`;
+
+            for (let i = 0; i < maxRows * maxCols; i++) {
+                html += '<div class="array-dot"></div>';
+            }
+
+            html += '</div>';
+            if (showEllipsis) {
+                html += `<div class="area-dimensions">(מוצג חלק מהמערך)</div>`;
+            }
+            html += `<div class="area-calculation">${rows} שורות × ${cols} עמודות = ${rows * cols}</div>`;
+            html += '</div>';
+
+            container.innerHTML = html;
+            container.style.display = 'block';
+        }
+
+        /**
+         * Display equal groups for division
+         * @param {number} total - Total number of items
+         * @param {number} groups - Number of groups
+         * @param {string} type - 'partitive' (sharing) or 'quotative' (measuring)
+         * @param {string} containerId - The ID of the container element
+         */
+        function displayEqualGroups(total, groups, type, containerId) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+
+            let html = '<div class="equal-groups-container">';
+
+            if (type === 'partitive') {
+                // Partitive division: "How many in each group?"
+                const itemsPerGroup = Math.floor(total / groups);
+                const remainder = total % groups;
+
+                html += `<div class="area-model-title">חילוק לקבוצות: ${total} ÷ ${groups}</div>`;
+                html += '<div class="groups-row">';
+
+                for (let g = 0; g < groups; g++) {
+                    html += '<div class="group">';
+                    html += '<div class="group-items">';
+
+                    const itemsInThisGroup = g < remainder ? itemsPerGroup + 1 : itemsPerGroup;
+                    for (let i = 0; i < itemsInThisGroup; i++) {
+                        html += '<div class="group-item"></div>';
+                    }
+
+                    html += '</div>';
+                    html += `<div class="group-label">קבוצה ${g + 1}</div>`;
+                    html += '</div>';
+                }
+
+                html += '</div>';
+                html += `<div class="area-calculation">כל קבוצה מקבלת ${itemsPerGroup}`;
+                if (remainder > 0) html += ` (+ ${remainder} נשאר)`;
+                html += '</div>';
+
+            } else {
+                // Quotative division: "How many groups?"
+                const itemsPerGroup = groups;
+                const numGroups = Math.floor(total / itemsPerGroup);
+                const remainder = total % itemsPerGroup;
+
+                html += `<div class="area-model-title">חילוק למדידה: ${total} ÷ ${groups}</div>`;
+                html += '<div class="groups-row">';
+
+                for (let g = 0; g < numGroups; g++) {
+                    html += '<div class="group">';
+                    html += '<div class="group-items">';
+
+                    for (let i = 0; i < itemsPerGroup; i++) {
+                        html += '<div class="group-item"></div>';
+                    }
+
+                    html += '</div>';
+                    html += `<div class="group-label">קבוצה ${g + 1}</div>`;
+                    html += '</div>';
+                }
+
+                html += '</div>';
+                html += `<div class="area-calculation">${numGroups} קבוצות של ${itemsPerGroup}`;
+                if (remainder > 0) html += ` (+ ${remainder} נשאר)`;
+                html += '</div>';
+            }
+
+            html += '</div>';
+            container.innerHTML = html;
+            container.style.display = 'block';
+        }
+
+        /**
+         * Hide visual model container
+         * @param {string} containerId - The ID of the container element
+         */
+        function hideVisualModel(containerId) {
+            const container = document.getElementById(containerId);
+            if (container) {
+                container.style.display = 'none';
+                container.innerHTML = '';
+            }
         }
 
         // MULTIPLICATION TOOL FUNCTIONS
@@ -3075,6 +3462,7 @@ ${'='.repeat(70)}
     <!-- New Module Scripts -->
     <script src="js/modules/fraction_module.js"></script>
     <script src="js/modules/division_module.js"></script>
+    <script src="js/modules/order_operations_module.js"></script>
 
     <!-- Feature 4: Navigation System (Previous/Next/Skip) -->
     <script>
