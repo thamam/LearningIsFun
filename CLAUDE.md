@@ -79,7 +79,16 @@ The navigation system (Previous/Next/Skip buttons) is implemented as an injected
 - Extends state objects with question bank tracking
 - Wraps existing generate/check functions
 - Manages skipped vs answered question tracking
-- File: `src/math/PASTE_THIS_Navigation_Code.md` contains the injectable version
+- Documentation: `src/math/docs/PASTE_THIS_Navigation_Code.md`
+
+### Problem Reporting Feature
+A problem reporting system allows Emma to flag issues during practice:
+- Orange "⚠️ יש בעיה בתרגיל הזה" button on every question
+- Multi-choice form: wrong answer, unclear purpose, or other
+- Captures full context: question, answer, state, timestamp
+- Stores in LocalStorage as `emmaProblemReports`
+- Export via `exportProblemReports()` in console
+- Documentation: `src/math/docs/PROBLEM_REPORTING_FEATURE.md`
 
 ## Important Patterns
 
@@ -108,12 +117,37 @@ Two question types per module:
 ```
 /
 ├── README.md                           # Minimal project description
-├── original_prompt.md                  # Original sprint planning requirements (6 features)
+├── CLAUDE.md                           # This file
+├── original_prompt.md                  # Original sprint planning requirements
+├── docs/                               # Documentation (NOT in git, reports only)
+│   ├── grade3/                         # Grade 3 curriculum enhancements
+│   ├── research/                       # Research materials (ChatGPT study plans, etc.)
+│   └── reports/                        # Bug reports, audit reports
+├── archive/                            # Old files and backups
+│   ├── backups/                        # HTML backup files
+│   ├── test-results/                   # Playwright test results
+│   └── קראו בכותר*/                    # Downloaded Hebrew reference materials
 └── src/
     └── math/
-        ├── Emma_math_lab.html          # Main application (all code)
-        └── PASTE_THIS_Navigation_Code.md  # Navigation feature patch documentation
+        ├── Emma_math_lab.html          # Main application (~3800 lines)
+        ├── css/
+        │   └── main.css                # All styles
+        ├── js/
+        │   ├── features/               # Feature implementations
+        │   └── modules/                # Module implementations
+        └── docs/                       # Math-specific documentation
+            ├── PROBLEM_REPORTING_FEATURE.md  # Problem reporting docs
+            ├── PASTE_THIS_Navigation_Code.md  # Navigation feature patch
+            ├── BUG*.md                 # Bug fix reports
+            ├── MODULAR*.md             # Refactoring documentation
+            └── TEST*.md                # Test reports and checklists
 ```
+
+**Important**:
+- Main application is `src/math/Emma_math_lab.html`
+- All documentation is organized in `docs/` and `src/math/docs/`
+- Backup files are in `archive/backups/`
+- Old downloaded materials are in `archive/`
 
 ## Future Development Notes
 
