@@ -1095,3 +1095,137 @@
           height: 14px;
         }
       }
+
+      /* Problem Reporting System */
+      .report-problem-container {
+        margin: 15px 0;
+        text-align: center;
+      }
+
+      .report-problem-btn {
+        background: #ff9800;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 0.9em;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        font-family: 'Noto Sans Hebrew', Arial, sans-serif;
+      }
+
+      .report-problem-btn:hover {
+        background: #f57c00;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(255, 152, 0, 0.3);
+      }
+
+      .problem-report-form {
+        background: #fff3e0;
+        border: 2px solid #ff9800;
+        border-radius: 12px;
+        padding: 20px;
+        margin-top: 10px;
+        text-align: right;
+      }
+
+      .problem-report-form h4 {
+        color: #e65100;
+        margin-top: 0;
+        margin-bottom: 15px;
+        font-size: 1.1em;
+      }
+
+      .report-option {
+        background: white;
+        border: 2px solid #ffcc80;
+        border-radius: 8px;
+        padding: 12px;
+        margin: 8px 0;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        text-align: right;
+        font-family: 'Noto Sans Hebrew', Arial, sans-serif;
+      }
+
+      .report-option:hover {
+        border-color: #ff9800;
+        background: #fff8e1;
+        transform: translateX(-3px);
+      }
+
+      .report-option.selected {
+        background: #ff9800;
+        color: white;
+        border-color: #f57c00;
+        font-weight: 600;
+      }
+
+      .report-other-text {
+        width: 100%;
+        padding: 10px;
+        border: 2px solid #ffcc80;
+        border-radius: 8px;
+        margin-top: 8px;
+        font-family: 'Noto Sans Hebrew', Arial, sans-serif;
+        font-size: 0.95em;
+        resize: vertical;
+        min-height: 60px;
+      }
+
+      .report-other-text:focus {
+        outline: none;
+        border-color: #ff9800;
+      }
+
+      .report-submit-btn {
+        background: #4caf50;
+        color: white;
+        border: none;
+        padding: 12px 30px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 1em;
+        font-weight: 600;
+        margin-top: 15px;
+        font-family: 'Noto Sans Hebrew', Arial, sans-serif;
+        transition: all 0.3s ease;
+      }
+
+      .report-submit-btn:hover {
+        background: #388e3c;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(76, 175, 80, 0.3);
+      }
+
+      .report-submit-btn:disabled {
+        background: #ccc;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      .report-cancel-btn {
+        background: #f44336;
+        color: white;
+        border: none;
+        padding: 12px 30px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 1em;
+        font-weight: 600;
+        margin-top: 15px;
+        margin-right: 10px;
+        font-family: 'Noto Sans Hebrew', Arial, sans-serif;
+        transition: all 0.3s ease;
+      }
+
+      .report-cancel-btn:hover {
+        background: #d32f2f;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(244, 67, 54, 0.3);
+      }
+
+      .hidden {
+        display: none;
+      }
