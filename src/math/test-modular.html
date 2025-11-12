@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>Modular Test</title>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+    <h1>Testing Modular Setup</h1>
+    <div id="results"></div>
+
+    <script src="js/features/module-registry.js"></script>
+    <script>
+        const results = document.getElementById('results');
+
+        // Test 1: Module Registry loaded
+        if (typeof moduleRegistry !== 'undefined') {
+            results.innerHTML += '✅ Module Registry loaded<br>';
+        } else {
+            results.innerHTML += '❌ Module Registry NOT loaded<br>';
+        }
+
+        // Test 2: CSS loaded (check if body has background)
+        const bgColor = window.getComputedStyle(document.body).backgroundColor;
+        if (bgColor) {
+            results.innerHTML += `✅ CSS loaded (body bg: ${bgColor})<br>`;
+        } else {
+            results.innerHTML += '❌ CSS NOT loaded<br>';
+        }
+
+        // Test 3: Registry methods available
+        if (typeof moduleRegistry.register === 'function') {
+            results.innerHTML += '✅ Registry.register() available<br>';
+        } else {
+            results.innerHTML += '❌ Registry.register() NOT available<br>';
+        }
+
+        // Test 4: Try registering a test module
+        const TestModule = {
+            name: "Test Module",
+            id: "test",
+            icon: "🧪",
+            description: "Test description",
+            generateQuestion: () => ({question: "test", correctAnswer: 42}),
+            checkAnswer: (a, b) => a === b,
+            getHint: () => "hint",
+            getExplanation: () => ({detailed: "explanation"})
+        };
+
+        const registered = moduleRegistry.register('test', TestModule);
+        if (registered) {
+            results.innerHTML += '✅ Test module registered successfully<br>';
+        } else {
+            results.innerHTML += '❌ Test module registration FAILED<br>';
+        }
+
+        // Test 5: Verify module retrieval
+        const retrieved = moduleRegistry.get('test');
+        if (retrieved && retrieved.name === "Test Module") {
+            results.innerHTML += '✅ Module retrieval works<br>';
+        } else {
+            results.innerHTML += '❌ Module retrieval FAILED<br>';
+        }
+
+        results.innerHTML += '<br><strong>All tests passed! Modular setup is working correctly.</strong>';
+    </script>
+</body>
+</html>

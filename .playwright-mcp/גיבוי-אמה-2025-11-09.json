@@ -1,0 +1,72 @@
+{
+  "version": "1.0",
+  "exportDate": "2025-11-09T17:55:05.164Z",
+  "student": "Emma",
+  "testDate": "2025-11-18",
+  "totalSession": {
+    "totalQuestions": 5,
+    "correctAnswers": 5,
+    "totalTime": 0
+  },
+  "modules": {
+    "decimal": {
+      "level": "קשה",
+      "totalQuestions": 5,
+      "correctAnswers": 5,
+      "currentStreak": 5,
+      "bestStreak": 5,
+      "consecutiveCorrect": 2,
+      "consecutiveWrong": 0,
+      "sessionHistory": [
+        {
+          "timestamp": 1762710680385,
+          "question": "212 = 200 + ? + 2",
+          "userAnswer": 10,
+          "correctAnswer": 10,
+          "isCorrect": true,
+          "level": "בינוני"
+        },
+        {
+          "timestamp": 1762710699128,
+          "question": "251 = ? + 50 + 1",
+          "userAnswer": 200,
+          "correctAnswer": 200,
+          "isCorrect": true,
+          "level": "בינוני"
+        },
+        {
+          "timestamp": 1762710744001,
+          "question": "מהי הספרה החסרה? 44_\n(המספר נמצא בין 400 ל-500)",
+          "userAnswer": 4,
+          "correctAnswer": 4,
+          "isCorrect": true,
+          "level": "בינוני"
+        },
+        {
+          "timestamp": 1762710830357,
+          "question": "מהו המספר הקודם של 951?",
+          "userAnswer": 950,
+          "correctAnswer": 950,
+          "isCorrect": true,
+          "level": "קשה"
+        },
+        {
+          "timestamp": 1762710841501,
+          "question": "מהו המספר העוקב של 575?",
+          "userAnswer": 576,
+          "correctAnswer": 576,
+          "isCorrect": true,
+          "level": "קשה"
+        }
+      ],
+      "startTime": 1762710624614,
+      "lastSaved": 1762710894698
+    },
+    "multiplication": {},
+    "numberline": {}
+  },
+  "metadata": {
+    "browser": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36",
+    "exportTime": "9.11.2025, 19:55:05"
+  }
+}

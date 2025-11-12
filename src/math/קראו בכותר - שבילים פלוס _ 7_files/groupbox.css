@@ -1,0 +1,1377 @@
+@font-face {
+  font-weight: normal;
+  font-style: normal;
+  font-family: "MFWGadLight";
+  src: url("../font/MFW_Gad-Light/MFW_Gad-Light.eot");
+  /* IE9 Compat Modes */
+  src: url("../font/MFW_Gad-Light/MFW_Gad-Light.eot?#iefix") format("embedded-opentype"), url("../font/MFW_Gad-Light/MFW_Gad-Light.woff") format("woff"), url("../font/MFW_Gad-Light/MFW_Gad-Light.ttf") format("truetype"), url("../font/MFW_Gad-Light/MFW_Gad-Light.svg#MFWGad-Light") format("svg");
+}
+html[dir=ltr] .gb-holder {
+  /* Clearfix: contain floats */
+  /*#endregion */
+  line-height: 1.4;
+  font-family: Arial;
+  width: 57.8em;
+}
+html[dir=ltr] .gb-holder button,
+html[dir=ltr] .gb-holder input,
+html[dir=ltr] .gb-holder optgroup,
+html[dir=ltr] .gb-holder select,
+html[dir=ltr] .gb-holder textarea {
+  color: inherit;
+  /* 1 */
+  font: inherit;
+  /* 2 */
+  margin: 0;
+  /* 3 */
+}
+html[dir=ltr] .gb-holder .clearfix:before,
+html[dir=ltr] .gb-holder .clearfix:after {
+  display: table;
+  content: " ";
+}
+html[dir=ltr] .gb-holder .clearfix:after {
+  clear: both;
+}
+html[dir=ltr] .gb-holder ul {
+  list-style: none;
+}
+html[dir=ltr] .gb-holder .dropdown .dropdown-menu {
+  border: solid 2px #cccccc;
+  text-decoration: none;
+}
+html[dir=ltr] .gb-holder .dropdown.focused .dropdown-menu {
+  border: solid 0.2em #3eb5dc;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -ms-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  outline: none;
+}
+html[dir=ltr] .gb-holder button,
+html[dir=ltr] .gb-holder html input[type=button],
+html[dir=ltr] .gb-holder input[type=reset],
+html[dir=ltr] .gb-holder input[type=submit] {
+  -webkit-appearance: button;
+  /* 2 */
+  cursor: pointer;
+  /* 3 */
+}
+html[dir=ltr] .gb-holder input[type=text]::-ms-clear {
+  display: none;
+}
+html[dir=ltr] .gb-holder textarea:focus,
+html[dir=ltr] .gb-holder input:focus,
+html[dir=ltr] .gb-holder button:focus {
+  outline: 0;
+}
+html[dir=ltr] .gb-holder .groupbox.readonly {
+  color: #808080;
+}
+html[dir=ltr] .gb-holder .groupbox.readonly input[type=checkbox] + label > span {
+  color: #808080;
+}
+html[dir=ltr] .gb-holder .groupbox {
+  color: black;
+  /*#region Choose Groups*/
+  /*#endregion*/
+  /*#region Choose Students*/
+  /*#endregion*/
+  /*#region Save As Group*/
+  /*#endregion*/
+  /*#region Animation*/
+  /*#region HOSHI*/
+  /*#endregion*/
+  /*#endregion*/
+}
+html[dir=ltr] .gb-holder .groupbox .error {
+  font-size: 1.6em;
+  color: red;
+}
+html[dir=ltr] .gb-holder .groupbox .hide {
+  visibility: hidden;
+}
+html[dir=ltr] .gb-holder .groupbox .undisplay {
+  display: none;
+}
+html[dir=ltr] .gb-holder .groupbox .disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+html[dir=ltr] .gb-holder .groupbox .readonly {
+  cursor: default;
+}
+html[dir=ltr] .gb-holder .groupbox input[type=checkbox] {
+  display: none;
+}
+html[dir=ltr] .gb-holder .groupbox input[type=checkbox] + label {
+  display: inline-block;
+  background-repeat: no-repeat;
+  background-size: auto 100%;
+  background-position: 100% 0;
+  margin-bottom: 0;
+  background-image: url("../img/check.png");
+  line-height: 1;
+}
+html[dir=ltr] .gb-holder .groupbox input[type=checkbox]:not([readonly]) + label {
+  cursor: pointer;
+}
+html[dir=ltr] .gb-holder .groupbox input[type=checkbox]:checked + label {
+  background-repeat: no-repeat;
+  background-size: auto 100%;
+  background-position: 0 0;
+  background-image: url("../img/check.png");
+  line-height: 1;
+}
+html[dir=ltr] .gb-holder .groupbox input[type=checkbox] + label > span {
+  position: absolute;
+  left: 30px;
+  color: black;
+}
+html[dir=ltr] .gb-holder .groupbox .disabled input[type=checkbox] + label {
+  cursor: default;
+}
+html[dir=ltr] .gb-holder .groupbox .input[type=checkbox][readonly] + label {
+  cursor: default;
+}
+html[dir=ltr] .gb-holder .groupbox .dropdown-toggle,
+html[dir=ltr] .gb-holder .groupbox .add-individuals-btn {
+  color: black;
+}
+html[dir=ltr] .gb-holder .groupbox .groupbox-field-label {
+  font-size: 1.5em;
+  position: relative;
+}
+html[dir=ltr] .gb-holder .groupbox .groupbox-input {
+  font-size: 1.8em;
+  border: none;
+  color: #3b3b3b;
+}
+html[dir=ltr] .gb-holder .groupbox .groupbox-btn,
+html[dir=ltr] .gb-holder .groupbox .groupbox-cancel-btn {
+  border: 0;
+  font-family: "MFWGadLight";
+  text-align: center;
+  color: white;
+  display: inline-block;
+  width: 10em;
+  height: 2.5em;
+  margin: 0 0.25em;
+}
+html[dir=ltr] .gb-holder .groupbox .groupbox-btn {
+  background-color: #4eb00d;
+}
+html[dir=ltr] .gb-holder .groupbox .groupbox-cancel-btn {
+  background-color: #494949;
+}
+html[dir=ltr] .gb-holder .groupbox .groupbox-btn > span:not(.mybagui-loader-pulse),
+html[dir=ltr] .gb-holder .groupbox .groupbox-cancel-btn > span {
+  font-size: 1.5em;
+}
+html[dir=ltr] .gb-holder .groupbox .listbox {
+  border: 0.2em solid #eeeeee;
+  width: 26.5em;
+  height: 23em;
+  float: left;
+  background: white;
+}
+html[dir=ltr] .gb-holder .groupbox .listbox-header {
+  background-color: #dddee2;
+  padding: 0.3em 0.3em 0.3em 1em;
+}
+html[dir=ltr] .gb-holder .groupbox .listbox-header > span {
+  font-size: 1.8em;
+}
+html[dir=ltr] .gb-holder .groupbox .dropdown-toggle {
+  font-size: 1.8em;
+}
+html[dir=ltr] .gb-holder .groupbox .dropdown-menu > li > a {
+  font-size: 1.7em;
+}
+html[dir=ltr] .gb-holder .groupbox .listbox.has-scrollbar .listbox-scroll-holder {
+  padding: 0 0.5em 0 0;
+}
+html[dir=ltr] .gb-holder .groupbox .listbox-body-holder {
+  height: 18.8em;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+html[dir=ltr] .gb-holder .groupbox .listbox-body-holder::-webkit-scrollbar {
+  width: 0.5em;
+  height: 0.5em;
+}
+html[dir=ltr] .gb-holder .groupbox .listbox-body-holder::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 0.5em;
+  border-radius: 0.5em;
+  background: #a1a1a1;
+}
+html[dir=ltr] .gb-holder .groupbox .listbox-body-holder::-webkit-scrollbar-thumb:hover {
+  background: #949494;
+}
+html[dir=ltr] .gb-holder .groupbox .listbox-body-holder::-webkit-scrollbar-corner {
+  background-color: transparent;
+}
+html[dir=ltr] .gb-holder .groupbox .listbox.has-scrollbar .listbox-body {
+  padding: 0 0.7em 0 0;
+}
+html[dir=ltr] .gb-holder .groupbox .listbox-body > div {
+  padding: 0.5em;
+}
+html[dir=ltr] .gb-holder .groupbox .listbox-item > label,
+html[dir=ltr] .gb-holder .groupbox .listbox-item > span,
+html[dir=ltr] .gb-holder .groupbox .listbox-item > div > span {
+  font-size: 1.5em;
+}
+html[dir=ltr] .gb-holder .groupbox .listbox-item > div {
+  float: right;
+  width: calc(100% - 2em);
+}
+html[dir=ltr] .gb-holder .groupbox .listbox-item {
+  position: relative;
+}
+html[dir=ltr] .gb-holder .groupbox .listbox-separator {
+  background-color: #efefef;
+}
+html[dir=ltr] .gb-holder .groupbox .listbox:not(.chosen) .listbox-separator {
+  margin-bottom: 0.5em;
+}
+html[dir=ltr] .gb-holder .groupbox .listbox-separator > span {
+  font-size: 1.6em;
+}
+html[dir=ltr] .gb-holder .groupbox .listbox.chosen {
+  margin: 0 0 0 0.5em;
+}
+html[dir=ltr] .gb-holder .groupbox .listbox:not(.chosen) {
+  margin: 0 0.5em 0 0;
+}
+html[dir=ltr] .gb-holder .groupbox .cb-item + label,
+html[dir=ltr] .gb-holder .groupbox .cb2-item + label {
+  width: 17px;
+  height: 17px;
+}
+html[dir=ltr] .gb-holder .groupbox .group-delete,
+html[dir=ltr] .gb-holder .groupbox .student-delete,
+html[dir=ltr] .gb-holder .groupbox .individual-delete {
+  width: 1.5em;
+  height: 1.5em;
+  display: inline-block;
+  background-size: contain;
+  border: 0;
+  padding: 0;
+  float: left;
+  margin: 0.5em 0.5em 0 0;
+  background: url(../IMG/eraseS-01.svg) no-repeat;
+}
+html[dir=ltr] .gb-holder .groupbox .group-delete.disabled,
+html[dir=ltr] .gb-holder .groupbox .student-delete.disabled,
+html[dir=ltr] .gb-holder .groupbox .individual-delete.disabled {
+  background: none;
+}
+html[dir=ltr] .gb-holder .groupbox .open > .dropdown-menu {
+  top: 100%;
+  display: block;
+  max-height: 27.1em;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+html[dir=ltr] .gb-holder .groupbox .open > .dropdown-menu::-webkit-scrollbar {
+  width: 0.4em;
+  height: 0.4em;
+}
+html[dir=ltr] .gb-holder .groupbox .open > .dropdown-menu::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 0.5em;
+  border-radius: 0.5em;
+  background: #a1a1a1;
+}
+html[dir=ltr] .gb-holder .groupbox .open > .dropdown-menu::-webkit-scrollbar-thumb:hover {
+  background: #949494;
+}
+html[dir=ltr] .gb-holder .groupbox .open > .dropdown-menu::-webkit-scrollbar-corner {
+  background-color: transparent;
+}
+html[dir=ltr] .gb-holder .groupbox .arrow-holder {
+  float: left;
+  margin: 0 0.55em;
+  height: 23em;
+  width: 1.9em;
+  background: white;
+  min-width: 0.5em;
+}
+html[dir=ltr] .gb-holder .groupbox .arrow {
+  background: url(../IMG/GreyArrowy-01.svg) no-repeat;
+  background-size: contain;
+  background-position-y: center;
+  height: 100%;
+  width: 100%;
+}
+html[dir=ltr] .gb-holder .groupbox .add-individuals-holder {
+  width: 100%;
+  background-color: white;
+  height: 4.6em;
+}
+html[dir=ltr] .gb-holder .groupbox .add-individuals-btn-img {
+  width: 2em;
+  height: 2em;
+  background: url(../IMG/addGreen_29.svg) no-repeat;
+  display: inline-block;
+  float: left;
+}
+html[dir=ltr] .gb-holder .groupbox .add-individuals-btn-img + span {
+  font-size: 1.5em;
+}
+html[dir=ltr] .gb-holder .groupbox .school-dropdown-holder {
+  width: 98.5%;
+  margin-bottom: 1em;
+}
+html[dir=ltr] .gb-holder .groupbox .school-dropdown-holder .dropdown-menu {
+  width: 100%;
+}
+html[dir=ltr] .gb-holder .groupbox .students-selection {
+  background-color: white;
+}
+html[dir=ltr] .gb-holder .groupbox .students-selection-bar {
+  clear: both;
+  padding: 2.5em 0 3em 0;
+}
+html[dir=ltr] .gb-holder .groupbox .groups-dropdown-holder {
+  border: none;
+}
+html[dir=ltr] .gb-holder .groupbox .groups-dropdown-holder,
+html[dir=ltr] .gb-holder .groupbox .groups-dropdown-holder .dropdown-menu {
+  width: 25em;
+}
+html[dir=ltr] .gb-holder .groupbox .groups-dropdown-holder .dropdown-toggle {
+  padding: 0;
+}
+html[dir=ltr] .gb-holder .groupbox .save-as-group {
+  color: black;
+  height: 33em;
+  display: table;
+}
+html[dir=ltr] .gb-holder .groupbox .save-as-group input {
+  color: black;
+}
+html[dir=ltr] .gb-holder .groupbox .save-as-group.hide {
+  display: none;
+}
+html[dir=ltr] .gb-holder .groupbox .save-as-group-inner {
+  display: table-cell;
+  vertical-align: middle;
+}
+html[dir=ltr] .gb-holder .groupbox .save-as-group-inner-holder {
+  margin: 0 0 0 2em;
+  padding: 0 0 0 4em;
+  background-image: url(../IMG/info-01.svg);
+  background-repeat: no-repeat;
+  background-position-x: left;
+}
+html[dir=ltr] .gb-holder .groupbox .save-as-group-msg {
+  line-height: 2.5em;
+}
+html[dir=ltr] .gb-holder .groupbox .save-as-group-msg > span {
+  font-size: 1.5em;
+}
+html[dir=ltr] .gb-holder .groupbox .group-name-input-holder {
+  width: 53em;
+}
+html[dir=ltr] .gb-holder .groupbox .group-btn {
+  float: left;
+  margin-top: 0.5em;
+}
+html[dir=ltr] .gb-holder .groupbox .save-individuals-btn {
+  width: 22em;
+}
+html[dir=ltr] .gb-holder .groupbox .create-group-btn {
+  width: 19.5em;
+}
+html[dir=ltr] .gb-holder .groupbox .input--hoshi {
+  position: relative;
+}
+html[dir=ltr] .gb-holder .groupbox .input__field--hoshi {
+  border: none;
+  position: relative;
+  padding: 0 0 0.2em 0.5em;
+}
+html[dir=ltr] .gb-holder .groupbox .hoshi-label-holder {
+  position: relative;
+  overflow: hidden;
+  height: 0.5em;
+  display: block;
+}
+html[dir=ltr] .gb-holder .groupbox .input__label--hoshi::before,
+html[dir=ltr] .gb-holder .groupbox .input__label--hoshi::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  border-bottom: 1px solid #cccccc;
+}
+html[dir=ltr] .gb-holder .groupbox .mybagui-input-holder.readonly .input__label--hoshi::before,
+html[dir=ltr] .gb-holder .groupbox .mybagui-input-holder.readonly .input__label--hoshi::after {
+  border-bottom: none;
+}
+html[dir=ltr] .gb-holder .groupbox .input__label--hoshi::after {
+  border-bottom: 0.2em solid #3eb5dc;
+  -webkit-transform: translate3d(100%, 0, 0);
+  -moz-transform: translate3d(100%, 0, 0);
+  -ms-transform: translate3d(100%, 0, 0);
+  -o-transform: translate3d(100%, 0, 0);
+  transform: translate3d(100%, 0, 0);
+  -webkit-transition: -webkit-transform 0.3s;
+  -moz-transition: transform 0.3s;
+  -o-transition: transform 0.3s;
+  transition: transform 0.3s;
+}
+html[dir=ltr] .gb-holder .groupbox .input__field--hoshi:not([readonly]):focus + .hoshi-label-holder .input__label--hoshi::after {
+  -webkit-transform: translate3d(0, 0, 0);
+  -moz-transform: translate3d(0, 0, 0);
+  -ms-transform: translate3d(0, 0, 0);
+  -o-transform: translate3d(0, 0, 0);
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+html[dir=ltr] .gb-holder .groupbox.disabled .listbox:not(.chosen) .listbox-body-holder,
+html[dir=ltr] .gb-holder .groupbox.readonly .listbox:not(.chosen) .listbox-body-holder {
+  overflow: hidden;
+}
+html[dir=ltr] .gb-holder .groupbox.disabled .group-delete,
+html[dir=ltr] .gb-holder .groupbox.disabled .student-delete,
+html[dir=ltr] .gb-holder .groupbox.disabled .individual-delete,
+html[dir=ltr] .gb-holder .groupbox.readonly .group-delete,
+html[dir=ltr] .gb-holder .groupbox.readonly .student-delete,
+html[dir=ltr] .gb-holder .groupbox.readonly .individual-delete,
+html[dir=ltr] .gb-holder .group-delete.disabled,
+html[dir=ltr] .gb-holder .individual-delete.disabled {
+  cursor: default;
+}
+html[dir=ltr] .gb-holder .groupbox.disabled .add-individuals-btn {
+  cursor: default;
+}
+html[dir=ltr] .gb-holder .groupbox.readonly .add-individuals-btn {
+  visibility: hidden;
+  cursor: default;
+}
+html[dir=ltr] .gb-holder .groupbox.readonly .listbox-item label,
+html[dir=ltr] .gb-holder .groupbox.readonly .listbox-item button {
+  background-image: none;
+}
+html[dir=ltr] .gb-holder .gb-roll {
+  width: 100%;
+  padding: 0;
+  z-index: 50;
+  -webkit-transform: translateY(0%);
+  -moz-transform: translateY(0%);
+  -ms-transform: translateY(0%);
+  -o-transform: translateY(0%);
+  transform: translateY(0%);
+  -webkit-transition: all 0.5s;
+  -moz-transition: all 0.5s;
+  -o-transition: all 0.5s;
+  transition: all 0.5s;
+}
+html[dir=ltr] .gb-holder .gb-roll-perspective {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  -webkit-perspective: 1100px;
+  -moz-perspective: 1100px;
+  -ms-perspective: 1100px;
+  perspective: 1100px;
+  -webkit-perspective-origin: 50% 0;
+  -moz-perspective-origin: 50% 0;
+  -ms-perspective-origin: 50% 0;
+  perspective-origin: 50% 0;
+}
+html[dir=ltr] .gb-holder .gb-roll-perspective > div {
+  height: 100%;
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
+  text-align: justify;
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-transition: all 0.5s;
+  -moz-transition: all 0.5s;
+  -o-transition: all 0.5s;
+  transition: all 0.5s;
+}
+html[dir=ltr] .gb-holder .gb-roll-side1 {
+  z-index: 3;
+  -webkit-transform-origin: 50% 100%;
+  -moz-transform-origin: 50% 100%;
+  -ms-transform-origin: 50% 100%;
+  -o-transform-origin: 50% 100%;
+  transform-origin: 50% 100%;
+}
+html[dir=ltr] .gb-holder .gb-roll-perspective .gb-roll-side2,
+html[dir=ltr] .gb-holder .gb-roll-perspective .gb-roll-side3 {
+  -webkit-transform-origin: 50% 0%;
+  -moz-transform-origin: 50% 0%;
+  -ms-transform-origin: 50% 0%;
+  -o-transform-origin: 50% 0%;
+  transform-origin: 50% 0%;
+  -webkit-transform: rotateX(-90deg);
+  -moz-transform: rotateX(-90deg);
+  -ms-transform: rotateX(-90deg);
+  -o-transform: rotateX(-90deg);
+  transform: rotateX(-90deg);
+  -webkit-transition: top 0.5s;
+  -moz-transition: top 0.5s;
+  -o-transition: top 0.5s;
+  transition: top 0.5s;
+  position: absolute;
+  top: 0;
+}
+html[dir=ltr] .gb-holder .gb-roll-perspective .gb-roll-side2 {
+  z-index: 2;
+}
+html[dir=ltr] .gb-holder .gb-roll-perspective .gb-roll-side3 {
+  z-index: 1;
+}
+html[dir=ltr] .gb-holder .gb-roll-rotate2 {
+  top: 0;
+  padding-left: 0;
+  padding-right: 0;
+}
+html[dir=ltr] .gb-holder .gb-roll-rotate2 .gb-roll-side1 {
+  -webkit-transform: translateY(-100%) rotateX(90deg);
+  -moz-transform: translateY(-100%) rotateX(90deg);
+  -ms-transform: translateY(-100%) rotateX(90deg);
+  -o-transform: translateY(-100%) rotateX(90deg);
+  transform: translateY(-100%) rotateX(90deg);
+}
+html[dir=ltr] .gb-holder .gb-roll-rotate2 .gb-roll-side2 {
+  top: 100%;
+  -webkit-transition: -webkit-transform 0.5s;
+  -moz-transition: -moz-transform 0.5s;
+  -o-transition: transform 0.5s;
+  transition: transform 0.5s;
+  -webkit-transform: rotateX(0deg) translateY(-100%);
+  -moz-transform: rotateX(0deg) translateY(-100%);
+  -ms-transform: rotateX(0deg) translateY(-100%);
+  -o-transform: rotateX(0deg) translateY(-100%);
+  transform: rotateX(0deg) translateY(-100%);
+}
+html[dir=ltr] .gb-holder .gb-roll-rotate2 .gb-roll-side3 {
+  top: 100%;
+  -webkit-transition: -webkit-transform 0.5s;
+  -moz-transition: -moz-transform 0.5s;
+  -o-transition: transform 0.5s;
+  transition: transform 0.5s;
+  -webkit-transform: rotateX(-90deg);
+  -moz-transform: rotateX(-90deg);
+  -ms-transform: rotateX(-90deg);
+  -o-transform: rotateX(-90deg);
+  transform: rotateX(-90deg);
+}
+html[dir=ltr] .gb-holder .gb-roll-rotate1 {
+  top: 0;
+  padding-left: 0;
+  padding-right: 0;
+}
+html[dir=ltr] .gb-holder .gb-roll-rotate1 .gb-roll-side1 {
+  -webkit-transform: translateY(0%) rotateX(0deg);
+  -moz-transform: translateY(0%) rotateX(0deg);
+  -ms-transform: translateY(0%) rotateX(0deg);
+  -o-transform: translateY(0%) rotateX(0deg);
+  transform: translateY(0%) rotateX(0deg);
+}
+html[dir=ltr] .gb-holder .gb-roll-rotate1 .gb-roll-side2 {
+  top: 100%;
+  -webkit-transition: -webkit-transform 0.5s;
+  -moz-transition: -moz-transform 0.5s;
+  -o-transition: transform 0.5s;
+  transition: transform 0.5s;
+  -webkit-transform: rotateX(-90deg);
+  -moz-transform: rotateX(-90deg);
+  -ms-transform: rotateX(-90deg);
+  -o-transform: rotateX(-90deg);
+  transform: rotateX(-90deg);
+}
+html[dir=ltr] .gb-holder .gb-roll-rotate3 {
+  top: 0;
+  padding-left: 0;
+  padding-right: 0;
+}
+html[dir=ltr] .gb-holder .gb-roll-rotate3 .gb-roll-side1 {
+  -webkit-transform: translateY(-100%) rotateX(90deg);
+  -moz-transform: translateY(-100%) rotateX(90deg);
+  -ms-transform: translateY(-100%) rotateX(90deg);
+  -o-transform: translateY(-100%) rotateX(90deg);
+  transform: translateY(-100%) rotateX(90deg);
+}
+html[dir=ltr] .gb-holder .gb-roll-rotate3 .gb-roll-side2 {
+  top: 100%;
+  -webkit-transition: -webkit-transform 0.5s;
+  -moz-transition: -moz-transform 0.5s;
+  -o-transition: transform 0.5s;
+  transition: transform 0.5s;
+  -webkit-transform: translateY(-100%) rotateX(90deg);
+  -moz-transform: translateY(-100%) rotateX(90deg);
+  -ms-transform: translateY(-100%) rotateX(90deg);
+  -o-transform: translateY(-100%) rotateX(90deg);
+  transform: translateY(-100%) rotateX(90deg);
+}
+html[dir=ltr] .gb-holder .gb-roll-rotate3 .gb-roll-side3 {
+  top: 100%;
+  -webkit-transition: -webkit-transform 0.5s;
+  -moz-transition: -moz-transform 0.5s;
+  -o-transition: transform 0.5s;
+  transition: transform 0.5s;
+  -webkit-transform: rotateX(0deg) translateY(-100%);
+  -moz-transform: rotateX(0deg) translateY(-100%);
+  -ms-transform: rotateX(0deg) translateY(-100%);
+  -o-transform: rotateX(0deg) translateY(-100%);
+  transform: rotateX(0deg) translateY(-100%);
+}
+html[dir=ltr][dir=ltr] .groupbox .arrow {
+  -moz-transform: scaleX(-1);
+  -o-transform: scaleX(-1);
+  -webkit-transform: scaleX(-1);
+  -ms-transform: scaleX(-1);
+  transform: scaleX(-1);
+  -ms-filter: "FlipH";
+  filter: FlipH;
+}
+html[dir=ltr] .groupbox .add-individuals-btn {
+  border: 0;
+  width: 17em;
+  background: none;
+  margin: 1.5em 0;
+  padding-left: 0px;
+}
+html[dir=ltr][lang=zh] .gb-holder .groupbox .add-individuals-btn-img + span {
+  font-size: 2.3em;
+}
+html[dir=ltr][lang=ar] .groupbox .add-individuals-btn {
+  width: 14.1em;
+}
+html[dir=ltr][lang=en] .groupbox .add-individuals-btn {
+  width: 19em;
+}
+html[dir=ltr] .groupbox .group-name-input .input__field--hoshi {
+  width: calc(100% - 4.6em);
+}
+html[dir=ltr] .groupbox .group-name-input .hoshi-label-holder {
+  left: 7.8em;
+  width: calc(53em - 7.8em);
+}
+html[dir=ltr][lang=ar] .groupbox .group-name-input .input__field--hoshi {
+  width: calc(100% - 4.6em);
+}
+html[dir=ltr][lang=ar] .groupbox .group-name-input .hoshi-label-holder {
+  left: 6.7em;
+  width: calc(53em - 6.7em);
+}
+html[dir=ltr][lang=en] .groupbox .group-name-input .input__field--hoshi {
+  width: calc(100% - 7.9em);
+}
+html[dir=ltr][lang=en] .groupbox .group-name-input .hoshi-label-holder {
+  left: 13.6em;
+  width: calc(53em - 13.6em);
+}
+html[dir=ltr][lang=zh] .groupbox .group-name-input .input__field--hoshi {
+  width: calc(100% - 4.6em);
+}
+html[dir=ltr][lang=zh] .groupbox .group-name-input .hoshi-label-holder {
+  left: 5.5em;
+  width: calc(53em - 5.5em);
+}
+html[dir=ltr][dir=ltr] .groupbox .input__label--hoshi::after {
+  border-bottom: 0.2em solid #3eb5dc;
+  -webkit-transform: translate3d(-100%, 0, 0);
+  -moz-transform: translate3d(-100%, 0, 0);
+  -ms-transform: translate3d(-100%, 0, 0);
+  -o-transform: translate3d(-100%, 0, 0);
+  transform: translate3d(-100%, 0, 0);
+  -webkit-transition: -webkit-transform 0.3s;
+  -moz-transition: transform 0.3s;
+  -o-transition: transform 0.3s;
+  transition: transform 0.3s;
+}
+
+html[dir=rtl] .gb-holder {
+  /* Clearfix: contain floats */
+  /*#endregion */
+  line-height: 1.4;
+  font-family: Arial;
+  width: 57.8em;
+}
+html[dir=rtl] .gb-holder button,
+html[dir=rtl] .gb-holder input,
+html[dir=rtl] .gb-holder optgroup,
+html[dir=rtl] .gb-holder select,
+html[dir=rtl] .gb-holder textarea {
+  color: inherit;
+  /* 1 */
+  font: inherit;
+  /* 2 */
+  margin: 0;
+  /* 3 */
+}
+html[dir=rtl] .gb-holder .clearfix:before,
+html[dir=rtl] .gb-holder .clearfix:after {
+  display: table;
+  content: " ";
+}
+html[dir=rtl] .gb-holder .clearfix:after {
+  clear: both;
+}
+html[dir=rtl] .gb-holder ul {
+  list-style: none;
+}
+html[dir=rtl] .gb-holder .dropdown .dropdown-menu {
+  border: solid 2px #cccccc;
+  text-decoration: none;
+}
+html[dir=rtl] .gb-holder .dropdown.focused .dropdown-menu {
+  border: solid 0.2em #3eb5dc;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -ms-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  outline: none;
+}
+html[dir=rtl] .gb-holder button,
+html[dir=rtl] .gb-holder html input[type=button],
+html[dir=rtl] .gb-holder input[type=reset],
+html[dir=rtl] .gb-holder input[type=submit] {
+  -webkit-appearance: button;
+  /* 2 */
+  cursor: pointer;
+  /* 3 */
+}
+html[dir=rtl] .gb-holder input[type=text]::-ms-clear {
+  display: none;
+}
+html[dir=rtl] .gb-holder textarea:focus,
+html[dir=rtl] .gb-holder input:focus,
+html[dir=rtl] .gb-holder button:focus {
+  outline: 0;
+}
+html[dir=rtl] .gb-holder .groupbox.readonly {
+  color: #808080;
+}
+html[dir=rtl] .gb-holder .groupbox.readonly input[type=checkbox] + label > span {
+  color: #808080;
+}
+html[dir=rtl] .gb-holder .groupbox {
+  color: black;
+  /*#region Choose Groups*/
+  /*#endregion*/
+  /*#region Choose Students*/
+  /*#endregion*/
+  /*#region Save As Group*/
+  /*#endregion*/
+  /*#region Animation*/
+  /*#region HOSHI*/
+  /*#endregion*/
+  /*#endregion*/
+}
+html[dir=rtl] .gb-holder .groupbox .error {
+  font-size: 1.6em;
+  color: red;
+}
+html[dir=rtl] .gb-holder .groupbox .hide {
+  visibility: hidden;
+}
+html[dir=rtl] .gb-holder .groupbox .undisplay {
+  display: none;
+}
+html[dir=rtl] .gb-holder .groupbox .disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+html[dir=rtl] .gb-holder .groupbox .readonly {
+  cursor: default;
+}
+html[dir=rtl] .gb-holder .groupbox input[type=checkbox] {
+  display: none;
+}
+html[dir=rtl] .gb-holder .groupbox input[type=checkbox] + label {
+  display: inline-block;
+  background-repeat: no-repeat;
+  background-size: auto 100%;
+  background-position: 100% 0;
+  margin-bottom: 0;
+  background-image: url("../img/check.png");
+  line-height: 1;
+}
+html[dir=rtl] .gb-holder .groupbox input[type=checkbox]:not([readonly]) + label {
+  cursor: pointer;
+}
+html[dir=rtl] .gb-holder .groupbox input[type=checkbox]:checked + label {
+  background-repeat: no-repeat;
+  background-size: auto 100%;
+  background-position: 0 0;
+  background-image: url("../img/check.png");
+  line-height: 1;
+}
+html[dir=rtl] .gb-holder .groupbox input[type=checkbox] + label > span {
+  position: absolute;
+  left: 30px;
+  color: black;
+}
+html[dir=rtl] .gb-holder .groupbox .disabled input[type=checkbox] + label {
+  cursor: default;
+}
+html[dir=rtl] .gb-holder .groupbox .input[type=checkbox][readonly] + label {
+  cursor: default;
+}
+html[dir=rtl] .gb-holder .groupbox .dropdown-toggle,
+html[dir=rtl] .gb-holder .groupbox .add-individuals-btn {
+  color: black;
+}
+html[dir=rtl] .gb-holder .groupbox .groupbox-field-label {
+  font-size: 1.5em;
+  position: relative;
+}
+html[dir=rtl] .gb-holder .groupbox .groupbox-input {
+  font-size: 1.8em;
+  border: none;
+  color: #3b3b3b;
+}
+html[dir=rtl] .gb-holder .groupbox .groupbox-btn,
+html[dir=rtl] .gb-holder .groupbox .groupbox-cancel-btn {
+  border: 0;
+  font-family: "MFWGadLight";
+  text-align: center;
+  color: white;
+  display: inline-block;
+  width: 10em;
+  height: 2.5em;
+  margin: 0 0.25em;
+}
+html[dir=rtl] .gb-holder .groupbox .groupbox-btn {
+  background-color: #4eb00d;
+}
+html[dir=rtl] .gb-holder .groupbox .groupbox-cancel-btn {
+  background-color: #494949;
+}
+html[dir=rtl] .gb-holder .groupbox .groupbox-btn > span:not(.mybagui-loader-pulse),
+html[dir=rtl] .gb-holder .groupbox .groupbox-cancel-btn > span {
+  font-size: 1.5em;
+}
+html[dir=rtl] .gb-holder .groupbox .listbox {
+  border: 0.2em solid #eeeeee;
+  width: 26.5em;
+  height: 23em;
+  float: left;
+  background: white;
+}
+html[dir=rtl] .gb-holder .groupbox .listbox-header {
+  background-color: #dddee2;
+  padding: 0.3em 1em 0.3em 0.3em;
+}
+html[dir=rtl] .gb-holder .groupbox .listbox-header > span {
+  font-size: 1.8em;
+}
+html[dir=rtl] .gb-holder .groupbox .dropdown-toggle {
+  font-size: 1.8em;
+}
+html[dir=rtl] .gb-holder .groupbox .dropdown-menu > li > a {
+  font-size: 1.7em;
+}
+html[dir=rtl] .gb-holder .groupbox .listbox.has-scrollbar .listbox-scroll-holder {
+  padding: 0 0 0 0.5em;
+}
+html[dir=rtl] .gb-holder .groupbox .listbox-body-holder {
+  height: 18.8em;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+html[dir=rtl] .gb-holder .groupbox .listbox-body-holder::-webkit-scrollbar {
+  width: 0.5em;
+  height: 0.5em;
+}
+html[dir=rtl] .gb-holder .groupbox .listbox-body-holder::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 0.5em;
+  border-radius: 0.5em;
+  background: #a1a1a1;
+}
+html[dir=rtl] .gb-holder .groupbox .listbox-body-holder::-webkit-scrollbar-thumb:hover {
+  background: #949494;
+}
+html[dir=rtl] .gb-holder .groupbox .listbox-body-holder::-webkit-scrollbar-corner {
+  background-color: transparent;
+}
+html[dir=rtl] .gb-holder .groupbox .listbox.has-scrollbar .listbox-body {
+  padding: 0 0 0 0.7em;
+}
+html[dir=rtl] .gb-holder .groupbox .listbox-body > div {
+  padding: 0.5em;
+}
+html[dir=rtl] .gb-holder .groupbox .listbox-item > label,
+html[dir=rtl] .gb-holder .groupbox .listbox-item > span,
+html[dir=rtl] .gb-holder .groupbox .listbox-item > div > span {
+  font-size: 1.5em;
+}
+html[dir=rtl] .gb-holder .groupbox .listbox-item > div {
+  float: right;
+  width: calc(100% - 2em);
+}
+html[dir=rtl] .gb-holder .groupbox .listbox-item {
+  position: relative;
+}
+html[dir=rtl] .gb-holder .groupbox .listbox-separator {
+  background-color: #efefef;
+}
+html[dir=rtl] .gb-holder .groupbox .listbox:not(.chosen) .listbox-separator {
+  margin-bottom: 0.5em;
+}
+html[dir=rtl] .gb-holder .groupbox .listbox-separator > span {
+  font-size: 1.6em;
+}
+html[dir=rtl] .gb-holder .groupbox .listbox.chosen {
+  margin: 0 0.5em 0 0;
+}
+html[dir=rtl] .gb-holder .groupbox .listbox:not(.chosen) {
+  margin: 0 0 0 0.5em;
+}
+html[dir=rtl] .gb-holder .groupbox .cb-item + label,
+html[dir=rtl] .gb-holder .groupbox .cb2-item + label {
+  width: 17px;
+  height: 17px;
+}
+html[dir=rtl] .gb-holder .groupbox .group-delete,
+html[dir=rtl] .gb-holder .groupbox .student-delete,
+html[dir=rtl] .gb-holder .groupbox .individual-delete {
+  width: 1.5em;
+  height: 1.5em;
+  display: inline-block;
+  background-size: contain;
+  border: 0;
+  padding: 0;
+  float: left;
+  margin: 0.5em 0 0 0.5em;
+  background: url(../IMG/eraseS-01.svg) no-repeat;
+}
+html[dir=rtl] .gb-holder .groupbox .group-delete.disabled,
+html[dir=rtl] .gb-holder .groupbox .student-delete.disabled,
+html[dir=rtl] .gb-holder .groupbox .individual-delete.disabled {
+  background: none;
+}
+html[dir=rtl] .gb-holder .groupbox .open > .dropdown-menu {
+  top: 100%;
+  display: block;
+  max-height: 27.1em;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+html[dir=rtl] .gb-holder .groupbox .open > .dropdown-menu::-webkit-scrollbar {
+  width: 0.4em;
+  height: 0.4em;
+}
+html[dir=rtl] .gb-holder .groupbox .open > .dropdown-menu::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 0.5em;
+  border-radius: 0.5em;
+  background: #a1a1a1;
+}
+html[dir=rtl] .gb-holder .groupbox .open > .dropdown-menu::-webkit-scrollbar-thumb:hover {
+  background: #949494;
+}
+html[dir=rtl] .gb-holder .groupbox .open > .dropdown-menu::-webkit-scrollbar-corner {
+  background-color: transparent;
+}
+html[dir=rtl] .gb-holder .groupbox .arrow-holder {
+  float: left;
+  margin: 0 0.55em;
+  height: 23em;
+  width: 1.9em;
+  background: white;
+  min-width: 0.5em;
+}
+html[dir=rtl] .gb-holder .groupbox .arrow {
+  background: url(../IMG/GreyArrowy-01.svg) no-repeat;
+  background-size: contain;
+  background-position-y: center;
+  height: 100%;
+  width: 100%;
+}
+html[dir=rtl] .gb-holder .groupbox .add-individuals-holder {
+  width: 100%;
+  background-color: white;
+  height: 4.6em;
+}
+html[dir=rtl] .gb-holder .groupbox .add-individuals-btn-img {
+  width: 2em;
+  height: 2em;
+  background: url(../IMG/addGreen_29.svg) no-repeat;
+  display: inline-block;
+  float: left;
+}
+html[dir=rtl] .gb-holder .groupbox .add-individuals-btn-img + span {
+  font-size: 1.5em;
+}
+html[dir=rtl] .gb-holder .groupbox .school-dropdown-holder {
+  width: 98.5%;
+  margin-bottom: 1em;
+}
+html[dir=rtl] .gb-holder .groupbox .school-dropdown-holder .dropdown-menu {
+  width: 100%;
+}
+html[dir=rtl] .gb-holder .groupbox .students-selection {
+  background-color: white;
+}
+html[dir=rtl] .gb-holder .groupbox .students-selection-bar {
+  clear: both;
+  padding: 2.5em 0 3em 0;
+}
+html[dir=rtl] .gb-holder .groupbox .groups-dropdown-holder {
+  border: none;
+}
+html[dir=rtl] .gb-holder .groupbox .groups-dropdown-holder,
+html[dir=rtl] .gb-holder .groupbox .groups-dropdown-holder .dropdown-menu {
+  width: 25em;
+}
+html[dir=rtl] .gb-holder .groupbox .groups-dropdown-holder .dropdown-toggle {
+  padding: 0;
+}
+html[dir=rtl] .gb-holder .groupbox .save-as-group {
+  color: black;
+  height: 33em;
+  display: table;
+}
+html[dir=rtl] .gb-holder .groupbox .save-as-group input {
+  color: black;
+}
+html[dir=rtl] .gb-holder .groupbox .save-as-group.hide {
+  display: none;
+}
+html[dir=rtl] .gb-holder .groupbox .save-as-group-inner {
+  display: table-cell;
+  vertical-align: middle;
+}
+html[dir=rtl] .gb-holder .groupbox .save-as-group-inner-holder {
+  margin: 0 2em 0 0;
+  padding: 0 4em 0 0;
+  background-image: url(../IMG/info-01.svg);
+  background-repeat: no-repeat;
+  background-position-x: left;
+}
+html[dir=rtl] .gb-holder .groupbox .save-as-group-msg {
+  line-height: 2.5em;
+}
+html[dir=rtl] .gb-holder .groupbox .save-as-group-msg > span {
+  font-size: 1.5em;
+}
+html[dir=rtl] .gb-holder .groupbox .group-name-input-holder {
+  width: 53em;
+}
+html[dir=rtl] .gb-holder .groupbox .group-btn {
+  float: left;
+  margin-top: 0.5em;
+}
+html[dir=rtl] .gb-holder .groupbox .save-individuals-btn {
+  width: 22em;
+}
+html[dir=rtl] .gb-holder .groupbox .create-group-btn {
+  width: 19.5em;
+}
+html[dir=rtl] .gb-holder .groupbox .input--hoshi {
+  position: relative;
+}
+html[dir=rtl] .gb-holder .groupbox .input__field--hoshi {
+  border: none;
+  position: relative;
+  padding: 0 0.5em 0.2em 0;
+}
+html[dir=rtl] .gb-holder .groupbox .hoshi-label-holder {
+  position: relative;
+  overflow: hidden;
+  height: 0.5em;
+  display: block;
+}
+html[dir=rtl] .gb-holder .groupbox .input__label--hoshi::before,
+html[dir=rtl] .gb-holder .groupbox .input__label--hoshi::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  border-bottom: 1px solid #cccccc;
+}
+html[dir=rtl] .gb-holder .groupbox .mybagui-input-holder.readonly .input__label--hoshi::before,
+html[dir=rtl] .gb-holder .groupbox .mybagui-input-holder.readonly .input__label--hoshi::after {
+  border-bottom: none;
+}
+html[dir=rtl] .gb-holder .groupbox .input__label--hoshi::after {
+  border-bottom: 0.2em solid #3eb5dc;
+  -webkit-transform: translate3d(100%, 0, 0);
+  -moz-transform: translate3d(100%, 0, 0);
+  -ms-transform: translate3d(100%, 0, 0);
+  -o-transform: translate3d(100%, 0, 0);
+  transform: translate3d(100%, 0, 0);
+  -webkit-transition: -webkit-transform 0.3s;
+  -moz-transition: transform 0.3s;
+  -o-transition: transform 0.3s;
+  transition: transform 0.3s;
+}
+html[dir=rtl] .gb-holder .groupbox .input__field--hoshi:not([readonly]):focus + .hoshi-label-holder .input__label--hoshi::after {
+  -webkit-transform: translate3d(0, 0, 0);
+  -moz-transform: translate3d(0, 0, 0);
+  -ms-transform: translate3d(0, 0, 0);
+  -o-transform: translate3d(0, 0, 0);
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+html[dir=rtl] .gb-holder .groupbox.disabled .listbox:not(.chosen) .listbox-body-holder,
+html[dir=rtl] .gb-holder .groupbox.readonly .listbox:not(.chosen) .listbox-body-holder {
+  overflow: hidden;
+}
+html[dir=rtl] .gb-holder .groupbox.disabled .group-delete,
+html[dir=rtl] .gb-holder .groupbox.disabled .student-delete,
+html[dir=rtl] .gb-holder .groupbox.disabled .individual-delete,
+html[dir=rtl] .gb-holder .groupbox.readonly .group-delete,
+html[dir=rtl] .gb-holder .groupbox.readonly .student-delete,
+html[dir=rtl] .gb-holder .groupbox.readonly .individual-delete,
+html[dir=rtl] .gb-holder .group-delete.disabled,
+html[dir=rtl] .gb-holder .individual-delete.disabled {
+  cursor: default;
+}
+html[dir=rtl] .gb-holder .groupbox.disabled .add-individuals-btn {
+  cursor: default;
+}
+html[dir=rtl] .gb-holder .groupbox.readonly .add-individuals-btn {
+  visibility: hidden;
+  cursor: default;
+}
+html[dir=rtl] .gb-holder .groupbox.readonly .listbox-item label,
+html[dir=rtl] .gb-holder .groupbox.readonly .listbox-item button {
+  background-image: none;
+}
+html[dir=rtl] .gb-holder .gb-roll {
+  width: 100%;
+  padding: 0;
+  z-index: 50;
+  -webkit-transform: translateY(0%);
+  -moz-transform: translateY(0%);
+  -ms-transform: translateY(0%);
+  -o-transform: translateY(0%);
+  transform: translateY(0%);
+  -webkit-transition: all 0.5s;
+  -moz-transition: all 0.5s;
+  -o-transition: all 0.5s;
+  transition: all 0.5s;
+}
+html[dir=rtl] .gb-holder .gb-roll-perspective {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  -webkit-perspective: 1100px;
+  -moz-perspective: 1100px;
+  -ms-perspective: 1100px;
+  perspective: 1100px;
+  -webkit-perspective-origin: 50% 0;
+  -moz-perspective-origin: 50% 0;
+  -ms-perspective-origin: 50% 0;
+  perspective-origin: 50% 0;
+}
+html[dir=rtl] .gb-holder .gb-roll-perspective > div {
+  height: 100%;
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
+  text-align: justify;
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-transition: all 0.5s;
+  -moz-transition: all 0.5s;
+  -o-transition: all 0.5s;
+  transition: all 0.5s;
+}
+html[dir=rtl] .gb-holder .gb-roll-side1 {
+  z-index: 3;
+  -webkit-transform-origin: 50% 100%;
+  -moz-transform-origin: 50% 100%;
+  -ms-transform-origin: 50% 100%;
+  -o-transform-origin: 50% 100%;
+  transform-origin: 50% 100%;
+}
+html[dir=rtl] .gb-holder .gb-roll-perspective .gb-roll-side2,
+html[dir=rtl] .gb-holder .gb-roll-perspective .gb-roll-side3 {
+  -webkit-transform-origin: 50% 0%;
+  -moz-transform-origin: 50% 0%;
+  -ms-transform-origin: 50% 0%;
+  -o-transform-origin: 50% 0%;
+  transform-origin: 50% 0%;
+  -webkit-transform: rotateX(-90deg);
+  -moz-transform: rotateX(-90deg);
+  -ms-transform: rotateX(-90deg);
+  -o-transform: rotateX(-90deg);
+  transform: rotateX(-90deg);
+  -webkit-transition: top 0.5s;
+  -moz-transition: top 0.5s;
+  -o-transition: top 0.5s;
+  transition: top 0.5s;
+  position: absolute;
+  top: 0;
+}
+html[dir=rtl] .gb-holder .gb-roll-perspective .gb-roll-side2 {
+  z-index: 2;
+}
+html[dir=rtl] .gb-holder .gb-roll-perspective .gb-roll-side3 {
+  z-index: 1;
+}
+html[dir=rtl] .gb-holder .gb-roll-rotate2 {
+  top: 0;
+  padding-left: 0;
+  padding-right: 0;
+}
+html[dir=rtl] .gb-holder .gb-roll-rotate2 .gb-roll-side1 {
+  -webkit-transform: translateY(-100%) rotateX(90deg);
+  -moz-transform: translateY(-100%) rotateX(90deg);
+  -ms-transform: translateY(-100%) rotateX(90deg);
+  -o-transform: translateY(-100%) rotateX(90deg);
+  transform: translateY(-100%) rotateX(90deg);
+}
+html[dir=rtl] .gb-holder .gb-roll-rotate2 .gb-roll-side2 {
+  top: 100%;
+  -webkit-transition: -webkit-transform 0.5s;
+  -moz-transition: -moz-transform 0.5s;
+  -o-transition: transform 0.5s;
+  transition: transform 0.5s;
+  -webkit-transform: rotateX(0deg) translateY(-100%);
+  -moz-transform: rotateX(0deg) translateY(-100%);
+  -ms-transform: rotateX(0deg) translateY(-100%);
+  -o-transform: rotateX(0deg) translateY(-100%);
+  transform: rotateX(0deg) translateY(-100%);
+}
+html[dir=rtl] .gb-holder .gb-roll-rotate2 .gb-roll-side3 {
+  top: 100%;
+  -webkit-transition: -webkit-transform 0.5s;
+  -moz-transition: -moz-transform 0.5s;
+  -o-transition: transform 0.5s;
+  transition: transform 0.5s;
+  -webkit-transform: rotateX(-90deg);
+  -moz-transform: rotateX(-90deg);
+  -ms-transform: rotateX(-90deg);
+  -o-transform: rotateX(-90deg);
+  transform: rotateX(-90deg);
+}
+html[dir=rtl] .gb-holder .gb-roll-rotate1 {
+  top: 0;
+  padding-left: 0;
+  padding-right: 0;
+}
+html[dir=rtl] .gb-holder .gb-roll-rotate1 .gb-roll-side1 {
+  -webkit-transform: translateY(0%) rotateX(0deg);
+  -moz-transform: translateY(0%) rotateX(0deg);
+  -ms-transform: translateY(0%) rotateX(0deg);
+  -o-transform: translateY(0%) rotateX(0deg);
+  transform: translateY(0%) rotateX(0deg);
+}
+html[dir=rtl] .gb-holder .gb-roll-rotate1 .gb-roll-side2 {
+  top: 100%;
+  -webkit-transition: -webkit-transform 0.5s;
+  -moz-transition: -moz-transform 0.5s;
+  -o-transition: transform 0.5s;
+  transition: transform 0.5s;
+  -webkit-transform: rotateX(-90deg);
+  -moz-transform: rotateX(-90deg);
+  -ms-transform: rotateX(-90deg);
+  -o-transform: rotateX(-90deg);
+  transform: rotateX(-90deg);
+}
+html[dir=rtl] .gb-holder .gb-roll-rotate3 {
+  top: 0;
+  padding-left: 0;
+  padding-right: 0;
+}
+html[dir=rtl] .gb-holder .gb-roll-rotate3 .gb-roll-side1 {
+  -webkit-transform: translateY(-100%) rotateX(90deg);
+  -moz-transform: translateY(-100%) rotateX(90deg);
+  -ms-transform: translateY(-100%) rotateX(90deg);
+  -o-transform: translateY(-100%) rotateX(90deg);
+  transform: translateY(-100%) rotateX(90deg);
+}
+html[dir=rtl] .gb-holder .gb-roll-rotate3 .gb-roll-side2 {
+  top: 100%;
+  -webkit-transition: -webkit-transform 0.5s;
+  -moz-transition: -moz-transform 0.5s;
+  -o-transition: transform 0.5s;
+  transition: transform 0.5s;
+  -webkit-transform: translateY(-100%) rotateX(90deg);
+  -moz-transform: translateY(-100%) rotateX(90deg);
+  -ms-transform: translateY(-100%) rotateX(90deg);
+  -o-transform: translateY(-100%) rotateX(90deg);
+  transform: translateY(-100%) rotateX(90deg);
+}
+html[dir=rtl] .gb-holder .gb-roll-rotate3 .gb-roll-side3 {
+  top: 100%;
+  -webkit-transition: -webkit-transform 0.5s;
+  -moz-transition: -moz-transform 0.5s;
+  -o-transition: transform 0.5s;
+  transition: transform 0.5s;
+  -webkit-transform: rotateX(0deg) translateY(-100%);
+  -moz-transform: rotateX(0deg) translateY(-100%);
+  -ms-transform: rotateX(0deg) translateY(-100%);
+  -o-transform: rotateX(0deg) translateY(-100%);
+  transform: rotateX(0deg) translateY(-100%);
+}
+html[dir=rtl][dir=ltr] .groupbox .arrow {
+  -moz-transform: scaleX(-1);
+  -o-transform: scaleX(-1);
+  -webkit-transform: scaleX(-1);
+  -ms-transform: scaleX(-1);
+  transform: scaleX(-1);
+  -ms-filter: "FlipH";
+  filter: FlipH;
+}
+html[dir=rtl] .groupbox .add-individuals-btn {
+  border: 0;
+  width: 17em;
+  background: none;
+  margin: 1.5em 0;
+  padding-left: 0px;
+}
+html[dir=rtl][lang=zh] .gb-holder .groupbox .add-individuals-btn-img + span {
+  font-size: 2.3em;
+}
+html[dir=rtl][lang=ar] .groupbox .add-individuals-btn {
+  width: 14.1em;
+}
+html[dir=rtl][lang=en] .groupbox .add-individuals-btn {
+  width: 19em;
+}
+html[dir=rtl] .groupbox .group-name-input .input__field--hoshi {
+  width: calc(100% - 4.6em);
+}
+html[dir=rtl] .groupbox .group-name-input .hoshi-label-holder {
+  left: 7.8em;
+  width: calc(53em - 7.8em);
+}
+html[dir=rtl][lang=ar] .groupbox .group-name-input .input__field--hoshi {
+  width: calc(100% - 4.6em);
+}
+html[dir=rtl][lang=ar] .groupbox .group-name-input .hoshi-label-holder {
+  left: 6.7em;
+  width: calc(53em - 6.7em);
+}
+html[dir=rtl][lang=en] .groupbox .group-name-input .input__field--hoshi {
+  width: calc(100% - 7.9em);
+}
+html[dir=rtl][lang=en] .groupbox .group-name-input .hoshi-label-holder {
+  left: 13.6em;
+  width: calc(53em - 13.6em);
+}
+html[dir=rtl][lang=zh] .groupbox .group-name-input .input__field--hoshi {
+  width: calc(100% - 4.6em);
+}
+html[dir=rtl][lang=zh] .groupbox .group-name-input .hoshi-label-holder {
+  left: 5.5em;
+  width: calc(53em - 5.5em);
+}
+html[dir=rtl][dir=ltr] .groupbox .input__label--hoshi::after {
+  border-bottom: 0.2em solid #3eb5dc;
+  -webkit-transform: translate3d(-100%, 0, 0);
+  -moz-transform: translate3d(-100%, 0, 0);
+  -ms-transform: translate3d(-100%, 0, 0);
+  -o-transform: translate3d(-100%, 0, 0);
+  transform: translate3d(-100%, 0, 0);
+  -webkit-transition: -webkit-transform 0.3s;
+  -moz-transition: transform 0.3s;
+  -o-transition: transform 0.3s;
+  transition: transform 0.3s;
+}

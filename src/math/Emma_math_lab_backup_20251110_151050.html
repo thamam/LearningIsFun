@@ -1,0 +1,2913 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl" data-theme="light" style=""><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>מערכת תרגול למשימה - אמה</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Hebrew:wght@400;600;700&amp;display=swap" rel="stylesheet">
+    <!-- Modular CSS -->
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+    <!-- Overlay for celebrations -->
+    <div class="overlay" id="overlay" style="display: none;"></div>
+    <div class="celebration" id="celebration" style="display: none;"></div>
+
+    <!-- HOME SECTION -->
+    <div id="home-section" class="section active">
+        <div class="container">
+            <div class="header">
+                <div class="mascot">🎯</div>
+                <h1>🎓 מערכת תרגול למשימה - אמה</h1>
+                <div class="subtitle">משימת הערכה: שלישי 18.11 📝</div>
+                <div class="motivation">💪 את יכולה להצליח במשימה!</div>
+            </div>
+
+            <div class="stats-panel">
+                <div class="stats-title">📊 סיכום התקדמות כללי</div>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <span class="stat-number" id="total-questions-all">15</span>
+                        <span class="stat-label">סה"כ שאלות</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" id="total-correct-all">12</span>
+                        <span class="stat-label">תשובות נכונות</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" id="average-success">80%</span>
+                        <span class="stat-label">ממוצע הצלחה</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" id="study-time">47</span>
+                        <span class="stat-label">דקות תרגול</span>
+                    </div>
+                </div>
+                <div class="encouragement-msg" id="main-encouragement">🎉 כל הכבוד! את עושה עבודה מעולה עם 80% הצלחה!</div>
+            </div>
+
+            <!-- Feature 1: State Export/Import Panel -->
+            <div class="backup-panel">
+                <div class="backup-title">💾 גיבוי ושחזור נתונים</div>
+                <div class="backup-buttons">
+                    <button class="backup-btn" onclick="exportFullState()">
+                        📥 ייצא גיבוי מלא
+                    </button>
+                    <button class="backup-btn restore" onclick="document.getElementById('import-file-input').click()">
+                        📤 ייבא גיבוי
+                    </button>
+                </div>
+                <input type="file" id="import-file-input" accept=".json" onchange="importFullState(event)">
+                <div class="backup-info">
+                    💡 <strong>גיבוי מלא</strong> שומר את כל ההתקדמות שלך (כל המודולים) בקובץ אחד<br>
+                    📁 הקובץ נשמר ב-Downloads ונקרא: <strong>גיבוי-אמה-[תאריך].json</strong><br>
+                    🔒 שמרי את הקובץ במקום בטוח (מייל, Google Drive, USB)
+                </div>
+            </div>
+
+            <!-- Feature 2: Race Track Progress Visualization -->
+            <div class="race-track-container">
+                <div class="race-track-title">🏁 מסלול ההתקדמות שלך</div>
+                <div class="track">
+                    <!-- Milestones -->
+                    <div class="milestone" data-percent="0">🏁 התחלה</div>
+                    <div class="milestone" data-percent="25">🌱 צעדים ראשונים</div>
+                    <div class="milestone" data-percent="50">💪 באמצע הדרך</div>
+                    <div class="milestone" data-percent="75">🔥 כמעט שם!</div>
+                    <div class="milestone" data-percent="100">🏆 מוכנה למשימה!</div>
+
+                    <!-- Track line with gradient -->
+                    <div class="track-line"></div>
+
+                    <!-- Running character -->
+                    <div class="runner" id="progress-runner">🏃‍♀️</div>
+                </div>
+                <div class="progress-text-track">
+                    התקדמת <span class="progress-percentage" id="track-percentage">0</span>% מהדרך!
+                </div>
+            </div>
+
+            <div class="cards-container">
+                <!-- Card 1: מבנה עשרוני -->
+                <div class="exercise-card card-decimal">
+                    <div class="card-icon">📊</div>
+                    <div class="card-title">מבנה עשרוני עד 1,000</div>
+                    <div class="card-description">תרגול מספרים, פירוק מספרים, ערך ספרה, מספר עוקב/קודם</div>
+                    <div class="card-topics">עמודים 132-145, 126-131 | מבנה עשרוני, ישר מספרים</div>
+                    <div class="progress-indicator has-progress" id="decimal-progress">
+                    <div class="progress-text">✅ 8 שאלות | 75% הצלחה</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill decimal" style="width: 75%; border-radius: 4px;"></div>
+                    </div>
+                    <div class="progress-text" style="font-size: 11pt; margin-top: 5px;">המשך מאיפה שעצרת</div>
+                </div>
+                    <button class="start-button" onclick="showSection('decimal')">🚀 התחל תרגול</button>
+                </div>
+
+                <!-- Card 2: השלמת גורם ומכפלה -->
+                <div class="exercise-card card-multiplication">
+                    <div class="card-icon">✖️</div>
+                    <div class="card-title">השלמת גורם ומכפלה</div>
+                    <div class="card-description">תרגול לוח הכפל, השלמת מספרים חסרים בכפל</div>
+                    <div class="card-topics">עמודים 9-12 | גורם, מכפלה, לוח הכפל</div>
+                    <div class="progress-indicator has-progress" id="multiplication-progress">
+                    <div class="progress-text">✅ 7 שאלות | 86% הצלחה</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill multiplication" style="width: 86%; border-radius: 4px;"></div>
+                    </div>
+                    <div class="progress-text" style="font-size: 11pt; margin-top: 5px;">המשך מאיפה שעצרת</div>
+                </div>
+                    <button class="start-button multiplication" onclick="showSection('multiplication')">🚀 התחל תרגול</button>
+                </div>
+
+                <!-- Card 3: ישר המספרים -->
+                <div class="exercise-card card-numberline">
+                    <div class="card-icon">📏</div>
+                    <div class="card-title">ישר המספרים</div>
+                    <div class="card-description">מציאת מיקום מספרים על הישר, הערכת מרחקים</div>
+                    <div class="card-topics">עמודים 126-131 | ישר מספרים, סדר גודל</div>
+                    <div class="progress-indicator no-progress" id="numberline-progress"><div class="progress-text">🆕 התחל תרגול חדש</div></div>
+                    <button class="start-button numberline" onclick="showSection('numberline')">🚀 התחל תרגול</button>
+                </div>
+            </div>
+
+            <div class="footer">
+                <div class="tips">
+                    <div class="tip-item">
+                        <strong>💡 טיפ:</strong><br>
+                        תרגלי 15-20 דקות כל יום!
+                    </div>
+                    <div class="tip-item">
+                        <strong>📚 זכרי:</strong><br>
+                        חזרי גם על המחברות והספרים
+                    </div>
+                    <div class="tip-item">
+                        <strong>🎯 מטרה:</strong><br>
+                        השלימי לפחות 20 שאלות בכל נושא
+                    </div>
+                </div>
+                <div class="countdown" id="countdown" style="background: rgb(200, 230, 201); border-color: rgb(102, 187, 106);">✅ המשימה הייתה! תמשיכי לתרגל! 💪</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- DECIMAL SECTION -->
+    <div id="decimal-section" class="section">
+        <button class="home-btn" onclick="showSection('home')">🏠 חזרה לדף הבית</button>
+        <div class="tool-container">
+            <div class="tool-header">
+                <h1>🎯 תרגול מבנה עשרוני - אמה</h1>
+            </div>
+
+            <div class="stats-bar">
+                <div>
+                    <span>ניקוד: <strong><span id="decimal-score">6/8</span></strong></span>
+                </div>
+                <div>
+                    <span class="level-indicator level-hard" id="decimal-level">קשה</span>
+                </div>
+                <div>
+                    <span>רצף: <strong><span id="decimal-streak">3</span></strong></span>
+                </div>
+            </div>
+
+            <div class="main-content">
+                <div class="exercise-area">
+                    <div class="question" id="decimal-question">מהי הספרה החסרה? 7_4</div>
+
+                    <div class="answer-area">
+                        <input type="number" class="answer-input" id="decimal-answer-input" placeholder="התשובה שלך" style="display: inline-block;">
+                        <div class="choice-buttons" id="decimal-choice-buttons" style="display: none;"></div>
+                    </div>
+
+                    <div style="text-align: center;">
+                        <button class="check-btn" id="decimal-check-btn" onclick="checkDecimalAnswer()" style="display: inline-block;">בדוק תשובה</button>
+                        <button class="check-btn" id="decimal-new-question-btn" onclick="generateDecimalQuestion()" style="display: none;">שאלה חדשה</button>
+                    </div>
+
+                    <div class="feedback hidden" id="decimal-feedback">✅ את גאונית! תשובה נכונה!<br>🔊 כל הכבוד אמה!</div>
+                </div>
+
+                <div class="sidebar">
+                    <div class="sidebar-title">📊 סטטיסטיקות</div>
+                    <div class="progress-section">
+                        <div class="progress-item">
+                            <span>שאלות:</span>
+                            <span><span id="decimal-total-questions">8</span></span>
+                        </div>
+                        <div class="progress-item">
+                            <span>נכונות:</span>
+                            <span><span id="decimal-correct-answers">6</span> (<span id="decimal-percentage">75</span>%)</span>
+                        </div>
+                        <div class="progress-item">
+                            <span>רצף נוכחי:</span>
+                            <span id="decimal-current-streak">3</span>
+                        </div>
+                        <div class="progress-item">
+                            <span>רצף הטוב ביותר:</span>
+                            <span id="decimal-best-streak">3</span>
+                        </div>
+                        <div class="progress-item">
+                            <span>רמה נוכחית:</span>
+                            <span id="decimal-current-level">קשה</span>
+                        </div>
+                    </div>
+
+                    <div class="control-buttons">
+                        <button class="control-btn" onclick="pauseDecimalExercise()">⏸️ עצור תרגול</button>
+                        <button class="control-btn" onclick="exportDecimalReport()" style="background: #2196f3; color: white;">📊 ייצוא דוח</button>
+                        <button class="control-btn" onclick="viewDetailedHistory('decimal')" style="background: #9c27b0; color: white;">📋 יומן מפורט</button>
+                        <button class="control-btn" onclick="backupProgress('decimal')" style="background: #ff9800; color: white;">💾 גיבוי נתונים</button>
+                        <button class="control-btn" onclick="showResetOptions('decimal')" style="background: #f44336; color: white;">🔄 איפוס</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MULTIPLICATION SECTION -->
+    <div id="multiplication-section" class="section">
+        <button class="home-btn" onclick="showSection('home')">🏠 חזרה לדף הבית</button>
+        <div class="tool-container">
+            <div class="tool-header multiplication">
+                <h1>✖️ תרגול השלמת גורם ומכפלה - אמה</h1>
+            </div>
+
+            <div class="stats-bar multiplication">
+                <div>
+                    <span>ניקוד: <strong><span id="multiplication-score">6/7</span></strong></span>
+                </div>
+                <div>
+                    <span class="level-indicator level-hard" id="multiplication-level">קשה</span>
+                </div>
+                <div>
+                    <span>רצף: <strong><span id="multiplication-streak">5</span></strong></span>
+                </div>
+            </div>
+
+            <div class="main-content">
+                <div class="exercise-area">
+                    <div class="question multiplication" id="multiplication-question">10 × ___ = 60</div>
+
+                    <div class="answer-area">
+                        <input type="number" class="answer-input" id="multiplication-answer-input" placeholder="התשובה שלך" style="display: inline-block;">
+                        <div class="choice-buttons" id="multiplication-choice-buttons" style="display: none;"></div>
+                    </div>
+
+                    <div style="text-align: center;">
+                        <button class="check-btn multiplication" id="multiplication-check-btn" onclick="checkMultiplicationAnswer()" style="display: inline-block;">בדוק תשובה</button>
+                        <button class="check-btn multiplication" id="multiplication-new-question-btn" onclick="generateMultiplicationQuestion()" style="display: none;">שאלה חדשה</button>
+                    </div>
+
+                    <div class="feedback hidden" id="multiplication-feedback">✅ כל הכבוד! תשובה נכונה!<br>🔊 כל הכבוד אמה!</div>
+                </div>
+
+                <div class="sidebar">
+                    <div class="sidebar-title">📊 סטטיסטיקות</div>
+                    <div class="progress-section">
+                        <div class="progress-item">
+                            <span>שאלות:</span>
+                            <span><span id="multiplication-total-questions">7</span></span>
+                        </div>
+                        <div class="progress-item">
+                            <span>נכונות:</span>
+                            <span><span id="multiplication-correct-answers">6</span> (<span id="multiplication-percentage">86</span>%)</span>
+                        </div>
+                        <div class="progress-item">
+                            <span>רצף נוכחי:</span>
+                            <span id="multiplication-current-streak">5</span>
+                        </div>
+                        <div class="progress-item">
+                            <span>רצף הטוב ביותר:</span>
+                            <span id="multiplication-best-streak">5</span>
+                        </div>
+                        <div class="progress-item">
+                            <span>רמה נוכחית:</span>
+                            <span id="multiplication-current-level">קשה</span>
+                        </div>
+                    </div>
+
+                    <div class="control-buttons">
+                        <button class="control-btn" onclick="pauseMultiplicationExercise()">⏸️ עצור תרגול</button>
+                        <button class="control-btn" onclick="exportMultiplicationReport()" style="background: #4caf50; color: white;">📊 ייצוא דוח</button>
+                        <button class="control-btn" onclick="viewDetailedHistory('multiplication')" style="background: #9c27b0; color: white;">📋 יומן מפורט</button>
+                        <button class="control-btn" onclick="backupProgress('multiplication')" style="background: #ff9800; color: white;">💾 גיבוי נתונים</button>
+                        <button class="control-btn" onclick="showResetOptions('multiplication')" style="background: #f44336; color: white;">🔄 איפוס</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- NUMBER LINE SECTION -->
+    <div id="numberline-section" class="section">
+        <button class="home-btn" onclick="showSection('home')">🏠 חזרה לדף הבית</button>
+        <div class="tool-container">
+            <div class="tool-header numberline">
+                <h1>📏 תרגול ישר המספרים - אמה</h1>
+            </div>
+
+            <div class="stats-bar numberline">
+                <div>
+                    <span>ניקוד: <strong><span id="numberline-score">0</span></strong></span>
+                </div>
+                <div>
+                    <span class="level-indicator" id="numberline-level">בינוני</span>
+                </div>
+                <div>
+                    <span>רצף: <strong><span id="numberline-streak">0</span></strong></span>
+                </div>
+            </div>
+
+            <div class="main-content">
+                <div class="exercise-area">
+                    <div class="question numberline" id="numberline-question">
+                        לחצי על "שאלה חדשה" כדי להתחיל! 🚀
+                    </div>
+
+                    <div class="number-line-container" id="numberline-visual" style="display: none;">
+                        <div class="number-line">
+                            <div class="line" id="numberline-line"></div>
+                        </div>
+                    </div>
+
+                    <div class="answer-area">
+                        <input type="number" class="answer-input" id="numberline-answer-input" placeholder="התשובה שלך" style="display: none;">
+                        <div class="choice-buttons" id="numberline-choice-buttons" style="display: none;"></div>
+                    </div>
+
+                    <div style="text-align: center;">
+                        <button class="check-btn numberline" id="numberline-check-btn" onclick="checkNumberlineAnswer()" style="display: none;">בדוק תשובה</button>
+                        <button class="check-btn numberline" id="numberline-new-question-btn" onclick="generateNumberlineQuestion()">שאלה חדשה</button>
+                    </div>
+
+                    <div class="feedback hidden" id="numberline-feedback"></div>
+                </div>
+
+                <div class="sidebar">
+                    <div class="sidebar-title">📊 סטטיסטיקות</div>
+                    <div class="progress-section">
+                        <div class="progress-item">
+                            <span>שאלות:</span>
+                            <span><span id="numberline-total-questions">0</span></span>
+                        </div>
+                        <div class="progress-item">
+                            <span>נכונות:</span>
+                            <span><span id="numberline-correct-answers">0</span> (<span id="numberline-percentage">0</span>%)</span>
+                        </div>
+                        <div class="progress-item">
+                            <span>רצף נוכחי:</span>
+                            <span id="numberline-current-streak">0</span>
+                        </div>
+                        <div class="progress-item">
+                            <span>רצף הטוב ביותר:</span>
+                            <span id="numberline-best-streak">0</span>
+                        </div>
+                        <div class="progress-item">
+                            <span>רמה נוכחית:</span>
+                            <span id="numberline-current-level">בינוני</span>
+                        </div>
+                    </div>
+
+                    <div class="control-buttons">
+                        <button class="control-btn" onclick="pauseNumberlineExercise()">⏸️ עצור תרגול</button>
+                        <button class="control-btn" onclick="exportNumberlineReport()" style="background: #ff9800; color: white;">📊 ייצוא דוח</button>
+                        <button class="control-btn" onclick="viewDetailedHistory('numberline')" style="background: #9c27b0; color: white;">📋 יומן מפורט</button>
+                        <button class="control-btn" onclick="backupProgress('numberline')" style="background: #ff9800; color: white;">💾 גיבוי נתונים</button>
+                        <button class="control-btn" onclick="showResetOptions('numberline')" style="background: #f44336; color: white;">🔄 איפוס</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global state
+        let currentSection = 'home';
+
+        // Game states for each tool
+        let decimalState = {
+            level: 'בינוני',
+            totalQuestions: 0,
+            correctAnswers: 0,
+            currentStreak: 0,
+            bestStreak: 0,
+            consecutiveCorrect: 0,
+            consecutiveWrong: 0,
+            currentQuestion: null,
+            currentAnswer: null,
+            sessionHistory: [],
+            startTime: Date.now(),
+            lastSaved: null,
+        };
+
+        let multiplicationState = {
+            level: 'בינוני',
+            totalQuestions: 0,
+            correctAnswers: 0,
+            currentStreak: 0,
+            bestStreak: 0,
+            consecutiveCorrect: 0,
+            consecutiveWrong: 0,
+            currentQuestion: null,
+            currentAnswer: null,
+            sessionHistory: [],
+            startTime: Date.now(),
+            lastSaved: null,
+        };
+
+        let numberlineState = {
+            level: 'בינוני',
+            totalQuestions: 0,
+            correctAnswers: 0,
+            currentStreak: 0,
+            bestStreak: 0,
+            consecutiveCorrect: 0,
+            consecutiveWrong: 0,
+            currentQuestion: null,
+            currentAnswer: null,
+            sessionHistory: [],
+            startTime: Date.now(),
+            lastSaved: null,
+        };
+
+        let fractionState = {
+            level: 'בינוני',
+            totalQuestions: 0,
+            correctAnswers: 0,
+            currentStreak: 0,
+            bestStreak: 0,
+            consecutiveCorrect: 0,
+            consecutiveWrong: 0,
+            currentQuestion: null,
+            currentAnswer: null,
+            sessionHistory: [],
+            startTime: Date.now(),
+            lastSaved: null,
+        };
+
+        let divisionState = {
+            level: 'בינוני',
+            totalQuestions: 0,
+            correctAnswers: 0,
+            currentStreak: 0,
+            bestStreak: 0,
+            consecutiveCorrect: 0,
+            consecutiveWrong: 0,
+            currentQuestion: null,
+            currentAnswer: null,
+            sessionHistory: [],
+            startTime: Date.now(),
+            lastSaved: null,
+        };
+
+        // Expose state objects to window for feature patches
+        window.decimalState = decimalState;
+        window.multiplicationState = multiplicationState;
+        window.numberlineState = numberlineState;
+        window.fractionState = fractionState;
+        window.divisionState = divisionState;
+
+        // Section management
+        function showSection(sectionName) {
+            // Hide all sections - include both hardcoded and registry modules
+            const hardcodedSections = ['home', 'decimal', 'multiplication', 'numberline', 'fraction', 'division'];
+            const registrySections = window.ModuleRegistry ? window.ModuleRegistry.getAllModules() : [];
+            const allSections = [...new Set([...hardcodedSections, ...registrySections])];
+
+            allSections.forEach(section => {
+                const element = document.getElementById(`${section}-section`);
+                if (element) {
+                    element.classList.remove('active');
+                }
+            });
+
+            // Show requested section
+            const targetSection = document.getElementById(`${sectionName}-section`);
+            if (targetSection) {
+                targetSection.classList.add('active');
+            }
+
+            currentSection = sectionName;
+            window.scrollTo(0, 0);
+
+            // Initialize section
+            if (sectionName !== 'home') {
+                initializeTool(sectionName);
+            } else {
+                loadAllProgress();
+            }
+        }
+
+        // Initialize specific tool
+        function initializeTool(toolName) {
+            loadProgress(toolName);
+            updateStats(toolName);
+
+            // Generate first question - hardcoded modules
+            if (toolName === 'decimal') {
+                generateDecimalQuestion();
+            } else if (toolName === 'multiplication') {
+                generateMultiplicationQuestion();
+            } else if (toolName === 'numberline') {
+                generateNumberlineQuestion();
+            } else if (toolName === 'fraction') {
+                generateFractionQuestion();
+            } else if (toolName === 'division') {
+                generateDivisionQuestion();
+            }
+            // Fallback: Check module registry
+            else if (window.ModuleRegistry && window.ModuleRegistry.isRegistered(toolName)) {
+                const module = window.ModuleRegistry.get(toolName);
+                if (module && module.generateQuestion) {
+                    module.generateQuestion();
+                }
+            }
+        }
+
+        // Load progress for specific tool
+        function loadProgress(toolName) {
+            const keys = {
+                decimal: 'emmaDecimalProgress',
+                multiplication: 'emmaMultiplicationProgress',
+                numberline: 'emmaNumberLineProgress',
+                fraction: 'emmaFractionProgress',
+                division: 'emmaDivisionProgress',
+                // Add registry keys as fallback
+                ...(window.ModuleRegistry ? window.ModuleRegistry.getAllStorageKeys() : {})
+            };
+
+            const states = {
+                decimal: decimalState,
+                multiplication: multiplicationState,
+                numberline: numberlineState,
+                fraction: fractionState,
+                division: divisionState,
+                // Add registry states as fallback
+                ...(window.ModuleRegistry ? window.ModuleRegistry.getAllStates() : {})
+            };
+
+            const saved = localStorage.getItem(keys[toolName]);
+            if (saved) {
+                try {
+                    const savedState = JSON.parse(saved);
+                    const state = states[toolName];
+                    
+                    state.level = savedState.level || 'בינוני';
+                    state.totalQuestions = savedState.totalQuestions || 0;
+                    state.correctAnswers = savedState.correctAnswers || 0;
+                    state.currentStreak = savedState.currentStreak || 0;
+                    state.bestStreak = savedState.bestStreak || 0;
+                    state.consecutiveCorrect = savedState.consecutiveCorrect || 0;
+                    state.consecutiveWrong = savedState.consecutiveWrong || 0;
+                    state.sessionHistory = savedState.sessionHistory || [];
+                    state.startTime = savedState.startTime || Date.now();
+                    state.lastSaved = savedState.lastSaved;
+
+                    if (state.totalQuestions > 0) {
+                        showWelcomeBack(toolName);
+                    }
+                } catch (e) {
+                    console.error(`Error loading ${toolName} progress:`, e);
+                }
+            }
+        }
+
+        // Save progress for specific tool
+        function saveProgress(toolName) {
+            const keys = {
+                decimal: 'emmaDecimalProgress',
+                multiplication: 'emmaMultiplicationProgress',
+                numberline: 'emmaNumberLineProgress',
+                fraction: 'emmaFractionProgress',
+                division: 'emmaDivisionProgress',
+                // Add registry keys as fallback
+                ...(window.ModuleRegistry ? window.ModuleRegistry.getAllStorageKeys() : {})
+            };
+
+            const states = {
+                decimal: decimalState,
+                multiplication: multiplicationState,
+                numberline: numberlineState,
+                fraction: fractionState,
+                division: divisionState,
+                // Add registry states as fallback
+                ...(window.ModuleRegistry ? window.ModuleRegistry.getAllStates() : {})
+            };
+
+            try {
+                const state = states[toolName];
+                const toSave = {
+                    level: state.level,
+                    totalQuestions: state.totalQuestions,
+                    correctAnswers: state.correctAnswers,
+                    currentStreak: state.currentStreak,
+                    bestStreak: state.bestStreak,
+                    consecutiveCorrect: state.consecutiveCorrect,
+                    consecutiveWrong: state.consecutiveWrong,
+                    sessionHistory: state.sessionHistory,
+                    startTime: state.startTime,
+                    lastSaved: Date.now(),
+                };
+                localStorage.setItem(keys[toolName], JSON.stringify(toSave));
+                state.lastSaved = Date.now();
+            } catch (e) {
+                console.error(`Error saving ${toolName} progress:`, e);
+            }
+        }
+
+        // Show welcome back message
+        function showWelcomeBack(toolName) {
+            const states = {
+                decimal: decimalState,
+                multiplication: multiplicationState,
+                numberline: numberlineState
+            };
+
+            const state = states[toolName];
+            const percentage = state.totalQuestions > 0 ? 
+                Math.round((state.correctAnswers / state.totalQuestions) * 100) : 0;
+
+            const celebration = document.getElementById('celebration');
+            const overlay = document.getElementById('overlay');
+            
+            celebration.innerHTML = `
+                💚 ברוכה השבה אמה!<br><br>
+                המשכת מאיפה שעצרת:<br>
+                שאלות: ${state.totalQuestions}<br>
+                נכונות: ${state.correctAnswers} (${percentage}%)<br>
+                רצף מקסימלי: ${state.bestStreak}<br>
+                רמה: ${state.level}<br><br>
+                <button class="check-btn" onclick="hideCelebration()">בואי נמשיך! 🚀</button>
+            `;
+            celebration.style.display = 'block';
+            overlay.style.display = 'block';
+        }
+
+        // Update statistics for specific tool
+        function updateStats(toolName) {
+            const states = {
+                decimal: decimalState,
+                multiplication: multiplicationState,
+                numberline: numberlineState,
+                // Add registry states as fallback
+                ...(window.ModuleRegistry ? window.ModuleRegistry.getAllStates() : {})
+            };
+
+            const state = states[toolName];
+            const percentage = state.totalQuestions > 0 ? 
+                Math.round((state.correctAnswers / state.totalQuestions) * 100) : 0;
+
+            // Update stats display
+            document.getElementById(`${toolName}-total-questions`).textContent = state.totalQuestions;
+            document.getElementById(`${toolName}-correct-answers`).textContent = state.correctAnswers;
+            document.getElementById(`${toolName}-percentage`).textContent = percentage;
+            document.getElementById(`${toolName}-current-streak`).textContent = state.currentStreak;
+            document.getElementById(`${toolName}-best-streak`).textContent = state.bestStreak;
+            document.getElementById(`${toolName}-current-level`).textContent = state.level;
+            document.getElementById(`${toolName}-score`).textContent = `${state.correctAnswers}/${state.totalQuestions}`;
+            document.getElementById(`${toolName}-streak`).textContent = state.currentStreak;
+
+            // Update level indicator
+            const levelIndicator = document.getElementById(`${toolName}-level`);
+            levelIndicator.textContent = state.level;
+            levelIndicator.className = 'level-indicator';
+            if (state.level === 'קל') levelIndicator.classList.add('level-easy');
+            else if (state.level === 'בינוני') levelIndicator.classList.add('level-medium');
+            else levelIndicator.classList.add('level-hard');
+        }
+
+        // DECIMAL TOOL FUNCTIONS
+        function generateDecimalQuestion() {
+            const types = ['decomposition', 'digitValue', 'nextPrevious', 'compare', 'missingDigit'];
+            const type = types[Math.floor(Math.random() * types.length)];
+            
+            let question = {};
+            let answer;
+
+            // Generate number based on level
+            function getRandomNumber() {
+                if (decimalState.level === 'קל') {
+                    return Math.floor(Math.random() * 90) + 10; // 10-99
+                } else if (decimalState.level === 'בינוני') {
+                    return Math.floor(Math.random() * 400) + 100; // 100-499
+                } else {
+                    return Math.floor(Math.random() * 500) + 500; // 500-999
+                }
+            }
+
+            const num = getRandomNumber();
+
+            switch (type) {
+                case 'decomposition':
+                    const digits = num.toString().split('').map(Number);
+                    const position = Math.floor(Math.random() * digits.length);
+                    const placeValues = [];
+                    
+                    for (let i = 0; i < digits.length; i++) {
+                        const placeValue = digits[i] * Math.pow(10, digits.length - 1 - i);
+                        if (i === position) {
+                            placeValues.push('?');
+                            answer = placeValue;
+                        } else {
+                            placeValues.push(placeValue);
+                        }
+                    }
+                    
+                    question = {
+                        question: `${num} = ${placeValues.join(' + ')}`,
+                        type: 'input'
+                    };
+                    break;
+
+                case 'digitValue':
+                    const digitStr = num.toString();
+                    const digitPos = Math.floor(Math.random() * digitStr.length);
+                    const digit = parseInt(digitStr[digitPos]);
+                    const value = digit * Math.pow(10, digitStr.length - 1 - digitPos);
+                    
+                    question = {
+                        question: `מה ערך הספרה ${digit} במספר ${num}?`,
+                        type: 'input'
+                    };
+                    answer = value;
+                    break;
+
+                case 'nextPrevious':
+                    const isNext = Math.random() < 0.5;
+                    question = {
+                        question: isNext ? `מהו המספר העוקב של ${num}?` : `מהו המספר הקודם של ${num}?`,
+                        type: 'input'
+                    };
+                    answer = isNext ? num + 1 : num - 1;
+                    break;
+
+                case 'compare':
+                    const num2 = getRandomNumber();
+                    const symbols = ['<', '=', '>'];
+                    let correctSymbol;
+                    if (num < num2) correctSymbol = '<';
+                    else if (num > num2) correctSymbol = '>';
+                    else correctSymbol = '=';
+
+                    question = {
+                        question: `${num} ___ ${num2}`,
+                        type: 'choice',
+                        choices: ['<', '=', '>']
+                    };
+                    answer = correctSymbol;
+
+                    // Validation: Verify answer is mathematically correct
+                    if ((num < num2 && answer !== '<') ||
+                        (num > num2 && answer !== '>') ||
+                        (num === num2 && answer !== '=')) {
+                        console.error(`⚠️ COMPARISON ERROR: ${num} vs ${num2}, answer: ${answer}`);
+                    }
+                    break;
+
+                case 'missingDigit':
+                    const numStr = num.toString();
+                    const numDigits = numStr.length;
+                    const missingPos = Math.floor(Math.random() * numStr.length);
+                    const missingDigit = numStr[missingPos];
+                    const numWithMissing = numStr.substring(0, missingPos) + '_' + numStr.substring(missingPos + 1);
+
+                    // Calculate place value of missing digit (100, 10, or 1)
+                    const placeValue = Math.pow(10, numDigits - 1 - missingPos);
+
+                    // Generate random offset scaled by place value
+                    let offset;
+                    if (placeValue === 1) {
+                        // Ones digit: offset 1-10
+                        offset = Math.floor(Math.random() * 10) + 1;
+                    } else if (placeValue === 10) {
+                        // Tens digit: offset 10-50
+                        offset = Math.floor(Math.random() * 41) + 10;
+                    } else {
+                        // Hundreds digit: offset 100-400
+                        offset = Math.floor(Math.random() * 301) + 100;
+                    }
+
+                    // Calculate bounds with random offset
+                    let lowerBound = num - offset;
+                    let upperBound = num + offset;
+
+                    // Constrain to appropriate digit count (e.g., 100-999 for 3-digit numbers)
+                    const minNum = Math.pow(10, numDigits - 1);
+                    const maxNum = Math.pow(10, numDigits) - 1;
+                    lowerBound = Math.max(lowerBound, minNum);
+                    upperBound = Math.min(upperBound, maxNum);
+
+                    // Force LTR direction for number pattern to prevent RTL/LTR scrambling
+                    // Unicode LEFT-TO-RIGHT EMBEDDING (U+202A) + POP DIRECTIONAL FORMATTING (U+202C)
+                    const ltrNumPattern = '\u202A' + numWithMissing + '\u202C';
+
+                    question = {
+                        question: `מהי הספרה החסרה? ${ltrNumPattern}\n(המספר נמצא בין ${lowerBound} ל-${upperBound})`,
+                        type: 'input',
+                        // Store metadata for range validation
+                        missingPos: missingPos,
+                        pattern: numStr,
+                        originalDigit: parseInt(missingDigit)
+                    };
+
+                    // Store range instead of single answer
+                    answer = {
+                        type: 'range',
+                        min: lowerBound,
+                        max: upperBound,
+                        pattern: numStr,
+                        missingPos: missingPos,
+                        originalDigit: parseInt(missingDigit)
+                    };
+                    break;
+            }
+
+            decimalState.currentQuestion = question;
+            decimalState.currentAnswer = answer;
+
+            // Display question
+            document.getElementById('decimal-question').textContent = question.question;
+            
+            // Setup answer interface
+            if (question.type === 'input') {
+                document.getElementById('decimal-answer-input').style.display = 'inline-block';
+                document.getElementById('decimal-choice-buttons').style.display = 'none';
+                document.getElementById('decimal-answer-input').value = '';
+                document.getElementById('decimal-answer-input').focus();
+            } else {
+                document.getElementById('decimal-answer-input').style.display = 'none';
+                const choicesContainer = document.getElementById('decimal-choice-buttons');
+                choicesContainer.style.display = 'flex';
+                choicesContainer.innerHTML = '';
+                
+                question.choices.forEach(choice => {
+                    const btn = document.createElement('button');
+                    btn.className = 'choice-btn';
+                    btn.textContent = choice;
+                    btn.onclick = function() { selectDecimalChoice(choice, this); };
+                    choicesContainer.appendChild(btn);
+                });
+            }
+
+            document.getElementById('decimal-check-btn').style.display = 'inline-block';
+            document.getElementById('decimal-new-question-btn').style.display = 'none';
+            document.getElementById('decimal-feedback').className = 'feedback hidden';
+        }
+
+        function selectDecimalChoice(choice, element) {
+            // Remove previous selections
+            document.querySelectorAll('#decimal-choice-buttons .choice-btn').forEach(btn => {
+                btn.style.background = 'white';
+                btn.style.color = 'black';
+            });
+
+            // Highlight selected choice
+            element.style.background = '#2196f3';
+            element.style.color = 'white';
+            decimalState.selectedChoice = choice;
+        }
+
+        function checkDecimalAnswer() {
+            // Safety check
+            if (!decimalState.currentQuestion) {
+                console.error('No current question available');
+                return;
+            }
+
+            let userAnswer;
+
+            if (decimalState.currentQuestion.type === 'input') {
+                userAnswer = parseFloat(document.getElementById('decimal-answer-input').value);
+            } else {
+                userAnswer = decimalState.selectedChoice;
+            }
+
+            if (userAnswer === undefined || userAnswer === null || userAnswer === '') {
+                alert('אנא הכניסי תשובה!');
+                return;
+            }
+
+            // Check answer - handle range validation for missingDigit questions
+            let isCorrect;
+            if (typeof decimalState.currentAnswer === 'object' && decimalState.currentAnswer.type === 'range') {
+                // Missing digit with range validation
+                const answerInfo = decimalState.currentAnswer;
+                const userNum = parseInt(
+                    answerInfo.pattern.substring(0, answerInfo.missingPos) +
+                    userAnswer +
+                    answerInfo.pattern.substring(answerInfo.missingPos + 1)
+                );
+                isCorrect = (userNum >= answerInfo.min && userNum <= answerInfo.max);
+            } else {
+                // Standard validation
+                isCorrect = userAnswer == decimalState.currentAnswer;
+            }
+            
+            // Update statistics
+            decimalState.totalQuestions++;
+            
+            decimalState.sessionHistory.push({
+                timestamp: Date.now(),
+                question: decimalState.currentQuestion.question,
+                userAnswer: userAnswer,
+                correctAnswer: decimalState.currentAnswer,
+                isCorrect: isCorrect,
+                level: decimalState.level,
+            });
+            
+            if (isCorrect) {
+                decimalState.correctAnswers++;
+                decimalState.currentStreak++;
+                decimalState.consecutiveCorrect++;
+                decimalState.consecutiveWrong = 0;
+
+                if (decimalState.currentStreak > decimalState.bestStreak) {
+                    decimalState.bestStreak = decimalState.currentStreak;
+                }
+            } else {
+                decimalState.currentStreak = 0;
+                decimalState.consecutiveWrong++;
+                decimalState.consecutiveCorrect = 0;
+            }
+            
+            saveProgress('decimal');
+
+            // Show feedback
+            const feedback = document.getElementById('decimal-feedback');
+            if (isCorrect) {
+                const encouragements = ['מעולה!', 'פנטסטי!', 'את גאונית!', 'כל הכבוד!', 'מושלם!'];
+                const encouragement = encouragements[Math.floor(Math.random() * encouragements.length)];
+                
+                feedback.className = 'feedback correct';
+                feedback.innerHTML = `✅ ${encouragement} תשובה נכונה!<br>🔊 כל הכבוד אמה!`;
+            } else {
+                const encouragements = ['לא נורא!', 'ננסה שוב!', 'כמעט!', 'אפשר ללמוד מטעויות!', 'בפעם הבאה!'];
+                const encouragement = encouragements[Math.floor(Math.random() * encouragements.length)];
+
+                feedback.className = 'feedback wrong';
+
+                // Generate appropriate feedback based on question type
+                let feedbackHTML;
+                if (typeof decimalState.currentAnswer === 'object' && decimalState.currentAnswer.type === 'range') {
+                    // Range-based missingDigit feedback
+                    feedbackHTML = getDecimalMissingDigitFeedback(decimalState.currentAnswer);
+                } else {
+                    // Standard feedback
+                    feedbackHTML = `❌ ${encouragement}<br>התשובה הנכונה: ${decimalState.currentAnswer}<br>ההסבר: ${getDecimalExplanation()}`;
+                }
+
+                feedback.innerHTML = feedbackHTML;
+            }
+
+            // Update level based on performance
+            adjustDecimalDifficulty();
+            updateStats('decimal');
+
+            // Setup for next question
+            document.getElementById('decimal-check-btn').style.display = 'none';
+            document.getElementById('decimal-new-question-btn').style.display = 'inline-block';
+
+            // Auto-generate next question after delay
+            if (isCorrect) {
+                setTimeout(() => {
+                    generateDecimalQuestion();
+                }, 1500);
+            }
+
+            // Check for celebrations
+            if (decimalState.totalQuestions % 10 === 0) {
+                showCelebration('decimal');
+            }
+        }
+
+        function getDecimalExplanation() {
+            const question = decimalState.currentQuestion;
+            if (question.question.includes('=')) {
+                return 'פרק את המספר לפי ערך המקום של כל ספרה';
+            } else if (question.question.includes('ערך הספרה')) {
+                return 'הספרה כפול ערך המקום שלה';
+            } else if (question.question.includes('עוקב')) {
+                return 'המספר העוקב הוא המספר הבא ברצף (+1)';
+            } else if (question.question.includes('קודם')) {
+                return 'המספר הקודם הוא המספר הקודם ברצף (-1)';
+            } else {
+                return 'בדקי את החישוב שוב';
+            }
+        }
+
+        function getDecimalMissingDigitFeedback(answerInfo) {
+            // Find all valid digits
+            const validDigits = [];
+            for (let d = 0; d <= 9; d++) {
+                const testNum = parseInt(
+                    answerInfo.pattern.substring(0, answerInfo.missingPos) +
+                    d +
+                    answerInfo.pattern.substring(answerInfo.missingPos + 1)
+                );
+                if (testNum >= answerInfo.min && testNum <= answerInfo.max) {
+                    validDigits.push(d);
+                }
+            }
+
+            // Pick one valid answer (prefer original if it's valid, otherwise first valid)
+            const exampleAnswer = validDigits.includes(answerInfo.originalDigit)
+                ? answerInfo.originalDigit
+                : validDigits[0];
+
+            // Calculate the full number with the example answer
+            const exampleNum = parseInt(
+                answerInfo.pattern.substring(0, answerInfo.missingPos) +
+                exampleAnswer +
+                answerInfo.pattern.substring(answerInfo.missingPos + 1)
+            );
+
+            // Generate pattern with LTR embedding
+            const ltrPattern = '\u202A' + answerInfo.pattern.substring(0, answerInfo.missingPos) +
+                              exampleAnswer +
+                              answerInfo.pattern.substring(answerInfo.missingPos + 1) + '\u202C';
+
+            // Create educational feedback
+            return `❌ לא בדיוק, אבל אפשר ללמוד!<br><br>
+                    <strong>תשובה אפשרית:</strong> ${exampleAnswer}<br><br>
+                    <strong>הסבר:</strong><br>
+                    ${ltrPattern} = ${exampleNum}<br>
+                    ${exampleNum} נמצא בין ${answerInfo.min} ל-${answerInfo.max} ✓<br><br>
+                    💡 <strong>שימי לב:</strong> יש יותר מתשובה אחת אפשרית לשאלה הזאת!`;
+        }
+
+        function adjustDecimalDifficulty() {
+            if (decimalState.consecutiveCorrect >= 3 && decimalState.level !== 'קשה') {
+                if (decimalState.level === 'קל') decimalState.level = 'בינוני';
+                else if (decimalState.level === 'בינוני') decimalState.level = 'קשה';
+                showLevelUp('decimal');
+                decimalState.consecutiveCorrect = 0;
+            } else if (decimalState.consecutiveWrong >= 2 && decimalState.level !== 'קל') {
+                if (decimalState.level === 'קשה') decimalState.level = 'בינוני';
+                else if (decimalState.level === 'בינוני') decimalState.level = 'קל';
+                showLevelDown('decimal');
+                decimalState.consecutiveWrong = 0;
+            }
+        }
+
+        function showLevelUp(toolName) {
+            const celebration = document.getElementById('celebration');
+            const overlay = document.getElementById('overlay');
+            
+            celebration.innerHTML = `
+                🎉 עלית רמה! כל הכבוד!<br><br>
+                רמה חדשה: <strong>${getState(toolName).level}</strong><br><br>
+                <button class="check-btn" onclick="hideCelebration()">המשיכי! 💪</button>
+            `;
+            celebration.style.display = 'block';
+            overlay.style.display = 'block';
+        }
+
+        function showLevelDown(toolName) {
+            const celebration = document.getElementById('celebration');
+            const overlay = document.getElementById('overlay');
+            
+            celebration.innerHTML = `
+                💙 יורדים רמה כדי לתרגל יותר<br><br>
+                רמה חדשה: <strong>${getState(toolName).level}</strong><br><br>
+                <button class="check-btn" onclick="hideCelebration()">בואי נתרגל! 💪</button>
+            `;
+            celebration.style.display = 'block';
+            overlay.style.display = 'block';
+        }
+
+        function getState(toolName) {
+            const states = {
+                decimal: decimalState,
+                multiplication: multiplicationState,
+                numberline: numberlineState,
+                // Add registry states as fallback
+                ...(window.ModuleRegistry ? window.ModuleRegistry.getAllStates() : {})
+            };
+            return states[toolName];
+        }
+
+        function showCelebration(toolName) {
+            const state = getState(toolName);
+            const celebration = document.getElementById('celebration');
+            const overlay = document.getElementById('overlay');
+            
+            celebration.innerHTML = `
+                🎊 כל הכבוד! עשית ${state.totalQuestions} שאלות!<br><br>
+                ✅ ${state.correctAnswers} נכונות<br>
+                🔥 רצף: ${state.currentStreak}<br><br>
+                <button class="check-btn" onclick="hideCelebration()">המשיכי! 🚀</button>
+            `;
+            celebration.style.display = 'block';
+            overlay.style.display = 'block';
+        }
+
+        function hideCelebration() {
+            document.getElementById('celebration').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+        }
+
+        // MULTIPLICATION TOOL FUNCTIONS
+        function generateMultiplicationQuestion() {
+            const types = ['missingMultiplier', 'missingMultiplicand', 'missingProduct', 'division'];
+            const type = types[Math.floor(Math.random() * types.length)];
+            
+            let question = {};
+            let answer;
+
+            // Generate numbers based on level
+            function getMultiplicationRange() {
+                if (multiplicationState.level === 'קל') {
+                    return { min: 1, max: 5 }; // 1-5
+                } else if (multiplicationState.level === 'בינוני') {
+                    return { min: 1, max: 10 }; // 1-10
+                } else {
+                    return { min: 1, max: 12 }; // 1-12
+                }
+            }
+
+            const range = getMultiplicationRange();
+            const num1 = Math.floor(Math.random() * range.max) + range.min;
+            const num2 = Math.floor(Math.random() * range.max) + range.min;
+            const product = num1 * num2;
+
+            switch (type) {
+                case 'missingMultiplier':
+                    question = {
+                        question: `${num1} × ___ = ${product}`,
+                        type: 'input'
+                    };
+                    answer = num2;
+                    break;
+
+                case 'missingMultiplicand':
+                    question = {
+                        question: `___ × ${num2} = ${product}`,
+                        type: 'input'
+                    };
+                    answer = num1;
+                    break;
+
+                case 'missingProduct':
+                    question = {
+                        question: `${num1} × ${num2} = ___`,
+                        type: 'input'
+                    };
+                    answer = product;
+                    break;
+
+                case 'division':
+                    question = {
+                        question: `אם ${num1} × ${num2} = ${product}, אז ${product} ÷ ${num1} = ___`,
+                        type: 'input'
+                    };
+                    answer = num2;
+                    break;
+            }
+
+            multiplicationState.currentQuestion = question;
+            multiplicationState.currentAnswer = answer;
+
+            // Display question
+            document.getElementById('multiplication-question').textContent = question.question;
+            
+            // Setup answer interface
+            document.getElementById('multiplication-answer-input').style.display = 'inline-block';
+            document.getElementById('multiplication-choice-buttons').style.display = 'none';
+            document.getElementById('multiplication-answer-input').value = '';
+            document.getElementById('multiplication-answer-input').focus();
+
+            document.getElementById('multiplication-check-btn').style.display = 'inline-block';
+            document.getElementById('multiplication-new-question-btn').style.display = 'none';
+            document.getElementById('multiplication-feedback').className = 'feedback hidden';
+        }
+
+        function checkMultiplicationAnswer() {
+            // Safety check
+            if (!multiplicationState.currentQuestion) {
+                console.error('No current question available');
+                return;
+            }
+
+            const userAnswer = parseFloat(document.getElementById('multiplication-answer-input').value);
+
+            if (isNaN(userAnswer)) {
+                alert('אנא הכניסי מספר!');
+                return;
+            }
+
+            const isCorrect = userAnswer === multiplicationState.currentAnswer;
+            
+            // Update statistics
+            multiplicationState.totalQuestions++;
+            
+            multiplicationState.sessionHistory.push({
+                timestamp: Date.now(),
+                question: multiplicationState.currentQuestion.question,
+                userAnswer: userAnswer,
+                correctAnswer: multiplicationState.currentAnswer,
+                isCorrect: isCorrect,
+                level: multiplicationState.level,
+            });
+            
+            if (isCorrect) {
+                multiplicationState.correctAnswers++;
+                multiplicationState.currentStreak++;
+                multiplicationState.consecutiveCorrect++;
+                multiplicationState.consecutiveWrong = 0;
+
+                if (multiplicationState.currentStreak > multiplicationState.bestStreak) {
+                    multiplicationState.bestStreak = multiplicationState.currentStreak;
+                }
+            } else {
+                multiplicationState.currentStreak = 0;
+                multiplicationState.consecutiveWrong++;
+                multiplicationState.consecutiveCorrect = 0;
+            }
+            
+            saveProgress('multiplication');
+
+            // Show feedback
+            const feedback = document.getElementById('multiplication-feedback');
+            if (isCorrect) {
+                const encouragements = ['מעולה!', 'פנטסטי!', 'את גאונית!', 'כל הכבוד!', 'מושלם!'];
+                const encouragement = encouragements[Math.floor(Math.random() * encouragements.length)];
+                
+                feedback.className = 'feedback correct';
+                feedback.innerHTML = `✅ ${encouragement} תשובה נכונה!<br>🔊 כל הכבוד אמה!`;
+            } else {
+                const encouragements = ['לא נורא!', 'ננסה שוב!', 'כמעט!', 'אפשר ללמוד מטעויות!', 'בפעם הבאה!'];
+                const encouragement = encouragements[Math.floor(Math.random() * encouragements.length)];
+                
+                feedback.className = 'feedback wrong';
+                feedback.innerHTML = `❌ ${encouragement}<br>התשובה הנכונה: ${multiplicationState.currentAnswer}<br>ההסבר: תרגלי את לוח הכפל!`;
+            }
+
+            // Update level based on performance
+            adjustMultiplicationDifficulty();
+            updateStats('multiplication');
+
+            // Setup for next question
+            document.getElementById('multiplication-check-btn').style.display = 'none';
+            document.getElementById('multiplication-new-question-btn').style.display = 'inline-block';
+
+            // Auto-generate next question after delay
+            if (isCorrect) {
+                setTimeout(() => {
+                    generateMultiplicationQuestion();
+                }, 1500);
+            }
+
+            // Check for celebrations
+            if (multiplicationState.totalQuestions % 10 === 0) {
+                showCelebration('multiplication');
+            }
+        }
+
+        function adjustMultiplicationDifficulty() {
+            if (multiplicationState.consecutiveCorrect >= 3 && multiplicationState.level !== 'קשה') {
+                if (multiplicationState.level === 'קל') multiplicationState.level = 'בינוני';
+                else if (multiplicationState.level === 'בינוני') multiplicationState.level = 'קשה';
+                showLevelUp('multiplication');
+                multiplicationState.consecutiveCorrect = 0;
+            } else if (multiplicationState.consecutiveWrong >= 2 && multiplicationState.level !== 'קל') {
+                if (multiplicationState.level === 'קשה') multiplicationState.level = 'בינוני';
+                else if (multiplicationState.level === 'בינוני') multiplicationState.level = 'קל';
+                showLevelDown('multiplication');
+                multiplicationState.consecutiveWrong = 0;
+            }
+        }
+
+        // NUMBER LINE TOOL FUNCTIONS
+        function generateNumberlineQuestion() {
+            // Removed 'whereIsNumber' - answer is visible on labeled number line (no problem-solving required)
+            const types = ['whatIsNumber', 'betweenNumbers', 'closerTo'];
+            const type = types[Math.floor(Math.random() * types.length)];
+            
+            let question = {};
+            let answer;
+
+            // Generate range based on level
+            function getNumberlineRange() {
+                if (numberlineState.level === 'קל') {
+                    return { min: 0, max: 100, interval: 10 };
+                } else if (numberlineState.level === 'בינוני') {
+                    return { min: 0, max: 500, interval: 50 };
+                } else {
+                    return { min: 0, max: 1000, interval: 100 };
+                }
+            }
+
+            const range = getNumberlineRange();
+
+            switch (type) {
+                case 'whatIsNumber':
+                    const arrowPosition = Math.floor(Math.random() * (range.max / range.interval)) * range.interval;
+                    question = {
+                        question: `איזה מספר מסומן בחץ?`,
+                        type: 'visual-input',
+                        range: range,
+                        arrowPosition: arrowPosition
+                    };
+                    answer = arrowPosition;
+                    break;
+
+                case 'betweenNumbers':
+                    const num1 = Math.floor(Math.random() * (range.max / range.interval / 2)) * range.interval;
+                    const num2 = num1 + range.interval * 2;
+                    const between = (num1 + num2) / 2;
+                    question = {
+                        question: `איזה מספר נמצא בדיוק באמצע בין ${num1} ל-${num2}?`,
+                        type: 'input'
+                    };
+                    answer = between;
+                    break;
+
+                case 'closerTo':
+                    const baseNum = Math.floor(Math.random() * (range.max / range.interval)) * range.interval;
+                    const testNum = baseNum + Math.floor(range.interval * 0.3);
+                    const option1 = baseNum;
+                    const option2 = baseNum + range.interval;
+                    question = {
+                        question: `המספר ${testNum} קרוב יותר ל-${option1} או ל-${option2}?`,
+                        type: 'choice',
+                        choices: [option1, option2]
+                    };
+                    answer = Math.abs(testNum - option1) < Math.abs(testNum - option2) ? option1 : option2;
+                    break;
+            }
+
+            numberlineState.currentQuestion = question;
+            numberlineState.currentAnswer = answer;
+
+            // Display question
+            document.getElementById('numberline-question').textContent = question.question;
+
+            // Display number line if needed
+            if (question.type === 'visual' || question.type === 'visual-choice' || question.type === 'visual-input') {
+                displayNumberLine(question);
+            } else {
+                document.getElementById('numberline-visual').style.display = 'none';
+            }
+
+            // Setup answer interface
+            if (question.type === 'input' || question.type === 'visual-input') {
+                document.getElementById('numberline-answer-input').style.display = 'inline-block';
+                document.getElementById('numberline-choice-buttons').style.display = 'none';
+                document.getElementById('numberline-answer-input').value = '';
+                document.getElementById('numberline-answer-input').focus();
+            } else if (question.type === 'choice' || question.type === 'visual-choice') {
+                document.getElementById('numberline-answer-input').style.display = 'none';
+                const choicesContainer = document.getElementById('numberline-choice-buttons');
+                choicesContainer.style.display = 'flex';
+                choicesContainer.innerHTML = '';
+
+                question.choices.forEach(choice => {
+                    const btn = document.createElement('button');
+                    btn.className = 'choice-btn';
+                    btn.textContent = choice;
+                    btn.onclick = function() { selectNumberlineChoice(choice, this); };
+                    choicesContainer.appendChild(btn);
+                });
+            }
+
+            document.getElementById('numberline-check-btn').style.display = 'inline-block';
+            document.getElementById('numberline-new-question-btn').style.display = 'none';
+            document.getElementById('numberline-feedback').className = 'feedback hidden';
+        }
+
+        function displayNumberLine(question) {
+            const container = document.getElementById('numberline-visual');
+            container.style.display = 'block';
+            
+            const lineElement = document.getElementById('numberline-line');
+            lineElement.innerHTML = '';
+
+            const range = question.range;
+            const steps = range.max / range.interval;
+
+            // Create markers
+            for (let i = 0; i <= steps; i++) {
+                const value = i * range.interval;
+                const position = (i / steps) * 100;
+
+                const marker = document.createElement('div');
+                marker.className = 'marker';
+                marker.style.left = position + '%';
+                lineElement.appendChild(marker);
+
+                const label = document.createElement('div');
+                label.className = 'marker-label';
+                label.style.left = position + '%';
+                label.textContent = value;
+                lineElement.appendChild(label);
+            }
+
+            // Add arrow if specified
+            if (question.arrowPosition !== undefined) {
+                const arrowPos = (question.arrowPosition / range.max) * 100;
+                const arrow = document.createElement('div');
+                arrow.className = 'arrow';
+                arrow.textContent = '⬇️';
+                arrow.style.left = arrowPos + '%';
+                lineElement.appendChild(arrow);
+            }
+        }
+
+        function selectNumberlineChoice(choice, element) {
+            document.querySelectorAll('#numberline-choice-buttons .choice-btn').forEach(btn => {
+                btn.style.background = 'white';
+                btn.style.color = 'black';
+            });
+
+            element.style.background = '#ff9800';
+            element.style.color = 'white';
+            numberlineState.selectedChoice = choice;
+        }
+
+        function checkNumberlineAnswer() {
+            // Safety check
+            if (!numberlineState.currentQuestion) {
+                console.error('No current question available');
+                return;
+            }
+
+            let userAnswer;
+
+            if (numberlineState.currentQuestion.type === 'input' || numberlineState.currentQuestion.type === 'visual-input') {
+                userAnswer = parseFloat(document.getElementById('numberline-answer-input').value);
+            } else if (numberlineState.currentQuestion.type === 'choice' || numberlineState.currentQuestion.type === 'visual-choice') {
+                userAnswer = numberlineState.selectedChoice;
+            }
+
+            if (userAnswer === undefined || userAnswer === null || userAnswer === '') {
+                alert('אנא הכניסי תשובה!');
+                return;
+            }
+
+            const isCorrect = userAnswer == numberlineState.currentAnswer;
+            
+            // Update statistics
+            numberlineState.totalQuestions++;
+            
+            numberlineState.sessionHistory.push({
+                timestamp: Date.now(),
+                question: numberlineState.currentQuestion.question,
+                userAnswer: userAnswer,
+                correctAnswer: numberlineState.currentAnswer,
+                isCorrect: isCorrect,
+                level: numberlineState.level,
+            });
+            
+            if (isCorrect) {
+                numberlineState.correctAnswers++;
+                numberlineState.currentStreak++;
+                numberlineState.consecutiveCorrect++;
+                numberlineState.consecutiveWrong = 0;
+
+                if (numberlineState.currentStreak > numberlineState.bestStreak) {
+                    numberlineState.bestStreak = numberlineState.currentStreak;
+                }
+            } else {
+                numberlineState.currentStreak = 0;
+                numberlineState.consecutiveWrong++;
+                numberlineState.consecutiveCorrect = 0;
+            }
+            
+            saveProgress('numberline');
+
+            // Show feedback
+            const feedback = document.getElementById('numberline-feedback');
+            if (isCorrect) {
+                const encouragements = ['מעולה!', 'פנטסטי!', 'את גאונית!', 'כל הכבוד!', 'מושלם!'];
+                const encouragement = encouragements[Math.floor(Math.random() * encouragements.length)];
+                
+                feedback.className = 'feedback correct';
+                feedback.innerHTML = `✅ ${encouragement} תשובה נכונה!<br>🔊 כל הכבוד אמה!`;
+            } else {
+                const encouragements = ['לא נורא!', 'ננסה שוב!', 'כמעט!', 'אפשר ללמוד מטעויות!', 'בפעם הבאה!'];
+                const encouragement = encouragements[Math.floor(Math.random() * encouragements.length)];
+                
+                feedback.className = 'feedback wrong';
+                feedback.innerHTML = `❌ ${encouragement}<br>התשובה הנכונה: ${numberlineState.currentAnswer}`;
+            }
+
+            // Update level based on performance
+            adjustNumberlineDifficulty();
+            updateStats('numberline');
+
+            // Setup for next question
+            document.getElementById('numberline-check-btn').style.display = 'none';
+            document.getElementById('numberline-new-question-btn').style.display = 'inline-block';
+
+            // Auto-generate next question after delay
+            if (isCorrect) {
+                setTimeout(() => {
+                    generateNumberlineQuestion();
+                }, 1500);
+            }
+
+            // Check for celebrations
+            if (numberlineState.totalQuestions % 10 === 0) {
+                showCelebration('numberline');
+            }
+        }
+
+        function adjustNumberlineDifficulty() {
+            if (numberlineState.consecutiveCorrect >= 3 && numberlineState.level !== 'קשה') {
+                if (numberlineState.level === 'קל') numberlineState.level = 'בינוני';
+                else if (numberlineState.level === 'בינוני') numberlineState.level = 'קשה';
+                showLevelUp('numberline');
+                numberlineState.consecutiveCorrect = 0;
+            } else if (numberlineState.consecutiveWrong >= 2 && numberlineState.level !== 'קל') {
+                if (numberlineState.level === 'קשה') numberlineState.level = 'בינוני';
+                else if (numberlineState.level === 'בינוני') numberlineState.level = 'קל';
+                showLevelDown('numberline');
+                numberlineState.consecutiveWrong = 0;
+            }
+        }
+
+        // PAUSE/RESET/EXPORT FUNCTIONS for all tools
+        function pauseDecimalExercise() {
+            showPauseSummary('decimal');
+        }
+
+        function pauseMultiplicationExercise() {
+            showPauseSummary('multiplication');
+        }
+
+        function pauseNumberlineExercise() {
+            showPauseSummary('numberline');
+        }
+
+        function showPauseSummary(toolName) {
+            const state = getState(toolName);
+            const percentage = state.totalQuestions > 0 ? 
+                Math.round((state.correctAnswers / state.totalQuestions) * 100) : 0;
+            
+            const celebration = document.getElementById('celebration');
+            const overlay = document.getElementById('overlay');
+            
+            celebration.innerHTML = `
+                ⏸️ סיכום ביניים<br><br>
+                שאלות: ${state.totalQuestions}<br>
+                נכונות: ${state.correctAnswers} (${percentage}%)<br>
+                רצף מקסימלי: ${state.bestStreak}<br>
+                רמה: ${state.level}<br><br>
+                <button class="check-btn" onclick="hideCelebration()">המשך תרגול 🚀</button>
+                <button class="check-btn" onclick="showSection('home')" style="background: #2196f3; margin-top: 10px;">חזרה לדף הבית 🏠</button>
+            `;
+            celebration.style.display = 'block';
+            overlay.style.display = 'block';
+        }
+
+        function resetDecimalProgress() {
+            resetToolProgress('decimal', 'emmaDecimalProgress');
+        }
+
+        function resetMultiplicationProgress() {
+            resetToolProgress('multiplication', 'emmaMultiplicationProgress');
+        }
+
+        function resetNumberlineProgress() {
+            resetToolProgress('numberline', 'emmaNumberLineProgress');
+        }
+
+        // Show reset options
+        function showResetOptions(toolName) {
+            const celebration = document.getElementById('celebration');
+            const overlay = document.getElementById('overlay');
+            
+            celebration.innerHTML = `
+                <div style="font-size: 16pt;">⚠️ <strong>אפשרויות איפוס</strong></div><br>
+                בחרי מה לאפס:<br><br>
+                <button class="check-btn" onclick="resetOnlyStats('${toolName}')" style="background: #ff9800; margin: 5px;">📊 רק סטטיסטיקות<br><small style="font-size: 12pt;">(שומר את היומן המפורט)</small></button><br>
+                <button class="check-btn" onclick="resetEverything('${toolName}')" style="background: #f44336; margin: 5px;">🗑️ הכל (סטטיסטיקות + יומן)<br><small style="font-size: 12pt;">(איפוס מלא - לא ניתן לשחזר!)</small></button><br>
+                <button class="check-btn" onclick="hideCelebration()" style="background: #9e9e9e; margin: 5px;">❌ ביטול</button>
+            `;
+            celebration.style.display = 'block';
+            overlay.style.display = 'block';
+        }
+
+        // Reset only statistics (keep history)
+        function resetOnlyStats(toolName) {
+            if (confirm('📊 איפוס סטטיסטיקות בלבד\n\nזה יאפס:\n✓ ניקוד\n✓ רצפים\n✓ רמה\n\nזה ישמור:\n✓ יומן מפורט של כל השאלות\n✓ תאריך התחלה\n\nלהמשיך?')) {
+                const keys = {
+                    decimal: 'emmaDecimalProgress',
+                    multiplication: 'emmaMultiplicationProgress',
+                    numberline: 'emmaNumberLineProgress',
+                    // Add registry keys as fallback
+                    ...(window.ModuleRegistry ? window.ModuleRegistry.getAllStorageKeys() : {})
+                };
+
+                const states = {
+                    decimal: decimalState,
+                    multiplication: multiplicationState,
+                    numberline: numberlineState,
+                    // Add registry states as fallback
+                    ...(window.ModuleRegistry ? window.ModuleRegistry.getAllStates() : {})
+                };
+                
+                const state = states[toolName];
+                const savedHistory = state.sessionHistory;
+                const savedStartTime = state.startTime;
+                
+                state.level = 'בינוני';
+                state.totalQuestions = 0;
+                state.correctAnswers = 0;
+                state.currentStreak = 0;
+                state.bestStreak = 0;
+                state.consecutiveCorrect = 0;
+                state.consecutiveWrong = 0;
+                state.currentQuestion = null;
+                state.currentAnswer = null;
+                // Keep history!
+                state.sessionHistory = savedHistory;
+                state.startTime = savedStartTime;
+                
+                saveProgress(toolName);
+                updateStats(toolName);
+                
+                hideCelebration();
+                alert('✅ סטטיסטיקות אופסו!\n📋 היומן המפורט נשמר.');
+            } else {
+                hideCelebration();
+            }
+        }
+
+        // Reset everything
+        function resetEverything(toolName) {
+            if (confirm('⚠️ איפוס מלא - אזהרה!\n\nזה ימחק לצמיתות:\n✗ כל הסטטיסטיקות\n✗ כל היומן המפורט\n✗ כל התשובות\n\n⚠️ לא ניתן לשחזר!\n\n💡 מומלץ לייצא גיבוי לפני!\n\nבטוחה?')) {
+                const keys = {
+                    decimal: 'emmaDecimalProgress',
+                    multiplication: 'emmaMultiplicationProgress',
+                    numberline: 'emmaNumberLineProgress'
+                };
+                
+                resetToolProgress(toolName, keys[toolName]);
+                hideCelebration();
+            } else {
+                hideCelebration();
+            }
+        }
+
+        function resetToolProgress(toolName, storageKey) {
+            localStorage.removeItem(storageKey);
+
+            const states = {
+                decimal: decimalState,
+                multiplication: multiplicationState,
+                numberline: numberlineState,
+                // Add registry states as fallback
+                ...(window.ModuleRegistry ? window.ModuleRegistry.getAllStates() : {})
+            };
+
+            const state = states[toolName];
+            state.level = 'בינוני';
+            state.totalQuestions = 0;
+            state.correctAnswers = 0;
+            state.currentStreak = 0;
+            state.bestStreak = 0;
+            state.consecutiveCorrect = 0;
+            state.consecutiveWrong = 0;
+            state.currentQuestion = null;
+            state.currentAnswer = null;
+            state.sessionHistory = [];
+            state.startTime = Date.now();
+            state.lastSaved = null;
+
+            updateStats(toolName);
+            
+            document.getElementById(`${toolName}-question`).textContent = 'לחצי על "שאלה חדשה" כדי להתחיל! 🚀';
+            document.getElementById(`${toolName}-feedback`).className = 'feedback hidden';
+            document.getElementById(`${toolName}-check-btn`).style.display = 'none';
+            document.getElementById(`${toolName}-new-question-btn`).style.display = 'inline-block';
+            document.getElementById(`${toolName}-answer-input`).style.display = 'none';
+        }
+
+        function exportDecimalReport() {
+            exportReport('decimal', 'מבנה עשרוני');
+        }
+
+        function exportMultiplicationReport() {
+            exportReport('multiplication', 'השלמת גורם ומכפלה');
+        }
+
+        function exportNumberlineReport() {
+            exportReport('numberline', 'ישר המספרים');
+        }
+
+        function exportReport(toolName, toolTitle) {
+            const state = getState(toolName);
+            const percentage = state.totalQuestions > 0 ? 
+                Math.round((state.correctAnswers / state.totalQuestions) * 100) : 0;
+            
+            const totalTime = Math.floor((Date.now() - state.startTime) / 1000 / 60);
+            const avgTimePerQuestion = state.totalQuestions > 0 ? 
+                Math.round((Date.now() - state.startTime) / 1000 / state.totalQuestions) : 0;
+            
+            const levelCounts = { קל: 0, בינוני: 0, קשה: 0 };
+            state.sessionHistory.forEach(h => {
+                if (levelCounts[h.level] !== undefined) levelCounts[h.level]++;
+            });
+            
+            const reportText = `
+📊 דוח תרגול ${toolTitle} - אמה
+${'='.repeat(50)}
+
+📅 תאריך: ${new Date().toLocaleDateString('he-IL')}
+⏰ שעה: ${new Date().toLocaleTimeString('he-IL')}
+
+📈 סטטיסטיקות כלליות:
+${'-'.repeat(50)}
+✅ סה"כ שאלות: ${state.totalQuestions}
+✅ תשובות נכונות: ${state.correctAnswers}
+❌ תשובות שגויות: ${state.totalQuestions - state.correctAnswers}
+📊 אחוז הצלחה: ${percentage}%
+🔥 רצף מקסימלי: ${state.bestStreak}
+⏱️ זמן כולל: ${totalTime} דקות
+⚡ ממוצע זמן לשאלה: ${avgTimePerQuestion} שניות
+
+📊 פילוח לפי רמות:
+${'-'.repeat(50)}
+🌱 רמה קלה: ${levelCounts['קל']} שאלות
+🔥 רמה בינונית: ${levelCounts['בינוני']} שאלות
+⚡ רמה קשה: ${levelCounts['קשה']} שאלות
+
+🎯 רמה נוכחית: ${state.level}
+
+💪 הערכה:
+${'-'.repeat(50)}
+${getPerformanceEvaluation(percentage, state.bestStreak)}
+
+🌟 המלצות:
+${'-'.repeat(50)}
+${getRecommendations(percentage, state.level)}
+
+${'='.repeat(50)}
+נוצר על ידי: מערכת תרגול למשימה
+בהצלחה במשימה! 🎓
+            `;
+            
+            const blob = new Blob([reportText], { type: 'text/plain;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `דוח-${toolTitle}-אמה-${new Date().toISOString().split('T')[0]}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            const celebration = document.getElementById('celebration');
+            const overlay = document.getElementById('overlay');
+            
+            celebration.innerHTML = `
+                ✅ הדוח יוצא בהצלחה!<br><br>
+                📄 <strong>שם הקובץ:</strong> דוח-${toolTitle}-אמה-${new Date().toISOString().split('T')[0]}.txt<br>
+                📁 <strong>מיקום:</strong> תיקיית ההורדות שלך (Downloads)<br><br>
+                📊 ${state.totalQuestions} שאלות<br>
+                ✅ ${percentage}% הצלחה<br><br>
+                <button class="check-btn" onclick="hideCelebration()">סגור</button>
+            `;
+            celebration.style.display = 'block';
+            overlay.style.display = 'block';
+        }
+
+        function getPerformanceEvaluation(percentage, bestStreak) {
+            if (percentage >= 90) {
+                return '🌟 מעולה! אמה שולטת בנושא ברמה גבוהה מאוד!';
+            } else if (percentage >= 75) {
+                return '💪 טוב מאוד! אמה מתקדמת נהדר, המשיכי כך!';
+            } else if (percentage >= 60) {
+                return '👍 יפה! יש התקדמות טובה, כדאי להמשיך לתרגל.';
+            } else {
+                return '💙 שימי לב - כדאי לתרגל עוד ולחזור על החומר.';
+            }
+        }
+
+        function getRecommendations(percentage, level) {
+            let recs = [];
+            
+            if (percentage < 70) {
+                recs.push('• תרגלי 15-20 דקות כל יום');
+                recs.push('• תתמקדי בנושאים שטעית בהם');
+                recs.push('• קראי את ההסברים בעיון');
+            }
+            
+            if (level === 'קל') {
+                recs.push('• נסי להגיע לרמה בינונית');
+                recs.push('• תרגלי עוד כדי לשפר');
+            } else if (level === 'בינוני') {
+                recs.push('• המשיכי לתרגל - את בדרך הנכונה!');
+                recs.push('• נסי להגיע לרמה קשה');
+            } else {
+                recs.push('• מצוין! את ברמה הגבוהה ביותר!');
+                recs.push('• המשיכי לשמור על הרמה');
+            }
+            
+            recs.push('• חזרי על המחברות והספרים');
+            
+            return recs.join('\n');
+        }
+
+        // HOME PAGE FUNCTIONS
+        function loadAllProgress() {
+            const hardcodedTools = ['decimal', 'multiplication', 'numberline'];
+            const registryTools = window.ModuleRegistry ? window.ModuleRegistry.getAllModules() : [];
+            const tools = [...new Set([...hardcodedTools, ...registryTools])];
+
+            const keys = {
+                decimal: 'emmaDecimalProgress',
+                multiplication: 'emmaMultiplicationProgress',
+                numberline: 'emmaNumberLineProgress',
+                // Add registry keys as fallback
+                ...(window.ModuleRegistry ? window.ModuleRegistry.getAllStorageKeys() : {})
+            };
+
+            let totalQuestions = 0;
+            let totalCorrect = 0;
+            let totalTime = 0;
+
+            tools.forEach(tool => {
+                const saved = localStorage.getItem(keys[tool]);
+                if (saved) {
+                    try {
+                        const data = JSON.parse(saved);
+                        totalQuestions += data.totalQuestions || 0;
+                        totalCorrect += data.correctAnswers || 0;
+                        if (data.startTime) {
+                            totalTime += (Date.now() - data.startTime);
+                        }
+
+                        // Update card progress
+                        updateCardProgress(tool, data);
+                    } catch (e) {
+                        console.error(`Error loading ${tool}:`, e);
+                    }
+                } else {
+                    // No progress - show new
+                    updateCardProgress(tool, null);
+                }
+            });
+
+            // Update overall stats
+            document.getElementById('total-questions-all').textContent = totalQuestions;
+            document.getElementById('total-correct-all').textContent = totalCorrect;
+            
+            const avgSuccess = totalQuestions > 0 ? Math.round((totalCorrect / totalQuestions) * 100) : 0;
+            document.getElementById('average-success').textContent = avgSuccess + '%';
+            
+            const totalMinutes = Math.floor(totalTime / 1000 / 60);
+            document.getElementById('study-time').textContent = totalMinutes;
+
+            // Update encouragement message
+            updateEncouragementMessage(totalQuestions, avgSuccess);
+
+            // Update countdown
+            updateCountdown();
+        }
+
+        function updateCardProgress(tool, data) {
+            const progressDiv = document.getElementById(`${tool}-progress`);
+            
+            if (!data || data.totalQuestions === 0) {
+                progressDiv.className = 'progress-indicator no-progress';
+                progressDiv.innerHTML = '<div class="progress-text">🆕 התחל תרגול חדש</div>';
+            } else {
+                const percentage = Math.round((data.correctAnswers / data.totalQuestions) * 100);
+                progressDiv.className = 'progress-indicator has-progress';
+                progressDiv.innerHTML = `
+                    <div class="progress-text">✅ ${data.totalQuestions} שאלות | ${percentage}% הצלחה</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill ${tool}" style="width: ${percentage}%; border-radius: 4px;"></div>
+                    </div>
+                    <div class="progress-text" style="font-size: 11pt; margin-top: 5px;">המשך מאיפה שעצרת</div>
+                `;
+            }
+        }
+
+        function updateEncouragementMessage(totalQuestions, avgSuccess) {
+            const msgElement = document.getElementById('main-encouragement');
+            
+            if (totalQuestions === 0) {
+                msgElement.textContent = '🌟 בואי נתחיל לתרגל! כל תרגול מקרב אותך להצלחה במשימה!';
+            } else if (avgSuccess >= 80) {
+                msgElement.textContent = `🎉 כל הכבוד! את עושה עבודה מעולה עם ${avgSuccess}% הצלחה!`;
+            } else if (avgSuccess >= 60) {
+                msgElement.textContent = `💪 יפה! המשיכי כך - את בדרך הנכונה עם ${avgSuccess}% הצלחה!`;
+            } else {
+                msgElement.textContent = `💙 תמשיכי לתרגל - כל שאלה מקדמת אותך! כרגע ${avgSuccess}% הצלחה.`;
+            }
+        }
+
+        function updateCountdown() {
+            const examDate = new Date('2024-11-18');
+            const today = new Date();
+            const diffTime = examDate - today;
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            
+            const countdownElement = document.getElementById('countdown');
+            
+            if (diffDays > 0) {
+                countdownElement.textContent = `⏰ ${diffDays} ימים למשימה!`;
+                if (diffDays <= 3) {
+                    countdownElement.style.background = '#ffcdd2';
+                    countdownElement.style.borderColor = '#e53935';
+                }
+            } else if (diffDays === 0) {
+                countdownElement.textContent = '⏰ המשימה היום! בהצלחה! 🎉';
+                countdownElement.style.background = '#fff9c4';
+                countdownElement.style.borderColor = '#fbc02d';
+            } else {
+                countdownElement.textContent = '✅ המשימה הייתה! תמשיכי לתרגל! 💪';
+                countdownElement.style.background = '#c8e6c9';
+                countdownElement.style.borderColor = '#66bb6a';
+            }
+        }
+
+        // View detailed history
+        function viewDetailedHistory(toolName) {
+            const state = getState(toolName);
+            const titles = {
+                decimal: 'מבנה עשרוני',
+                multiplication: 'השלמת גורם ומכפלה',
+                numberline: 'ישר המספרים'
+            };
+
+            if (!state.sessionHistory || state.sessionHistory.length === 0) {
+                alert('אין עדיין היסטוריה לתצוגה.\nהתחילי לתרגל!');
+                return;
+            }
+
+            let historyHTML = `
+                <div style="max-height: 500px; overflow-y: auto; text-align: right; font-size: 12pt;">
+                <strong style="font-size: 18pt;">📋 יומן מפורט - ${titles[toolName]}</strong><br>
+                <small>סה"כ ${state.sessionHistory.length} שאלות</small><br><br>
+                <table style="width: 100%; border-collapse: collapse; font-size: 11pt;">
+                <tr style="background: #e3f2fd; font-weight: bold;">
+                    <td style="padding: 8px; border: 1px solid #ddd;">#</td>
+                    <td style="padding: 8px; border: 1px solid #ddd;">שאלה</td>
+                    <td style="padding: 8px; border: 1px solid #ddd;">תשובה שלך</td>
+                    <td style="padding: 8px; border: 1px solid #ddd;">תשובה נכונה</td>
+                    <td style="padding: 8px; border: 1px solid #ddd;">תוצאה</td>
+                    <td style="padding: 8px; border: 1px solid #ddd;">רמה</td>
+                </tr>
+            `;
+
+            state.sessionHistory.forEach((item, index) => {
+                const bgColor = item.isCorrect ? '#e8f5e9' : '#ffebee';
+                const resultIcon = item.isCorrect ? '✅' : '❌';
+                historyHTML += `
+                    <tr style="background: ${bgColor};">
+                        <td style="padding: 6px; border: 1px solid #ddd;">${index + 1}</td>
+                        <td style="padding: 6px; border: 1px solid #ddd;">${item.question}</td>
+                        <td style="padding: 6px; border: 1px solid #ddd;"><strong>${item.userAnswer}</strong></td>
+                        <td style="padding: 6px; border: 1px solid #ddd;">${item.correctAnswer}</td>
+                        <td style="padding: 6px; border: 1px solid #ddd; text-align: center;">${resultIcon}</td>
+                        <td style="padding: 6px; border: 1px solid #ddd;">${item.level}</td>
+                    </tr>
+                `;
+            });
+
+            historyHTML += `</table></div><br>`;
+            historyHTML += `<button class="check-btn" onclick="exportDetailedHistory('${toolName}')">📥 הורד יומן</button> `;
+            historyHTML += `<button class="check-btn" onclick="hideCelebration()" style="background: #9e9e9e;">סגור</button>`;
+
+            const celebration = document.getElementById('celebration');
+            const overlay = document.getElementById('overlay');
+            
+            celebration.innerHTML = historyHTML;
+            celebration.style.display = 'block';
+            overlay.style.display = 'block';
+        }
+
+        // Export detailed history
+        function exportDetailedHistory(toolName) {
+            const state = getState(toolName);
+            const titles = {
+                decimal: 'מבנה עשרוני',
+                multiplication: 'השלמת גורם ומכפלה',
+                numberline: 'ישר המספרים'
+            };
+
+            let historyText = `
+📋 יומן תרגול מפורט - ${titles[toolName]} - אמה
+${'='.repeat(70)}
+
+📅 תאריך ייצוא: ${new Date().toLocaleDateString('he-IL')} ${new Date().toLocaleTimeString('he-IL')}
+📊 סה"כ שאלות ביומן: ${state.sessionHistory.length}
+
+${'='.repeat(70)}
+
+`;
+
+            state.sessionHistory.forEach((item, index) => {
+                const timestamp = new Date(item.timestamp).toLocaleString('he-IL');
+                const result = item.isCorrect ? '✅ נכון' : '❌ שגוי';
+                
+                historyText += `
+שאלה #${index + 1} | ${timestamp}
+${'-'.repeat(70)}
+📝 שאלה: ${item.question}
+💭 תשובה שניתנה: ${item.userAnswer}
+✓ תשובה נכונה: ${item.correctAnswer}
+📊 תוצאה: ${result}
+🎯 רמה: ${item.level}
+
+`;
+            });
+
+            historyText += `
+${'='.repeat(70)}
+סוף היומן | נוצר על ידי מערכת תרגול אמה
+`;
+
+            const blob = new Blob([historyText], { type: 'text/plain;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `יומן-מפורט-${titles[toolName]}-אמה-${new Date().toISOString().split('T')[0]}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+
+            alert('✅ היומן המפורט הורד בהצלחה!\n📁 מיקום: תיקיית Downloads');
+        }
+
+        // Backup progress
+        function backupProgress(toolName) {
+            const keys = {
+                decimal: 'emmaDecimalProgress',
+                multiplication: 'emmaMultiplicationProgress',
+                numberline: 'emmaNumberLineProgress'
+            };
+
+            const titles = {
+                decimal: 'מבנה עשרוני',
+                multiplication: 'גורם ומכפלה',
+                numberline: 'ישר המספרים'
+            };
+
+            const saved = localStorage.getItem(keys[toolName]);
+            if (!saved) {
+                alert('אין נתונים לגיבוי עדיין!');
+                return;
+            }
+
+            const backupData = {
+                tool: toolName,
+                title: titles[toolName],
+                backupDate: new Date().toISOString(),
+                data: JSON.parse(saved)
+            };
+
+            const blob = new Blob([JSON.stringify(backupData, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `גיבוי-${titles[toolName]}-אמה-${new Date().toISOString().split('T')[0]}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+
+            const celebration = document.getElementById('celebration');
+            const overlay = document.getElementById('overlay');
+            
+            celebration.innerHTML = `
+                ✅ גיבוי נוצר בהצלחה!<br><br>
+                📁 <strong>מיקום:</strong> תיקיית Downloads<br>
+                📄 <strong>שם קובץ:</strong> גיבוי-${titles[toolName]}-אמה-${new Date().toISOString().split('T')[0]}.json<br><br>
+                💾 הקובץ מכיל את כל הנתונים שלך!<br>
+                🔒 שמרי אותו במקום בטוח<br><br>
+                <small>💡 טיפ: שלחי את הקובץ למייל או Google Drive לגיבוי נוסף</small><br><br>
+                <button class="check-btn" onclick="hideCelebration()">סגור</button>
+            `;
+            celebration.style.display = 'block';
+            overlay.style.display = 'block';
+        }
+
+        // Auto-backup every hour
+        setInterval(() => {
+            ['decimal', 'multiplication', 'numberline'].forEach(tool => {
+                const state = getState(tool);
+                if (state.totalQuestions > 0) {
+                    // Silent backup to console
+                    console.log(`🔄 Auto-backup: ${tool} - ${state.totalQuestions} questions`);
+                }
+            });
+        }, 3600000); // Every hour
+
+        // INITIALIZATION
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load all progress on home page
+            loadAllProgress();
+            
+            // Enable Enter key for inputs
+            ['decimal', 'multiplication', 'numberline'].forEach(tool => {
+                const input = document.getElementById(`${tool}-answer-input`);
+                if (input) {
+                    input.addEventListener('keypress', function(e) {
+                        if (e.key === 'Enter') {
+                            if (tool === 'decimal') checkDecimalAnswer();
+                            else if (tool === 'multiplication') checkMultiplicationAnswer();
+                            else if (tool === 'numberline') checkNumberlineAnswer();
+                        }
+                    });
+                }
+            });
+
+            // Auto-save every 30 seconds
+            setInterval(() => {
+                if (decimalState.totalQuestions > 0) saveProgress('decimal');
+                if (multiplicationState.totalQuestions > 0) saveProgress('multiplication');
+                if (numberlineState.totalQuestions > 0) saveProgress('numberline');
+            }, 30000);
+
+            // Save before page unload
+            window.addEventListener('beforeunload', () => {
+                if (decimalState.totalQuestions > 0) saveProgress('decimal');
+                if (multiplicationState.totalQuestions > 0) saveProgress('multiplication');
+                if (numberlineState.totalQuestions > 0) saveProgress('numberline');
+            });
+        });
+    </script>
+
+    <!-- Feature 1: State Export/Import Functions -->
+    <script>
+        // Export full state to JSON file
+        function exportFullState() {
+            console.log("🚀 Starting full state export...");
+
+            // Calculate total statistics
+            const decimalData = JSON.parse(localStorage.getItem('emmaDecimalProgress') || '{}');
+            const multiplicationData = JSON.parse(localStorage.getItem('emmaMultiplicationProgress') || '{}');
+            const numberlineData = JSON.parse(localStorage.getItem('emmaNumberLineProgress') || '{}');
+
+            const totalStats = {
+                totalQuestions: (decimalData.totalQuestions || 0) + (multiplicationData.totalQuestions || 0) + (numberlineData.totalQuestions || 0),
+                correctAnswers: (decimalData.correctAnswers || 0) + (multiplicationData.correctAnswers || 0) + (numberlineData.correctAnswers || 0),
+                totalTime: (decimalData.totalTime || 0) + (multiplicationData.totalTime || 0) + (numberlineData.totalTime || 0)
+            };
+
+            // Create full state object
+            const fullState = {
+                version: "1.0",
+                exportDate: new Date().toISOString(),
+                student: "Emma",
+                testDate: "2025-11-18",
+                totalSession: totalStats,
+                modules: {
+                    decimal: decimalData,
+                    multiplication: multiplicationData,
+                    numberline: numberlineData
+                },
+                metadata: {
+                    browser: navigator.userAgent,
+                    exportTime: new Date().toLocaleString('he-IL')
+                }
+            };
+
+            // Create and download file
+            const jsonString = JSON.stringify(fullState, null, 2);
+            const blob = new Blob([jsonString], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+
+            const dateStr = new Date().toISOString().split('T')[0];
+            const filename = `גיבוי-אמה-${dateStr}.json`;
+
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = filename;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+
+            console.log("✅ Export successful:", filename);
+
+            // Show success message
+            showExportSuccessMessage(filename, fullState);
+        }
+
+        // Show export success celebration
+        function showExportSuccessMessage(filename, state) {
+            const overlay = document.getElementById('overlay');
+            const celebration = document.getElementById('celebration');
+
+            celebration.innerHTML = `
+                💾 <strong>גיבוי נוצר בהצלחה!</strong><br><br>
+                📁 <strong>שם קובץ:</strong> ${filename}<br>
+                📊 <strong>סה"כ נתונים:</strong><br>
+                • ${state.totalSession.totalQuestions} שאלות<br>
+                • ${state.totalSession.correctAnswers} תשובות נכונות<br>
+                • ${Math.floor(state.totalSession.totalTime / 60)} דקות תרגול<br><br>
+                💡 <strong>הקובץ נשמר ב-Downloads</strong><br>
+                🔒 שמרי אותו במקום בטוח (מייל, Google Drive)<br><br>
+                <button class="check-btn" onclick="hideCelebration()">סגור ✓</button>
+            `;
+
+            overlay.style.display = 'block';
+            celebration.style.display = 'block';
+        }
+
+        // Import state from JSON file
+        function importFullState(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            console.log("🚀 Starting state import from:", file.name);
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const importedState = JSON.parse(e.target.result);
+
+                    // Validate structure
+                    if (!importedState.version || !importedState.modules) {
+                        throw new Error("Invalid backup file format");
+                    }
+
+                    console.log("📥 Importing state version:", importedState.version);
+
+                    // Show confirmation dialog
+                    const confirmMsg = `
+                        האם לשחזר את הגיבוי?\n\n
+                        📅 תאריך גיבוי: ${new Date(importedState.exportDate).toLocaleString('he-IL')}\n
+                        📊 סה"כ שאלות: ${importedState.totalSession.totalQuestions}\n
+                        ✅ תשובות נכונות: ${importedState.totalSession.correctAnswers}\n\n
+                        ⚠️ פעולה זו תדרוס את הנתונים הקיימים!
+                    `;
+
+                    if (!confirm(confirmMsg)) {
+                        console.log("❌ Import cancelled by user");
+                        event.target.value = '';
+                        return;
+                    }
+
+                    // Create backup before import
+                    const backupState = {
+                        decimal: JSON.parse(localStorage.getItem('emmaDecimalProgress') || '{}'),
+                        multiplication: JSON.parse(localStorage.getItem('emmaMultiplicationProgress') || '{}'),
+                        numberline: JSON.parse(localStorage.getItem('emmaNumberLineProgress') || '{}')
+                    };
+                    localStorage.setItem('emmaBackupBeforeImport', JSON.stringify(backupState));
+
+                    // Import all modules
+                    if (importedState.modules.decimal) {
+                        localStorage.setItem('emmaDecimalProgress', JSON.stringify(importedState.modules.decimal));
+                    }
+                    if (importedState.modules.multiplication) {
+                        localStorage.setItem('emmaMultiplicationProgress', JSON.stringify(importedState.modules.multiplication));
+                    }
+                    if (importedState.modules.numberline) {
+                        localStorage.setItem('emmaNumberLineProgress', JSON.stringify(importedState.modules.numberline));
+                    }
+
+                    console.log("✅ Import successful!");
+
+                    // Show success message and reload
+                    showImportSuccessMessage(importedState);
+
+                    // Clear file input
+                    event.target.value = '';
+
+                    // Reload page after delay
+                    setTimeout(() => {
+                        location.reload();
+                    }, 3000);
+
+                } catch (error) {
+                    console.error("❌ Import failed:", error);
+                    alert(`שגיאה בייבוא הגיבוי:\n${error.message}\n\nודא שהקובץ הוא קובץ גיבוי תקין.`);
+                    event.target.value = '';
+                }
+            };
+
+            reader.readAsText(file);
+        }
+
+        // Show import success celebration
+        function showImportSuccessMessage(state) {
+            const overlay = document.getElementById('overlay');
+            const celebration = document.getElementById('celebration');
+
+            celebration.innerHTML = `
+                ✅ <strong>הגיבוי שוחזר בהצלחה!</strong><br><br>
+                📅 <strong>תאריך גיבוי:</strong> ${new Date(state.exportDate).toLocaleString('he-IL')}<br>
+                📊 <strong>נתונים שוחזרו:</strong><br>
+                • ${state.totalSession.totalQuestions} שאלות<br>
+                • ${state.totalSession.correctAnswers} תשובות נכונות<br>
+                • ${Math.floor(state.totalSession.totalTime / 60)} דקות תרגול<br><br>
+                🔄 <strong>העמוד ייטען מחדש בעוד 3 שניות...</strong><br><br>
+                💾 גיבוי אוטומטי של הנתונים הקודמים נשמר<br>
+                <small>(במקרה של בעיה)</small>
+            `;
+
+            overlay.style.display = 'block';
+            celebration.style.display = 'block';
+        }
+
+        console.log("✅ Feature 1: Export/Import functions loaded successfully!");
+    </script>
+
+    <!-- Feature 2: Race Track Progress Visualization Functions -->
+    <script>
+        // Calculate overall progress percentage
+        function calculateOverallProgress() {
+            const modules = ['decimal', 'multiplication', 'numberline'];
+            const storageKeys = {
+                'decimal': 'emmaDecimalProgress',
+                'multiplication': 'emmaMultiplicationProgress',
+                'numberline': 'emmaNumberLineProgress'
+            };
+
+            let totalWeightedScore = 0;
+            const targetPerModule = 30; // Target: 30 questions per module
+
+            modules.forEach(moduleName => {
+                const state = JSON.parse(localStorage.getItem(storageKeys[moduleName]) || '{}');
+
+                const questionsAnswered = state.totalQuestions || 0;
+                const questionsRatio = Math.min(questionsAnswered / targetPerModule, 1);
+
+                const correctAnswers = state.correctAnswers || 0;
+                const successRate = questionsAnswered > 0 ? correctAnswers / questionsAnswered : 0;
+
+                // Formula: 60% coverage + 40% success rate
+                const moduleScore = (questionsRatio * 0.6) + (successRate * 0.4);
+                totalWeightedScore += moduleScore;
+            });
+
+            // Average across 3 modules, as percentage
+            const overallProgress = Math.round((totalWeightedScore / 3) * 100);
+            return Math.min(overallProgress, 100);
+        }
+
+        // Update race track visual elements
+        function updateRaceTrack() {
+            const progress = calculateOverallProgress();
+
+            // Update percentage text
+            const percentageEl = document.getElementById('track-percentage');
+            if (percentageEl) {
+                percentageEl.textContent = progress;
+            }
+
+            // Update runner position
+            const runner = document.getElementById('progress-runner');
+            if (runner) {
+                // Constrain between 5% and 95% to stay within track
+                const runnerPosition = 5 + (progress * 0.9);
+                runner.style.left = runnerPosition + '%';
+            }
+
+            // Update milestone styles (mark reached milestones)
+            const milestones = document.querySelectorAll('.milestone');
+            milestones.forEach(milestone => {
+                const milestonePercent = parseInt(milestone.getAttribute('data-percent'));
+                if (progress >= milestonePercent) {
+                    milestone.classList.add('reached');
+                } else {
+                    milestone.classList.remove('reached');
+                }
+            });
+
+            console.log(`🏃‍♀️ Race track updated: ${progress}% progress`);
+        }
+
+        // Wrap existing functions to update race track
+        function wrapProgressFunctionsForRaceTrack() {
+            // Wrap saveProgress to update race track on save
+            if (typeof window.saveProgress === 'function') {
+                const originalSaveProgress = window.saveProgress;
+                window.saveProgress = function(toolName) {
+                    const result = originalSaveProgress.call(this, toolName);
+                    updateRaceTrack();
+                    return result;
+                };
+            }
+
+            // Wrap loadProgress to update race track on load
+            if (typeof window.loadProgress === 'function') {
+                const originalLoadProgress = window.loadProgress;
+                window.loadProgress = function(toolName) {
+                    const result = originalLoadProgress.call(this, toolName);
+                    updateRaceTrack();
+                    return result;
+                };
+            }
+
+            // Wrap loadAllProgress to update on page load
+            if (typeof window.loadAllProgress === 'function') {
+                const originalLoadAllProgress = window.loadAllProgress;
+                window.loadAllProgress = function() {
+                    const result = originalLoadAllProgress.call(this);
+                    setTimeout(() => updateRaceTrack(), 100);
+                    return result;
+                };
+            }
+        }
+
+        // Initialize race track on page load
+        function initRaceTrack() {
+            console.log("🚀 Initializing Race Track...");
+            wrapProgressFunctionsForRaceTrack();
+
+            // Initial update
+            setTimeout(() => {
+                updateRaceTrack();
+            }, 500);
+        }
+
+        // Run on DOM ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initRaceTrack);
+        } else {
+            initRaceTrack();
+        }
+
+        // Make updateRaceTrack globally accessible for manual updates
+        window.updateRaceTrack = updateRaceTrack;
+
+        console.log("✅ Feature 2: Race Track functions loaded successfully!");
+    </script>
+
+    <!-- Feature 5: Multi-Attempt Wrong Answer Flow -->
+    <script>
+        // Encouraging messages for each attempt
+        const encouragingMessages = {
+            attempt1: [
+                "לא נורא! כולנו טועים לפעמים 💙",
+                "ניסיון ראשון - יש לך עוד הזדמנויות! 💪",
+                "כמעט! חשבי על זה שוב 🤔"
+            ],
+            attempt2: [
+                "ניסיון שני - את מתקרבת! 🎯",
+                "לא בדיוק, אבל המשיכי לנסות! 🌟",
+                "תחשבי שוב בקצב שלך 🧠"
+            ],
+            attempt3: [
+                "זה קצת קשה, נכון? זה בסדר גמור! 💝",
+                "3 ניסיונות - חשבת יפה, אבל זה מסובך 🤗",
+                "את עושה כמיטב יכולתך! 👏"
+            ]
+        };
+
+        // Get random encouraging message
+        function getEncouragingMessage(attemptNum) {
+            const messages = encouragingMessages[`attempt${attemptNum}`];
+            return messages[Math.floor(Math.random() * messages.length)];
+        }
+
+        // Initialize attempt tracking for a module
+        function initAttemptTracking(toolName) {
+            const state = window[`${toolName}State`];
+            if (!state) return;
+
+            if (!state.currentAttempts) {
+                state.currentAttempts = [];
+            }
+            if (!state.questionHistory) {
+                state.questionHistory = [];
+            }
+
+            // Safety: If we're on a NEW question (different from last tracked), reset attempts
+            if (state.currentQuestion && state._lastQuestionText !== state.currentQuestion.question) {
+                state.currentAttempts = [];
+                state._lastQuestionText = state.currentQuestion.question;
+            }
+        }
+
+        // Reset attempts for current question
+        function resetAttempts(toolName) {
+            const state = window[`${toolName}State`];
+            if (state) {
+                state.currentAttempts = [];
+            }
+        }
+
+        // Add attempt record
+        function recordAttempt(toolName, userAnswer, isCorrect) {
+            const state = window[`${toolName}State`];
+            if (!state || !state.currentAttempts) return;
+
+            state.currentAttempts.push({
+                attempt: state.currentAttempts.length + 1,
+                answer: userAnswer,
+                isCorrect: isCorrect,
+                timestamp: Date.now()
+            });
+        }
+
+        // Show encouraging message with retry option
+        function showEncouragingFeedback(toolName, attemptNum, secondRound = false) {
+            const message = getEncouragingMessage(attemptNum);
+            const roundText = secondRound ? " (סיבוב נוסף)" : "";
+            const feedback = document.getElementById(`${toolName}-feedback`);
+
+            if (feedback) {
+                feedback.className = 'feedback';
+                feedback.style.background = '#fff3e0';
+                feedback.style.color = '#e65100';
+                feedback.style.border = '3px solid #ff9800';
+                feedback.innerHTML = `
+                    ❌ ${message}<br>
+                    <small style="font-size: 12pt;">ניסיון ${attemptNum} מתוך 3${roundText}</small><br><br>
+                    <button class="check-btn" onclick="clearAnswerForRetry('${toolName}')">בואי ננסה שוב! 🔄</button>
+                `;
+                feedback.classList.remove('hidden');
+            }
+        }
+
+        // Show reveal prompt after 3 attempts
+        function showRevealPrompt(toolName) {
+            const feedback = document.getElementById(`${toolName}-feedback`);
+            const state = window[`${toolName}State`];
+
+            if (feedback) {
+                feedback.className = 'feedback';
+                feedback.style.background = '#e3f2fd';
+                feedback.style.color = '#1565c0';
+                feedback.style.border = '3px solid #2196f3';
+                feedback.innerHTML = `
+                    🤔 <strong>ניסיון 3 מתוך 3</strong><br><br>
+                    האם תרצי שאני אחשוף את התשובה?<br><br>
+                    <button class="check-btn" style="background: #4caf50; margin: 5px;" onclick="revealAnswerNow('${toolName}')">
+                        כן, תחשפי! 💡
+                    </button>
+                    <button class="check-btn" style="background: #ff9800; margin: 5px;" onclick="continueAttempting('${toolName}')">
+                        לא, תני לי עוד הזדמנות! 💪
+                    </button>
+                `;
+                feedback.classList.remove('hidden');
+            }
+        }
+
+        // Reveal answer with explanation
+        function revealAnswerNow(toolName, forced = false) {
+            const state = window[`${toolName}State`];
+            const feedback = document.getElementById(`${toolName}-feedback`);
+
+            if (!state || !feedback) return;
+
+            const correctAnswer = state.currentAnswer;
+            const questionText = state.currentQuestion?.question || 'השאלה הנוכחית';
+
+            feedback.className = 'feedback';
+            feedback.style.background = '#e8f5e9';
+            feedback.style.color = '#2e7d32';
+            feedback.style.border = '3px solid #4caf50';
+            feedback.innerHTML = `
+                💡 <strong>התשובה הנכונה: ${correctAnswer}</strong><br><br>
+
+                📚 <strong>הסבר:</strong><br>
+                ${getExplanation(toolName, questionText, correctAnswer)}<br><br>
+
+                ${forced ?
+                    "זה היה קשה! שום דבר - לימדת משהו חדש 🌟" :
+                    "טוב שביקשת עזרה! ככה לומדים 💪"
+                }<br><br>
+
+                <button class="check-btn" onclick="continueAfterReveal('${toolName}')">המשיכי לשאלה הבאה ➡️</button>
+            `;
+            feedback.classList.remove('hidden');
+
+            // Record as revealed
+            if (state.questionHistory) {
+                state.questionHistory.push({
+                    question: questionText,
+                    attempts: state.currentAttempts || [],
+                    correctAnswer: correctAnswer,
+                    finalResult: 'revealed',
+                    userChoseReveal: !forced,
+                    timestamp: Date.now()
+                });
+            }
+
+            // Hide check button
+            const checkBtn = document.getElementById(`${toolName}-check-btn`);
+            if (checkBtn) checkBtn.style.display = 'none';
+        }
+
+        // Get explanation based on tool type
+        function getExplanation(toolName, question, answer) {
+            // Basic explanation - can be enhanced per module type
+            if (toolName === 'decimal') {
+                return `התשובה הנכונה היא ${answer}. קראי שוב את השאלה בקפידה ושימי לב למקום הספרה.`;
+            } else if (toolName === 'multiplication') {
+                return `התשובה הנכונה היא ${answer}. נסי לזכור את לוח הכפל או להשתמש בחישוב מהיר.`;
+            } else if (toolName === 'numberline') {
+                return `התשובה הנכונה היא ${answer}. שימי לב למיקום על ישר המספרים ולמרווחים בין המספרים.`;
+            }
+            return `התשובה הנכונה היא ${answer}.`;
+        }
+
+        // Clear answer field for retry
+        window.clearAnswerForRetry = function(toolName) {
+            const input = document.getElementById(`${toolName}-answer-input`);
+            if (input) {
+                input.value = '';
+                input.focus();
+            }
+
+            const feedback = document.getElementById(`${toolName}-feedback`);
+            if (feedback) {
+                feedback.classList.add('hidden');
+            }
+        };
+
+        // Continue attempting (after declining reveal)
+        window.continueAttempting = function(toolName) {
+            const state = window[`${toolName}State`];
+            if (state && state.currentAttempts) {
+                // Mark that we're in second round
+                state.secondRound = true;
+            }
+
+            window.clearAnswerForRetry(toolName);
+        };
+
+        // Continue after reveal
+        window.continueAfterReveal = function(toolName) {
+            resetAttempts(toolName);
+
+            const state = window[`${toolName}State`];
+            if (state) {
+                state.secondRound = false;
+            }
+
+            // Generate new question
+            if (toolName === 'decimal' && typeof window.generateDecimalQuestion === 'function') {
+                window.generateDecimalQuestion();
+            } else if (toolName === 'multiplication' && typeof window.generateMultiplicationQuestion === 'function') {
+                window.generateMultiplicationQuestion();
+            } else if (toolName === 'numberline' && typeof window.generateNumberlineQuestion === 'function') {
+                window.generateNumberlineQuestion();
+            }
+        };
+
+        // Wrap check answer functions
+        function wrapCheckAnswerFunctionsForAttempts() {
+            ['decimal', 'multiplication', 'numberline'].forEach(toolName => {
+                const funcName = `check${toolName.charAt(0).toUpperCase() + toolName.slice(1)}Answer`;
+
+                if (typeof window[funcName] === 'function') {
+                    const originalCheck = window[funcName];
+
+                    window[funcName] = function() {
+                        const state = window[`${toolName}State`];
+                        if (!state) return originalCheck.call(this);
+
+                        // Initialize tracking if needed
+                        initAttemptTracking(toolName);
+
+                        // Get user answer before calling original
+                        const input = document.getElementById(`${toolName}-answer-input`);
+                        let userAnswer = null;
+
+                        // Check if input is VISIBLE and being used (not just exists)
+                        if (input && input.style.display !== 'none' && input.offsetParent !== null) {
+                            userAnswer = parseInt(input.value);
+                        } else {
+                            // For choice-based questions
+                            userAnswer = state.selectedChoice;
+                        }
+
+                        const correctAnswer = state.currentAnswer;
+                        const isCorrect = (userAnswer === correctAnswer);
+
+                        // Record attempt
+                        recordAttempt(toolName, userAnswer, isCorrect);
+
+                        const attemptCount = state.currentAttempts.length;
+                        const inSecondRound = state.secondRound || false;
+                        const effectiveAttempt = inSecondRound ? (attemptCount - 3) : attemptCount;
+
+                        // If correct, call original and reset
+                        if (isCorrect) {
+                            resetAttempts(toolName);
+                            state.secondRound = false;
+                            return originalCheck.call(this);
+                        }
+
+                        // Wrong answer handling
+                        if (attemptCount < 3) {
+                            // First 3 attempts
+                            showEncouragingFeedback(toolName, attemptCount, false);
+                            return false;
+                        } else if (attemptCount === 3 && !inSecondRound) {
+                            // After 3rd attempt - show reveal prompt
+                            showRevealPrompt(toolName);
+                            return false;
+                        } else if (inSecondRound && effectiveAttempt < 3) {
+                            // Second round (after declining reveal)
+                            showEncouragingFeedback(toolName, effectiveAttempt, true);
+                            return false;
+                        } else if (attemptCount >= 6) {
+                            // After 6 attempts - force reveal
+                            revealAnswerNow(toolName, true);
+                            return false;
+                        } else {
+                            // Show reveal prompt again
+                            showRevealPrompt(toolName);
+                            return false;
+                        }
+                    };
+                }
+            });
+        }
+
+        // Wrap generate functions to reset attempts
+        function wrapGenerateFunctionsForAttempts() {
+            ['decimal', 'multiplication', 'numberline'].forEach(toolName => {
+                const funcName = `generate${toolName.charAt(0).toUpperCase() + toolName.slice(1)}Question`;
+
+                if (typeof window[funcName] === 'function') {
+                    const originalGenerate = window[funcName];
+
+                    window[funcName] = function() {
+                        resetAttempts(toolName);
+                        const state = window[`${toolName}State`];
+                        if (state) state.secondRound = false;
+                        return originalGenerate.call(this);
+                    };
+                }
+            });
+        }
+
+        // Initialize Feature 5
+        function initMultiAttempt() {
+            console.log("🚀 Initializing Multi-Attempt Feature...");
+
+            // Initialize tracking for all modules
+            ['decimal', 'multiplication', 'numberline'].forEach(toolName => {
+                initAttemptTracking(toolName);
+            });
+
+            // Wrap functions
+            wrapCheckAnswerFunctionsForAttempts();
+            wrapGenerateFunctionsForAttempts();
+
+            console.log("✅ Multi-Attempt feature ready!");
+        }
+
+        // Run on DOM ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initMultiAttempt);
+        } else {
+            initMultiAttempt();
+        }
+
+        console.log("✅ Feature 5: Multi-Attempt functions loaded successfully!");
+    </script>
+
+    <!-- Feature 6: Module Interface Standardization -->
+    <!--
+    ═══════════════════════════════════════════════════════════════════════════════
+    📖 MODULE INTERFACE STANDARDIZATION - IModule Contract
+    ═══════════════════════════════════════════════════════════════════════════════
+
+    This section defines the standardized interface for all practice modules.
+    New modules should follow this contract to ensure compatibility.
+
+    ╔═══════════════════════════════════════════════════════════════════════════╗
+    ║ IModule Interface Definition                                             ║
+    ╚═══════════════════════════════════════════════════════════════════════════╝
+
+    interface IModule {
+        // Required Metadata
+        name: string;              // Module name in Hebrew (e.g., "מבנה עשרוני")
+        id: string;                // Unique identifier (e.g., "decimal")
+        icon: string;              // Display emoji (e.g., "📊")
+        description: string;       // Short description in Hebrew
+        topics: string[];          // Covered topics (e.g., ["פירוק מספרים", "ערך ספרה"])
+        targetPages: string;       // Relevant textbook pages (e.g., "עמודים 132-145")
+
+        // Required Core Functions
+        generateQuestion: (level: string) => {
+            question: string;          // Question text in Hebrew
+            type: "input" | "choice" | "visual-input" | "visual-choice";
+            correctAnswer: any;        // Correct answer (number, string, etc.)
+            choices?: string[];        // For choice-type questions
+            explanation: string;       // Detailed explanation
+            difficulty: "קל" | "בינוני" | "קשה";
+        };
+
+        checkAnswer: (userAnswer: any, correctAnswer: any, questionData: object) => boolean;
+
+        getHint: (questionData: object) => string;
+
+        getExplanation: (questionData: object, userAnswer: any) => {
+            detailed: string;      // Detailed explanation
+            tip: string;           // Quick tip for next time
+            nextSteps: string;     // Suggested practice steps
+        };
+
+        // Optional Functions
+        getDifficultyRange?: (level: string) => object;
+        getStats?: (moduleState: object) => object;
+        customCSS?: string;        // Additional module-specific CSS
+        customHTML?: string;       // Special HTML for visualization
+    }
+
+    ╔═══════════════════════════════════════════════════════════════════════════╗
+    ║ Adding a New Module - Quick Guide (< 30 minutes)                         ║
+    ╚═══════════════════════════════════════════════════════════════════════════╝
+
+    Step 1: Create Module Object
+    ────────────────────────────────────────────────────────────────────────────
+    const MyNewModule = {
+        name: "שם המודול בעברית",
+        id: "module-id",
+        icon: "🎯",
+        description: "תיאור קצר",
+        topics: ["נושא 1", "נושא 2"],
+        targetPages: "עמודים X-Y",
+
+        generateQuestion: (level = 'בינוני') => {
+            // Generate and return question object
+            return {
+                question: "השאלה כאן?",
+                type: "input",
+                correctAnswer: 42,
+                explanation: "הסבר מפורט",
+                difficulty: level
+            };
+        },
+
+        checkAnswer: (userAnswer, correctAnswer) => userAnswer === correctAnswer,
+
+        getHint: (questionData) => "💡 רמז מועיל כאן",
+
+        getExplanation: (questionData, userAnswer) => ({
+            detailed: "הסבר מפורט כאן",
+            tip: "טיפ לפעם הבאה",
+            nextSteps: "מה לתרגל הלאה"
+        })
+    };
+
+    Step 2: Register Module
+    ────────────────────────────────────────────────────────────────────────────
+    moduleRegistry.register('module-id', MyNewModule);
+
+    Step 3: Test
+    ────────────────────────────────────────────────────────────────────────────
+    Open browser console and check for: "✅ מודול 'שם המודול' נרשם בהצלחה"
+
+    ╔═══════════════════════════════════════════════════════════════════════════╗
+    ║ Example Module: Angles (זוויות בגיאומטריה)                              ║
+    ╚═══════════════════════════════════════════════════════════════════════════╝
+
+    const AnglesModule = {
+        name: "זוויות בגיאומטריה",
+        id: "angles",
+        icon: "📐",
+        description: "זיהוי וחישוב זוויות, סוגי זוויות",
+        topics: ["זווית חדה", "זווית קהה", "זווית ישרה"],
+        targetPages: "עמודים 8-12",
+
+        generateQuestion: (level = 'בינוני') => {
+            const angles = level === 'קל' ? [30, 45, 60, 90] : [35, 47, 83, 127];
+            const angle = angles[Math.floor(Math.random() * angles.length)];
+
+            return {
+                question: `איזה סוג זווית היא זווית של ${angle} מעלות?`,
+                type: 'choice',
+                correctAnswer: angle === 90 ? 'זווית ישרה' : (angle < 90 ? 'זווית חדה' : 'זווית קהה'),
+                choices: ['זווית חדה', 'זווית ישרה', 'זווית קהה'],
+                explanation: angle === 90 ? 'זווית של 90° היא ישרה' :
+                            angle < 90 ? 'זוויות < 90° הן חדות' : 'זוויות > 90° הן קהות',
+                difficulty: level
+            };
+        },
+
+        checkAnswer: (userAnswer, correctAnswer) => userAnswer === correctAnswer,
+
+        getHint: (questionData) => "💡 זכרי: חדה < 90°, ישרה = 90°, קהה > 90°",
+
+        getExplanation: (questionData, userAnswer) => ({
+            detailed: questionData.explanation,
+            tip: "תמיד השוואי לזווית הישרה (90°)",
+            nextSteps: "תתרגלי עם זוויות שונות"
+        })
+    };
+
+    // To add this module: moduleRegistry.register('angles', AnglesModule);
+
+    ═══════════════════════════════════════════════════════════════════════════════
+    END OF MODULE INTERFACE DOCUMENTATION
+    ═══════════════════════════════════════════════════════════════════════════════
+    -->
+
+    <!-- Feature 6: Module Registry System -->
+    <script src="js/features/module-registry.js"></script>
+
+    <!-- Feature 4: Navigation System (Previous/Next/Skip) -->
+    <script>
+(function(){console.log("🚀 Loading Navigation Feature Patch...");if(!document.querySelector("style[data-nav-patch]")){const navCSS=document.createElement("style");navCSS.setAttribute("data-nav-patch","true");navCSS.textContent=`.question-navigation{margin:20px 0;padding:15px;background:#f5f7fa;border-radius:10px}.nav-buttons{display:flex;gap:10px;justify-content:center;margin-bottom:10px}.nav-btn{font-size:14pt;font-weight:600;padding:10px 20px;border:2px solid #2196f3;background:white;border-radius:8px;cursor:pointer;font-family:"Noto Sans Hebrew",Arial,sans-serif;transition:all 0.3s ease}.nav-btn:hover:not(:disabled){background:#e3f2fd}.nav-btn:disabled{opacity:0.5;cursor:not-allowed}.skip-btn{border-color:#ff9800;color:#ff9800}.question-indicator{text-align:center;font-size:12pt;font-weight:600;color:#666}.skipped-counter{color:#ff9800;font-weight:700}`;document.head.appendChild(navCSS)}function extendStates(){[window.decimalState,window.multiplicationState,window.numberlineState].forEach(state=>{if(state&&!state.questionBank){state.questionBank=[];state.currentQuestionIndex=0;state.skippedQuestions=[];state.answeredQuestions=[];state.questionStatus={}}})}function injectNavigationUI(){["decimal","multiplication","numberline"].forEach(tool=>{const answerArea=document.querySelector(`#${tool}-section .answer-area`);if(!answerArea||document.getElementById(`nav-container-${tool}`))return;const navHTML=`<div class="question-navigation" id="nav-container-${tool}"><div class="nav-buttons"><button class="nav-btn" id="prev-btn-${tool}">◄ הקודם</button><button class="nav-btn skip-btn" id="skip-btn-${tool}">⏭️ דלג</button><button class="nav-btn" id="next-btn-${tool}">הבא ►</button></div><div class="question-indicator">שאלה <span id="current-q-${tool}">1</span> | נענו: <span id="answered-count-${tool}">0</span> | דולגו: <span id="skipped-count-${tool}" class="skipped-counter">0</span></div></div>`;answerArea.insertAdjacentHTML("afterend",navHTML);document.getElementById(`prev-btn-${tool}`).onclick=()=>window.goToPrevious(tool);document.getElementById(`skip-btn-${tool}`).onclick=()=>window.skipQuestion(tool);document.getElementById(`next-btn-${tool}`).onclick=()=>window.goToNext(tool)})}window.goToPrevious=function(toolName){const state=getState(toolName);if(state.currentQuestionIndex>0){state.currentQuestionIndex--;displayQuestionFromBank(toolName);window.updateNavigationUI(toolName)}};window.goToNext=function(toolName){const state=getState(toolName);if(state.currentQuestionIndex<state.questionBank.length-1){state.currentQuestionIndex++;displayQuestionFromBank(toolName)}else{if(toolName==="decimal"&&typeof window.generateDecimalQuestion==="function")window.generateDecimalQuestion();else if(toolName==="multiplication"&&typeof window.generateMultiplicationQuestion==="function")window.generateMultiplicationQuestion();else if(toolName==="numberline"&&typeof window.generateNumberlineQuestion==="function")window.generateNumberlineQuestion()}window.updateNavigationUI(toolName)};window.skipQuestion=function(toolName){const state=getState(toolName);let currentQ=state.questionBank[state.currentQuestionIndex];if(!currentQ&&state.currentQuestion){currentQ={id:Date.now()+Math.random(),question:state.currentQuestion.question||"",questionText:state.currentQuestion.question||"",correctAnswer:state.currentAnswer,type:state.currentQuestion.type||"input",choices:state.currentQuestion.choices||[]};state.questionBank.push(currentQ);state.currentQuestionIndex=state.questionBank.length-1}if(!currentQ)return;if(!currentQ.id)currentQ.id=Date.now()+Math.random();if(!state.skippedQuestions.includes(currentQ.id))state.skippedQuestions.push(currentQ.id);state.questionStatus[currentQ.id]="skipped";const feedback=document.getElementById(`${toolName}-feedback`);if(feedback){feedback.className="feedback";feedback.style.background="#fff3e0";feedback.style.color="#e65100";feedback.style.border="3px solid #ff9800";feedback.innerHTML="⏭️ דילגת על השאלה<br>זה בסדר! נחזור אליה אחר כך";feedback.classList.remove("hidden")}if(typeof window.saveProgress==="function")window.saveProgress(toolName);window.updateNavigationUI(toolName);setTimeout(()=>window.goToNext(toolName),1000)};window.updateNavigationUI=function(toolName){const state=getState(toolName);const currentEl=document.getElementById(`current-q-${toolName}`);const answeredEl=document.getElementById(`answered-count-${toolName}`);const skippedEl=document.getElementById(`skipped-count-${toolName}`);if(currentEl)currentEl.textContent=state.currentQuestionIndex+1;if(answeredEl)answeredEl.textContent=state.answeredQuestions.length;if(skippedEl)skippedEl.textContent=state.skippedQuestions.length;const prevBtn=document.getElementById(`prev-btn-${toolName}`);if(prevBtn)prevBtn.disabled=state.currentQuestionIndex===0};function displayQuestionFromBank(toolName){const state=getState(toolName);if(!state.questionBank||state.questionBank.length===0)return;const question=state.questionBank[state.currentQuestionIndex];if(!question)return;state.currentQuestion=question;state.currentAnswer=question.correctAnswer;document.getElementById(`${toolName}-question`).textContent=question.questionText||question.question;const inputElement=document.getElementById(`${toolName}-answer-input`);const choicesContainer=document.getElementById(`${toolName}-choice-buttons`);if(inputElement)inputElement.style.display="none";if(choicesContainer){choicesContainer.style.display="none";choicesContainer.innerHTML=""}if(question.type==="input"||question.type==="visual-input"){if(inputElement){inputElement.style.display="inline-block";inputElement.value="";inputElement.focus()}}else if((question.type==="choice"||question.type==="visual-choice")&&question.choices){if(choicesContainer){choicesContainer.style.display="flex";question.choices.forEach(choice=>{const btn=document.createElement("button");btn.className="choice-btn";btn.textContent=choice;btn.onclick=function(){if(toolName==="decimal"&&typeof window.selectDecimalChoice==="function")window.selectDecimalChoice(choice,this);else if(toolName==="numberline"&&typeof window.selectNumberlineChoice==="function")window.selectNumberlineChoice(choice,this);getState(toolName).selectedChoice=choice};choicesContainer.appendChild(btn)})}}const checkBtn=document.getElementById(`${toolName}-check-btn`);const newBtn=document.getElementById(`${toolName}-new-question-btn`);if(checkBtn)checkBtn.style.display="inline-block";if(newBtn)newBtn.style.display="none";const feedback=document.getElementById(`${toolName}-feedback`);if(feedback)feedback.className="feedback hidden";if(toolName==="numberline"&&(question.type==="visual"||question.type==="visual-input"||question.type==="visual-choice")){if(typeof window.displayNumberLine==="function")window.displayNumberLine(question)}window.updateNavigationUI(toolName)}function wrapGenerateFunctions(){["decimal","multiplication","numberline"].forEach(toolName=>{const funcName=`generate${toolName.charAt(0).toUpperCase()+toolName.slice(1)}Question`;if(typeof window[funcName]==="function"){const original=window[funcName];window[funcName]=function(){original.call(this);addCurrentQuestionToBank(toolName)}}})}function addCurrentQuestionToBank(toolName){const state=getState(toolName);if(!state.currentQuestion)return;const questionObj={id:Date.now()+Math.random(),question:state.currentQuestion.question||"",questionText:state.currentQuestion.question||"",correctAnswer:state.currentAnswer,type:state.currentQuestion.type||"input",choices:state.currentQuestion.choices||[],range:state.currentQuestion.range,arrowPosition:state.currentQuestion.arrowPosition,targetNum:state.currentQuestion.targetNum};state.questionBank.push(questionObj);state.currentQuestionIndex=state.questionBank.length-1;window.updateNavigationUI(toolName)}function wrapCheckAnswerFunctions(){["decimal","multiplication","numberline"].forEach(toolName=>{const funcName=`check${toolName.charAt(0).toUpperCase()+toolName.slice(1)}Answer`;if(typeof window[funcName]==="function"){const original=window[funcName];window[funcName]=function(){const result=original.call(this);const state=getState(toolName);const currentQ=state.questionBank[state.currentQuestionIndex];if(currentQ&&currentQ.id&&state.correctAnswers>(state._prevCorrectAnswers||0)){if(!state.answeredQuestions.includes(currentQ.id))state.answeredQuestions.push(currentQ.id);state.questionStatus[currentQ.id]="answered";window.updateNavigationUI(toolName)}state._prevCorrectAnswers=state.correctAnswers;return result}}})}function wrapSaveLoadFunctions(){if(typeof window.saveProgress==="function"){const originalSave=window.saveProgress;window.saveProgress=function(toolName){const state=getState(toolName);const navData={questionBank:state.questionBank||[],currentQuestionIndex:state.currentQuestionIndex||0,skippedQuestions:state.skippedQuestions||[],answeredQuestions:state.answeredQuestions||[],questionStatus:state.questionStatus||{}};Object.assign(state,navData);return originalSave.call(this,toolName)}}if(typeof window.loadProgress==="function"){const originalLoad=window.loadProgress;window.loadProgress=function(toolName){const result=originalLoad.call(this,toolName);const state=getState(toolName);if(state){state.questionBank=state.questionBank||[];state.currentQuestionIndex=state.currentQuestionIndex||0;state.skippedQuestions=state.skippedQuestions||[];state.answeredQuestions=state.answeredQuestions||[];state.questionStatus=state.questionStatus||{};window.updateNavigationUI(toolName)}return result}}}function getState(toolName){const states={decimal:window.decimalState,multiplication:window.multiplicationState,numberline:window.numberlineState};return states[toolName]}function init(){try{extendStates();injectNavigationUI();wrapGenerateFunctions();wrapCheckAnswerFunctions();wrapSaveLoadFunctions();console.log("✅ Navigation Feature Patch Loaded Successfully!");["decimal","multiplication","numberline"].forEach(tool=>{if(getState(tool))window.updateNavigationUI(tool)})}catch(error){console.error("❌ Navigation patch failed:",error)}}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init);else init()})();
+    </script>
+
+</body></html>

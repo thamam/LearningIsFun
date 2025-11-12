@@ -1,0 +1,377 @@
+﻿@font-face {
+  font-family: "Nachlieli";
+  src: url(../Fonts/200.woff) format('woff');
+}
+@font-face {
+  font-family: "NachlieliBold";
+  src: url(../Fonts/700.woff) format('woff');
+}
+
+.tb-preloder {
+  background-image:url(../Images/preloaderbig.gif);
+  background-repeat:no-repeat;
+  background-position:center center;
+}
+
+#tb_wrapper {
+  direction: ltr;
+}
+
+#tb_header {
+  border-bottom:1px solid #cecece;
+  margin-left: 10px;
+}
+
+#tb_comments_rtl {
+  float: right;
+  margin-bottom: 2px;
+  font-family: NachlieliBold;
+  font-size: 16px;
+  color: #ee9c2c;
+}
+
+#tb_comments_ltr {  
+  margin-bottom: 2px;
+  font-family: NachlieliBold;
+  font-size: 16px;
+  color: #ee9c2c;
+}
+
+#tb_comments_toggle_rtl {
+  font-family: Nachlieli;
+  font-size: 14px;  
+}
+
+#tb_comments_toggle_ltr {
+  float: right;
+  font-family: Nachlieli;
+  font-size: 14px;  
+}
+
+#tb_show_comments {
+  cursor: pointer;
+}
+
+#tb_hide_comments {
+  display: none;
+  cursor: pointer;
+}
+
+#tb_add_new_talkback_rtl {
+  background-color:#fff;
+  border: 1px solid #dadada;
+  text-align: right;
+  padding: 5px 15px 15px;
+  font-family: Nachlieli;
+  font-size: 12px;
+  margin: 10px 30px 0;
+  border-radius: 4px;
+  margin-left: 80px;
+  position: relative;
+  direction: rtl;
+  
+}
+
+#tb_add_new_talkback_ltr {
+  background-color:#fff;
+  border: 1px solid #dadada;  
+  padding: 5px 15px 15px;
+  font-family: Nachlieli;
+  font-size: 12px;
+  margin: 10px 30px 0;
+  border-radius: 4px;
+  margin-right: 80px;
+  position: relative;
+  direction: ltr;  
+}
+
+#tb_add_new_talkback:focus {
+  outline: none;
+}
+
+#tb_send_new_talkback_rtl {  
+  background-size:cover;
+  background-repeat: no-repeat;
+  margin: 1px 10px 0;
+  width: 60px;
+  height: 30px;
+  float: left;
+  cursor:pointer;
+}
+
+#tb_send_new_talkback_ltr {  
+  background-size:cover;
+  background-repeat: no-repeat;
+  margin: 1px 10px 0;
+  width: 60px;
+  height: 30px;
+  float: right;
+  cursor:pointer;
+}
+
+#tb_send_new_talkback_rtl.he {
+  background-image:url(../Images/sendhe.svg);
+}
+
+#tb_send_new_talkback_rtl.ar {
+  background-image:url(../Images/sendar.svg);
+}
+
+#tb_send_new_talkback_ltr.en {
+  background-image:url(../Images/senden.svg);
+}
+
+#tb_send_new_talkback_ltr.zh {
+  background-image:url(../Images/sendzh.svg);
+}
+
+#tb_list_rtl {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  direction: rtl;
+  text-align: right;
+  overflow: hidden;
+  font-family: Nachlieli;
+  padding-bottom: 10px;
+  clear: both;
+}
+
+#tb_list_ltr {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  direction: ltr;  
+  overflow: hidden;
+  font-family: Nachlieli;
+  padding-bottom: 10px;
+  clear: both;
+}
+
+.tb-collapsed {
+  height:0;
+}
+
+.tb_talkback_rtl {
+  background: #ebebeb;
+  padding: 10px;
+  width: 66.66666%;
+  margin: 12px 30px 0 0;
+  float: right;
+  border-radius: 4px;
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
+  font-family: Nachlieli;
+  font-size: 13px;
+  position: relative;
+}
+
+.tb_talkback_ltr {
+  background: #ebebeb;
+  padding: 10px;
+  width: 66.66666%;
+  margin: 12px 0 0 30px;  
+  border-radius: 4px;
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
+  font-family: Nachlieli;
+  font-size: 13px;
+  position: relative;
+}
+
+.tb_talkback--me {
+  float: left;
+  background: #f9efd4;
+  margin-left: 30px;
+}
+
+.tb_talkback_header {
+  margin: 6px 6px 3px 6px;
+}
+
+.tb_index {
+  font-family: Nachlieli;
+  font-size: 12px;
+  color: #ee9c2c;
+}
+
+.tb_creation {
+  font-family: Nachlieli;
+  font-size: 12px;
+  margin-right: 3px;
+}
+
+.tb_trashcan {
+  background: url(../Images/trash-01.svg);
+  background-repeat: no-repeat;
+  width: 25px;
+  height: 20px;
+  position: absolute;
+  bottom: 0;
+  cursor: pointer;
+}
+
+.tb_talkback--me .tb_trashcan {
+  left: 102%;
+}
+
+
+.tb_talkback--others_rtl .tb_trashcan {
+  right: 100%;
+}
+
+.tb_talkback--others_ltr .tb_trashcan {
+  left: 100%;
+  margin-left: 5px;
+}
+
+.tb_username {
+  font-family: NachlieliBold;
+  font-size: 16px;
+  color: #ee9c2c;
+  margin: 0 6px 6px 6px;
+}
+
+.tb_body {
+  -ms-word-wrap: break-word;
+  word-wrap: break-word;
+  margin: 0 6px 6px 6px;
+  font-size: 14px;
+  line-height:22px;
+}
+
+#tb_more_comments {
+  font-family: Nachlieli;
+  font-size: 16px;
+}
+
+
+
+.tb_talkback--others_rtl::after {
+  content: '';
+  position: absolute;
+  top: 18px;
+  left: 100%;
+	width: 0; 
+	height: 0; 
+	border-top: 0 solid transparent;
+	border-bottom: 17px solid transparent;
+	border-left: 25px solid #ebebeb;
+}
+
+.tb_talkback--others_rtl::before {
+  content: '';
+  position: absolute;
+  top: 20px;
+  left: 100%;
+	width: 0; 
+	height: 0; 
+	border-top: 0 solid transparent;
+	border-bottom: 17px solid transparent;
+	border-left: 25px solid;
+  border-left-color: rgba(0, 0, 0, 0.2);
+}
+
+.tb_talkback--others_ltr::after {
+  content: '';
+  position: absolute;
+  top: 18px;
+  left: -25px;
+	width: 0; 
+	height: 0; 
+	border-top: 0 solid transparent;
+	border-bottom: 17px solid transparent;
+	border-right: 25px solid #ebebeb;
+}
+
+.tb_talkback--others_ltr::before {
+  content: '';
+  position: absolute;
+  top: 20px;
+  left: -25px;
+	width: 0; 
+	height: 0; 
+	border-top: 0 solid transparent;
+	border-bottom: 17px solid transparent;
+	border-right: 25px solid;
+  border-right-color: rgba(0, 0, 0, 0.2);
+}
+
+
+.tb_talkback--me::after {
+  content: '';
+  position: absolute;
+  top: 20px;
+  right: 100%;
+	width: 0; 
+	height: 0; 
+	border-top: 0 solid transparent;
+	border-bottom: 17px solid transparent;
+	border-right: 25px solid #f9efd4;
+}
+
+#tb_add_new_talkback_rtl::after {
+  content: '';
+  position: absolute;
+  top: 5px;
+  left: 100%;
+	width: 0; 
+	height: 0; 
+	border-top: 0 solid transparent;
+	border-bottom: 12px solid transparent;
+	border-left: 20px solid #fff;
+}
+
+
+#tb_add_new_talkback_rtl::before {
+  content: '';
+  position: absolute;
+  top: 4px;
+  left: 100%;
+	width: 0; 
+	height: 0; 
+	border-top: 0 solid transparent;
+	border-bottom: 14px solid transparent;
+	border-left: 23px solid #dadada;
+}
+
+#tb_add_new_talkback_ltr::after {
+  content: '';
+  position: absolute;
+  top: 5px;
+  left: -20px;
+	width: 0; 
+	height: 0; 
+	border-top: 0 solid transparent;
+	border-bottom: 12px solid transparent;
+	border-right: 20px solid #fff;
+}
+
+
+#tb_add_new_talkback_ltr::before {
+  content: '';
+  position: absolute;
+  top: 4px;
+  left: -23px;
+	width: 0; 
+	height: 0; 
+	border-top: 0 solid transparent;
+	border-bottom: 14px solid transparent;
+	border-right: 23px solid #dadada;
+}
+
+
+#tb_wrapper [contenteditable=true]:empty:before{
+  color: #808080; 
+  content: attr(placeholder);
+  display: block; /* For Firefox */
+}
+
+#tb_text_new_talkback {
+  font-family:Nachlieli;
+  border: none;
+  outline: none;
+  resize: none;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+}

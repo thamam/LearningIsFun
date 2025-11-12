@@ -1,0 +1,149 @@
+@font-face {
+  font-weight: normal;
+  font-style: normal;
+  font-family: "MFWGadLight";
+  src: url("../font/MFW_Gad-Light/MFW_Gad-Light.eot");
+  /* IE9 Compat Modes */
+  src: url("../font/MFW_Gad-Light/MFW_Gad-Light.eot?#iefix") format("embedded-opentype"), url("../font/MFW_Gad-Light/MFW_Gad-Light.woff") format("woff"), url("../font/MFW_Gad-Light/MFW_Gad-Light.ttf") format("truetype"), url("../font/MFW_Gad-Light/MFW_Gad-Light.svg#MFWGad-Light") format("svg");
+}
+html[dir=ltr] .dropdown {
+  direction: ltr;
+  position: relative;
+}
+html[dir=ltr] .dropdown-toggle {
+  position: relative;
+  padding: 0 2em 0 0.5em;
+  background: rgba(0, 0, 0, 0);
+  border: 0;
+  width: 100%;
+  text-align: left;
+  font-size: 1.8em;
+  overflow: hidden;
+  white-space: nowrap;
+  -ms-text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  height: 100%;
+  color: #3b3b3b;
+}
+html[dir=ltr] .dropdown-toggle::after {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 1.2em;
+  height: 100%;
+  background-image: url(../img/icon-arrow-black.svg);
+  background-position: center;
+  background-repeat: no-repeat;
+  content: "";
+}
+html[dir=ltr] .dropdown-menu {
+  position: absolute;
+  top: 0;
+  z-index: 10;
+  display: none;
+  float: left;
+  margin: 0.2em 0 0;
+  padding: 0.5em 0;
+  list-style: none;
+  border: 0.1em solid #cccccc;
+  background-color: #fff;
+}
+html[dir=ltr] .dropdown-menu > .selected {
+  background-color: #494949;
+}
+html[dir=ltr] .dropdown-menu > .selected > a {
+  color: #fff;
+}
+html[dir=ltr] .dropdown-menu > li > a {
+  display: block;
+  clear: both;
+  padding: 0 1em;
+  font-weight: 400;
+  line-height: 2;
+  font-size: 1.8em;
+  color: #3b3b3b;
+  text-decoration: none;
+}
+html[dir=ltr] .dropdown-menu > li > a:hover,
+html[dir=ltr] .dropdown-menu > li > a:focus {
+  background-color: #ddd;
+  color: #222;
+}
+html[dir=ltr] .open > .dropdown-menu {
+  top: 100%;
+  display: block;
+}
+
+html[dir=rtl] .dropdown {
+  direction: rtl;
+  position: relative;
+}
+html[dir=rtl] .dropdown-toggle {
+  position: relative;
+  padding: 0 0.5em 0 2em;
+  background: rgba(0, 0, 0, 0);
+  border: 0;
+  width: 100%;
+  text-align: left;
+  font-size: 1.8em;
+  overflow: hidden;
+  white-space: nowrap;
+  -ms-text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  height: 100%;
+  color: #3b3b3b;
+}
+html[dir=rtl] .dropdown-toggle::after {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 1.2em;
+  height: 100%;
+  background-image: url(../img/icon-arrow-black.svg);
+  background-position: center;
+  background-repeat: no-repeat;
+  content: "";
+}
+html[dir=rtl] .dropdown-menu {
+  position: absolute;
+  top: 0;
+  z-index: 10;
+  display: none;
+  float: left;
+  margin: 0.2em 0 0;
+  padding: 0.5em 0;
+  list-style: none;
+  border: 0.1em solid #cccccc;
+  background-color: #fff;
+}
+html[dir=rtl] .dropdown-menu > .selected {
+  background-color: #494949;
+}
+html[dir=rtl] .dropdown-menu > .selected > a {
+  color: #fff;
+}
+html[dir=rtl] .dropdown-menu > li > a {
+  display: block;
+  clear: both;
+  padding: 0 1em;
+  font-weight: 400;
+  line-height: 2;
+  font-size: 1.8em;
+  color: #3b3b3b;
+  text-decoration: none;
+}
+html[dir=rtl] .dropdown-menu > li > a:hover,
+html[dir=rtl] .dropdown-menu > li > a:focus {
+  background-color: #ddd;
+  color: #222;
+}
+html[dir=rtl] .open > .dropdown-menu {
+  top: 100%;
+  display: block;
+}
+
+html[dir=rtl] .dropdown-menu {
+  left: 0;
+}
