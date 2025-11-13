@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emma's English Practice</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+    <!-- Home Button (always visible except on home screen) -->
+    <button id="homeButton" class="home-button hidden" onclick="showSection('home')">
+        <span class="home-icon">🏠</span> Home
+    </button>
+
+    <!-- Main Container -->
+    <div id="app" class="container">
+
+        <!-- HOME SECTION -->
+        <section id="homeSection" class="section active">
+            <div class="home-header">
+                <h1 class="title">Emma's English Practice</h1>
+                <p class="subtitle">Let's practice English together! 🌟</p>
+            </div>
+
+            <!-- Progress Summary -->
+            <div class="progress-summary">
+                <div class="stat-card">
+                    <div class="stat-icon">🔥</div>
+                    <div class="stat-value" id="streakDisplay">0</div>
+                    <div class="stat-label">Day Streak</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📚</div>
+                    <div class="stat-value" id="wordsDisplay">0</div>
+                    <div class="stat-label">Words Learned</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">⭐</div>
+                    <div class="stat-value" id="starsDisplay">0</div>
+                    <div class="stat-label">Stars Earned</div>
+                </div>
+            </div>
+
+            <!-- Module Selection -->
+            <div class="modules-grid">
+                <div class="module-card" onclick="showSection('listen')">
+                    <div class="module-icon">🎧</div>
+                    <h2 class="module-title">Listen & Respond</h2>
+                    <p class="module-desc">Stories and vocabulary</p>
+                    <div class="module-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="listenProgress" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="module-card" onclick="showSection('speak')">
+                    <div class="module-icon">🗣️</div>
+                    <h2 class="module-title">Speak & Practice</h2>
+                    <p class="module-desc">Speaking and pronunciation</p>
+                    <div class="module-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="speakProgress" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="module-card" onclick="showSection('read')">
+                    <div class="module-icon">📖</div>
+                    <h2 class="module-title">Read & Match</h2>
+                    <p class="module-desc">Sight words and phonics</p>
+                    <div class="module-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="readProgress" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="module-card" onclick="showSection('write')">
+                    <div class="module-icon">✍️</div>
+                    <h2 class="module-title">Write & Create</h2>
+                    <p class="module-desc">Letters and words</p>
+                    <div class="module-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="writeProgress" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Button -->
+            <button class="settings-button" onclick="showSection('settings')">
+                ⚙️ Settings
+            </button>
+        </section>
+
+        <!-- LISTEN & RESPOND SECTION -->
+        <section id="listenSection" class="section">
+            <div class="section-header">
+                <h2 class="section-title">🎧 Listen & Respond</h2>
+                <div class="section-stats">
+                    <span id="listenScore">0/0 correct</span>
+                    <span id="listenStreak">Streak: 0</span>
+                </div>
+            </div>
+
+            <!-- Activity Selection -->
+            <div class="activity-selector" id="listenActivitySelector">
+                <button class="activity-btn" onclick="startListenActivity('story')">
+                    📚 Story Time
+                </button>
+                <button class="activity-btn" onclick="startListenActivity('vocabulary')">
+                    📝 Vocabulary
+                </button>
+                <button class="activity-btn" onclick="startListenActivity('instructions')">
+                    👂 Follow Instructions
+                </button>
+            </div>
+
+            <!-- Activity Content -->
+            <div class="activity-content hidden" id="listenActivityContent">
+                <!-- Story Activity -->
+                <div id="storyActivity" class="activity-panel hidden">
+                    <div class="story-display">
+                        <h3 id="storyTitle"></h3>
+                        <div class="story-image-container">
+                            <div class="story-image" id="storyImage">📖</div>
+                        </div>
+                        <div class="story-text" id="storyText"></div>
+                        <button class="voice-button" id="storyPlayButton" onclick="playStory()">
+                            🔊 Play Story
+                        </button>
+                    </div>
+                    <div class="story-question hidden" id="storyQuestion">
+                        <p class="question-text" id="questionText"></p>
+                        <div class="choices" id="questionChoices"></div>
+                    </div>
+                </div>
+
+                <!-- Vocabulary Activity -->
+                <div id="vocabularyActivity" class="activity-panel hidden">
+                    <div class="vocab-card">
+                        <div class="vocab-image" id="vocabImage">📝</div>
+                        <h2 class="vocab-word" id="vocabWord"></h2>
+                        <p class="vocab-definition" id="vocabDefinition"></p>
+                        <p class="vocab-example" id="vocabExample"></p>
+                        <button class="voice-button" onclick="playVocabWord()">
+                            🔊 Hear Word
+                        </button>
+                        <button class="primary-button" onclick="vocabNextWord()">
+                            Next Word →
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Instructions Activity -->
+                <div id="instructionsActivity" class="activity-panel hidden">
+                    <div class="instruction-display">
+                        <p class="instruction-text" id="instructionText">Listen to the instruction...</p>
+                        <button class="voice-button" onclick="playInstruction()">
+                            🔊 Play Instruction
+                        </button>
+                        <div class="instruction-objects" id="instructionObjects">
+                            <!-- Objects will be dynamically added -->
+                        </div>
+                        <button class="primary-button" onclick="checkInstructionAnswer()">
+                            Check Answer
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SPEAK & PRACTICE SECTION -->
+        <section id="speakSection" class="section">
+            <div class="section-header">
+                <h2 class="section-title">🗣️ Speak & Practice</h2>
+                <div class="section-stats">
+                    <span id="speakScore">0/0 correct</span>
+                    <span id="speakStreak">Streak: 0</span>
+                </div>
+            </div>
+
+            <!-- Activity Selection -->
+            <div class="activity-selector" id="speakActivitySelector">
+                <button class="activity-btn" onclick="startSpeakActivity('repeat')">
+                    🔄 Repeat After Me
+                </button>
+                <button class="activity-btn" onclick="startSpeakActivity('describe')">
+                    🖼️ Describe Picture
+                </button>
+                <button class="activity-btn" onclick="startSpeakActivity('conversation')">
+                    💬 Conversation
+                </button>
+            </div>
+
+            <!-- Activity Content -->
+            <div class="activity-content hidden" id="speakActivityContent">
+                <!-- Repeat Activity -->
+                <div id="repeatActivity" class="activity-panel hidden">
+                    <div class="repeat-card">
+                        <p class="repeat-instruction">Listen and repeat:</p>
+                        <div class="repeat-text-display" id="repeatText"></div>
+                        <button class="voice-button" onclick="playRepeatSentence()">
+                            🔊 Listen
+                        </button>
+                        <button class="mic-button" id="repeatMicButton" onclick="startRepeatRecording()">
+                            🎤 Press to Speak
+                        </button>
+                        <div class="user-speech-display" id="userSpeechDisplay"></div>
+                        <div class="feedback-display" id="repeatFeedback"></div>
+                    </div>
+                </div>
+
+                <!-- Describe Activity -->
+                <div id="describeActivity" class="activity-panel hidden">
+                    <div class="describe-card">
+                        <p class="describe-instruction">What do you see?</p>
+                        <div class="describe-image" id="describeImage">🖼️</div>
+                        <div class="sentence-starters" id="sentenceStarters">
+                            <p>Try saying: "I see a..."</p>
+                        </div>
+                        <button class="mic-button" onclick="startDescribeRecording()">
+                            🎤 Press to Speak
+                        </button>
+                        <div class="user-speech-display" id="describeSpeechDisplay"></div>
+                        <button class="primary-button" onclick="nextDescribeImage()">
+                            Next Picture →
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Conversation Activity -->
+                <div id="conversationActivity" class="activity-panel hidden">
+                    <div class="conversation-card">
+                        <div class="conversation-display" id="conversationDisplay"></div>
+                        <button class="voice-button" onclick="playConversationQuestion()">
+                            🔊 Hear Question
+                        </button>
+                        <button class="mic-button" onclick="startConversationRecording()">
+                            🎤 Press to Answer
+                        </button>
+                        <div class="user-speech-display" id="conversationSpeechDisplay"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- READ & MATCH SECTION -->
+        <section id="readSection" class="section">
+            <div class="section-header">
+                <h2 class="section-title">📖 Read & Match</h2>
+                <div class="section-stats">
+                    <span id="readScore">0/0 correct</span>
+                    <span id="readStreak">Streak: 0</span>
+                </div>
+            </div>
+
+            <!-- Activity Selection -->
+            <div class="activity-selector" id="readActivitySelector">
+                <button class="activity-btn" onclick="startReadActivity('sightwords')">
+                    👁️ Sight Words
+                </button>
+                <button class="activity-btn" onclick="startReadActivity('phonics')">
+                    🔤 Phonics Game
+                </button>
+                <button class="activity-btn" onclick="startReadActivity('sentences')">
+                    📝 Sentence Puzzles
+                </button>
+            </div>
+
+            <!-- Activity Content -->
+            <div class="activity-content hidden" id="readActivityContent">
+                <!-- Sight Words Activity -->
+                <div id="sightwordsActivity" class="activity-panel hidden">
+                    <div class="sightword-card">
+                        <p class="sightword-instruction">Click the word you hear:</p>
+                        <button class="voice-button" onclick="playSightWord()">
+                            🔊 Play Word
+                        </button>
+                        <div class="word-choices" id="sightwordChoices"></div>
+                        <div class="feedback-display" id="sightwordFeedback"></div>
+                    </div>
+                </div>
+
+                <!-- Phonics Activity -->
+                <div id="phonicsActivity" class="activity-panel hidden">
+                    <div class="phonics-card">
+                        <p class="phonics-instruction">Which word starts with this sound?</p>
+                        <button class="voice-button" onclick="playPhonicsSound()">
+                            🔊 Play Sound
+                        </button>
+                        <div class="phonics-choices" id="phonicsChoices"></div>
+                        <div class="feedback-display" id="phonicsFeedback"></div>
+                    </div>
+                </div>
+
+                <!-- Sentence Puzzles Activity -->
+                <div id="sentencesActivity" class="activity-panel hidden">
+                    <div class="sentence-card">
+                        <p class="sentence-instruction">Arrange the words to match what you hear:</p>
+                        <button class="voice-button" onclick="playSentence()">
+                            🔊 Play Sentence
+                        </button>
+                        <div class="word-bank" id="wordBank"></div>
+                        <div class="sentence-builder" id="sentenceBuilder"></div>
+                        <button class="primary-button" onclick="checkSentence()">
+                            Check Answer
+                        </button>
+                        <div class="feedback-display" id="sentenceFeedback"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- WRITE & CREATE SECTION -->
+        <section id="writeSection" class="section">
+            <div class="section-header">
+                <h2 class="section-title">✍️ Write & Create</h2>
+                <div class="section-stats">
+                    <span id="writeScore">0/0 correct</span>
+                    <span id="writeStreak">Streak: 0</span>
+                </div>
+            </div>
+
+            <!-- Activity Selection -->
+            <div class="activity-selector" id="writeActivitySelector">
+                <button class="activity-btn" onclick="startWriteActivity('letters')">
+                    🔤 Letter Practice
+                </button>
+                <button class="activity-btn" onclick="startWriteActivity('words')">
+                    📝 Word Copying
+                </button>
+            </div>
+
+            <!-- Activity Content -->
+            <div class="activity-content hidden" id="writeActivityContent">
+                <!-- Letters Activity -->
+                <div id="lettersActivity" class="activity-panel hidden">
+                    <div class="letter-card">
+                        <p class="letter-instruction">Type the letter you see and hear:</p>
+                        <div class="letter-display" id="letterDisplay">A</div>
+                        <button class="voice-button" onclick="playLetter()">
+                            🔊 Hear Letter
+                        </button>
+                        <input type="text" id="letterInput" class="letter-input" maxlength="1" placeholder="Type here">
+                        <button class="primary-button" onclick="checkLetter()">
+                            Check Answer
+                        </button>
+                        <div class="feedback-display" id="letterFeedback"></div>
+                    </div>
+                </div>
+
+                <!-- Words Activity -->
+                <div id="wordsActivity" class="activity-panel hidden">
+                    <div class="word-card">
+                        <p class="word-instruction">Type the word you see and hear:</p>
+                        <div class="word-display-container">
+                            <div class="word-image" id="wordImage">🐱</div>
+                            <div class="word-display" id="wordDisplay">cat</div>
+                        </div>
+                        <button class="voice-button" onclick="playWord()">
+                            🔊 Hear Word
+                        </button>
+                        <input type="text" id="wordInput" class="word-input" placeholder="Type the word here">
+                        <button class="primary-button" onclick="checkWord()">
+                            Check Answer
+                        </button>
+                        <div class="feedback-display" id="wordFeedback"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SETTINGS SECTION -->
+        <section id="settingsSection" class="section">
+            <div class="section-header">
+                <h2 class="section-title">⚙️ Settings</h2>
+            </div>
+
+            <div class="settings-panel">
+                <div class="setting-group">
+                    <label for="voiceSpeed">Voice Speed:</label>
+                    <input type="range" id="voiceSpeed" min="0.5" max="1.5" step="0.1" value="0.9">
+                    <span id="voiceSpeedValue">0.9x</span>
+                </div>
+
+                <div class="setting-group">
+                    <label for="voiceVolume">Volume:</label>
+                    <input type="range" id="voiceVolume" min="0" max="1" step="0.1" value="1">
+                    <span id="voiceVolumeValue">100%</span>
+                </div>
+
+                <div class="setting-group">
+                    <label>Voice Support:</label>
+                    <div id="voiceSupport"></div>
+                </div>
+
+                <div class="setting-actions">
+                    <button class="danger-button" onclick="confirmClearData()">
+                        🗑️ Clear All Progress
+                    </button>
+                    <button class="primary-button" onclick="exportProgress()">
+                        📥 Export Progress
+                    </button>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Feedback Modal -->
+    <div id="feedbackModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-icon" id="modalIcon">⭐</div>
+            <p class="modal-text" id="modalText">Great job!</p>
+            <button class="modal-button" onclick="closeFeedbackModal()">Continue</button>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay hidden">
+        <div class="loading-spinner"></div>
+        <p class="loading-text">Loading...</p>
+    </div>
+
+    <!-- Load Scripts -->
+    <script src="js/data/vocabulary.js"></script>
+    <script src="js/data/stories.js"></script>
+    <script src="js/utils/storage.js"></script>
+    <script src="js/utils/validation.js"></script>
+    <script src="js/voice-manager.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
