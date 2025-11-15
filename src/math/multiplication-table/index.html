@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>לוח הכפל - משחק אינטראקטיבי</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Hebrew:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Noto Sans Hebrew', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .mode-selector {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .mode-btn {
+            background: white;
+            border: 3px solid transparent;
+            padding: 15px 30px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-family: 'Noto Sans Hebrew', sans-serif;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+        }
+
+        .mode-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+        }
+
+        .mode-btn.active {
+            border-color: #667eea;
+            background: #667eea;
+            color: white;
+        }
+
+        .game-area {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            min-height: 500px;
+        }
+
+        /* Learn Mode - Multiplication Table */
+        .table-grid {
+            display: grid;
+            grid-template-columns: repeat(11, 1fr);
+            gap: 5px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .table-cell {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .table-cell.header {
+            background: #667eea;
+            color: white;
+            cursor: default;
+        }
+
+        .table-cell.number {
+            background: #f0f0f0;
+            border: 2px solid #ddd;
+        }
+
+        .table-cell.number:hover {
+            background: #fff3cd;
+            transform: scale(1.1);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            z-index: 10;
+        }
+
+        .table-cell.highlighted {
+            background: #28a745 !important;
+            color: white !important;
+            animation: pulse 0.5s ease;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+        }
+
+        /* Practice Mode */
+        .practice-area {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .question {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #667eea;
+            margin: 40px 0;
+        }
+
+        .answer-input {
+            font-size: 2rem;
+            padding: 15px 30px;
+            border: 3px solid #667eea;
+            border-radius: 15px;
+            text-align: center;
+            font-family: 'Noto Sans Hebrew', sans-serif;
+            width: 200px;
+            margin: 20px 0;
+        }
+
+        .btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 15px;
+            font-size: 1.2rem;
+            font-family: 'Noto Sans Hebrew', sans-serif;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            margin: 5px;
+        }
+
+        .btn:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+        }
+
+        .btn-success {
+            background: #28a745;
+        }
+
+        .btn-success:hover {
+            background: #218838;
+        }
+
+        .feedback {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 20px 0;
+            min-height: 40px;
+        }
+
+        .feedback.correct {
+            color: #28a745;
+            animation: slideIn 0.3s ease;
+        }
+
+        .feedback.wrong {
+            color: #dc3545;
+            animation: shake 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin: 30px 0;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .stat-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            min-width: 150px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        /* Game Mode */
+        .game-mode {
+            text-align: center;
+        }
+
+        .timer {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #667eea;
+            margin: 20px 0;
+        }
+
+        .timer.warning {
+            color: #dc3545;
+            animation: blink 0.5s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .choices {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            max-width: 400px;
+            margin: 30px auto;
+        }
+
+        .choice-btn {
+            padding: 30px;
+            font-size: 1.8rem;
+            background: #f8f9fa;
+            border: 3px solid #667eea;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Noto Sans Hebrew', sans-serif;
+            font-weight: 700;
+        }
+
+        .choice-btn:hover {
+            background: #667eea;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .choice-btn.correct {
+            background: #28a745;
+            color: white;
+            border-color: #28a745;
+        }
+
+        .choice-btn.wrong {
+            background: #dc3545;
+            color: white;
+            border-color: #dc3545;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            background: #f0f0f0;
+            border-radius: 10px;
+            height: 30px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #28a745 0%, #20c997 100%);
+            transition: width 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Confetti animation */
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: #f0f;
+            position: absolute;
+            animation: confetti-fall 3s linear;
+        }
+
+        @keyframes confetti-fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .celebration {
+            text-align: center;
+            padding: 40px;
+        }
+
+        .celebration h2 {
+            font-size: 3rem;
+            color: #28a745;
+            margin-bottom: 20px;
+        }
+
+        .trophy {
+            font-size: 5rem;
+            margin: 20px 0;
+        }
+
+        /* Table selector */
+        .table-selector {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+
+        .table-num-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 3px solid #667eea;
+            background: white;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .table-num-btn:hover,
+        .table-num-btn.active {
+            background: #667eea;
+            color: white;
+            transform: scale(1.1);
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .table-cell {
+                font-size: 0.8rem;
+            }
+
+            .question {
+                font-size: 2rem;
+            }
+
+            .answer-input {
+                font-size: 1.5rem;
+                width: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎮 לוח הכפל - משחק אינטראקטיבי 🎮</h1>
+            <p class="subtitle">למד, תרגל והנה מלוח הכפל!</p>
+        </header>
+
+        <div class="mode-selector">
+            <button class="mode-btn active" onclick="changeMode('learn')">
+                📚 מצב למידה
+            </button>
+            <button class="mode-btn" onclick="changeMode('practice')">
+                ✏️ מצב תרגול
+            </button>
+            <button class="mode-btn" onclick="changeMode('game')">
+                🎯 מצב משחק
+            </button>
+        </div>
+
+        <div class="game-area">
+            <!-- Learn Mode -->
+            <div id="learn-mode" class="mode-content">
+                <h2 style="text-align: center; color: #667eea; margin-bottom: 20px;">
+                    לחץ על כל משבצת כדי לראות את התרגיל!
+                </h2>
+                <div class="table-grid" id="multiplicationTable"></div>
+            </div>
+
+            <!-- Practice Mode -->
+            <div id="practice-mode" class="mode-content hidden">
+                <div class="practice-area">
+                    <h2 style="color: #667eea; margin-bottom: 20px;">בחר לוח לתרגול:</h2>
+                    <div class="table-selector" id="practiceTableSelector"></div>
+
+                    <div class="stats">
+                        <div class="stat-box">
+                            <div class="stat-label">נכונות</div>
+                            <div class="stat-value" id="practiceCorrect">0</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-label">טעויות</div>
+                            <div class="stat-value" id="practiceWrong">0</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-label">רצף נוכחי</div>
+                            <div class="stat-value" id="practiceStreak">0</div>
+                        </div>
+                    </div>
+
+                    <div class="question" id="practiceQuestion">בחר לוח לתרגול</div>
+                    <input type="number" class="answer-input hidden" id="practiceInput"
+                           placeholder="?" onkeypress="handlePracticeKeyPress(event)">
+                    <div class="feedback" id="practiceFeedback"></div>
+                    <button class="btn btn-success hidden" id="practiceCheckBtn" onclick="checkPracticeAnswer()">
+                        בדוק תשובה
+                    </button>
+                    <button class="btn hidden" id="practiceNextBtn" onclick="nextPracticeQuestion()">
+                        שאלה הבאה ➡️
+                    </button>
+                </div>
+            </div>
+
+            <!-- Game Mode -->
+            <div id="game-mode" class="mode-content hidden">
+                <div class="game-mode">
+                    <div id="gameStart">
+                        <h2 style="color: #667eea; margin-bottom: 20px;">אתגר לוח הכפל - 60 שניות!</h2>
+                        <p style="font-size: 1.2rem; margin-bottom: 30px;">
+                            כמה שאלות תוכל לענות נכון תוך דקה?
+                        </p>
+                        <div class="table-selector" id="gameTableSelector"></div>
+                        <button class="btn btn-success" onclick="startGame()" style="font-size: 1.5rem; padding: 20px 50px;">
+                            🚀 התחל משחק!
+                        </button>
+                    </div>
+
+                    <div id="gamePlaying" class="hidden">
+                        <div class="timer" id="gameTimer">60</div>
+                        <div class="stats">
+                            <div class="stat-box">
+                                <div class="stat-label">נכונות</div>
+                                <div class="stat-value" id="gameCorrect">0</div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-label">שאלות</div>
+                                <div class="stat-value" id="gameTotal">0</div>
+                            </div>
+                        </div>
+                        <div class="question" id="gameQuestion"></div>
+                        <div class="choices" id="gameChoices"></div>
+                        <div class="feedback" id="gameFeedback"></div>
+                    </div>
+
+                    <div id="gameEnd" class="hidden celebration">
+                        <div class="trophy">🏆</div>
+                        <h2>כל הכבוד!</h2>
+                        <p style="font-size: 1.5rem; margin: 20px 0;">
+                            עניתנכון על <strong id="finalCorrect">0</strong> שאלות מתוך <strong id="finalTotal">0</strong>!
+                        </p>
+                        <p style="font-size: 1.2rem; color: #667eea; margin-bottom: 30px;">
+                            דיוק: <strong id="finalAccuracy">0</strong>%
+                        </p>
+                        <button class="btn btn-success" onclick="resetGame()">
+                            שחק שוב! 🎮
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // State management
+        const state = {
+            currentMode: 'learn',
+            practice: {
+                selectedTable: null,
+                correct: 0,
+                wrong: 0,
+                streak: 0,
+                currentQuestion: null
+            },
+            game: {
+                selectedTables: [2, 3, 4, 5],
+                timeLeft: 60,
+                correct: 0,
+                total: 0,
+                timer: null,
+                currentQuestion: null
+            }
+        };
+
+        // Initialize app
+        function init() {
+            createMultiplicationTable();
+            createTableSelectors();
+            loadProgress();
+        }
+
+        // Create multiplication table for learn mode
+        function createMultiplicationTable() {
+            const table = document.getElementById('multiplicationTable');
+            table.innerHTML = '';
+
+            // Header row
+            table.innerHTML += '<div class="table-cell header">×</div>';
+            for (let i = 1; i <= 10; i++) {
+                table.innerHTML += `<div class="table-cell header">${i}</div>`;
+            }
+
+            // Number rows
+            for (let i = 1; i <= 10; i++) {
+                table.innerHTML += `<div class="table-cell header">${i}</div>`;
+                for (let j = 1; j <= 10; j++) {
+                    const result = i * j;
+                    table.innerHTML += `<div class="table-cell number" onclick="highlightCell(${i}, ${j}, ${result})">${result}</div>`;
+                }
+            }
+        }
+
+        // Highlight cell and show equation
+        function highlightCell(num1, num2, result) {
+            const cells = document.querySelectorAll('.table-cell.number');
+            cells.forEach(cell => cell.classList.remove('highlighted'));
+            event.target.classList.add('highlighted');
+
+            showToast(`${num1} × ${num2} = ${result}`);
+        }
+
+        // Create table selectors
+        function createTableSelectors() {
+            const practiceSelector = document.getElementById('practiceTableSelector');
+            const gameSelector = document.getElementById('gameTableSelector');
+
+            practiceSelector.innerHTML = '';
+            gameSelector.innerHTML = '';
+
+            for (let i = 2; i <= 10; i++) {
+                // Practice selector (single choice)
+                const practiceBtn = document.createElement('button');
+                practiceBtn.className = 'table-num-btn';
+                practiceBtn.textContent = i;
+                practiceBtn.onclick = () => selectPracticeTable(i);
+                practiceSelector.appendChild(practiceBtn);
+
+                // Game selector (multiple choice)
+                const gameBtn = document.createElement('button');
+                gameBtn.className = 'table-num-btn';
+                gameBtn.textContent = i;
+                if (state.game.selectedTables.includes(i)) {
+                    gameBtn.classList.add('active');
+                }
+                gameBtn.onclick = () => toggleGameTable(i);
+                gameSelector.appendChild(gameBtn);
+            }
+        }
+
+        // Mode switching
+        function changeMode(mode) {
+            state.currentMode = mode;
+
+            // Update buttons
+            document.querySelectorAll('.mode-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // Show/hide content
+            document.querySelectorAll('.mode-content').forEach(content => {
+                content.classList.add('hidden');
+            });
+            document.getElementById(`${mode}-mode`).classList.remove('hidden');
+
+            // Reset mode-specific state
+            if (mode === 'practice' && state.practice.selectedTable) {
+                generatePracticeQuestion();
+            }
+        }
+
+        // PRACTICE MODE
+        function selectPracticeTable(num) {
+            state.practice.selectedTable = num;
+
+            // Update button states
+            document.querySelectorAll('#practiceTableSelector .table-num-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (parseInt(btn.textContent) === num) {
+                    btn.classList.add('active');
+                }
+            });
+
+            // Start practice
+            generatePracticeQuestion();
+            document.getElementById('practiceInput').classList.remove('hidden');
+            document.getElementById('practiceCheckBtn').classList.remove('hidden');
+        }
+
+        function generatePracticeQuestion() {
+            if (!state.practice.selectedTable) return;
+
+            const multiplier = Math.floor(Math.random() * 10) + 1;
+            const table = state.practice.selectedTable;
+
+            state.practice.currentQuestion = {
+                num1: table,
+                num2: multiplier,
+                answer: table * multiplier
+            };
+
+            document.getElementById('practiceQuestion').textContent =
+                `${table} × ${multiplier} = ?`;
+            document.getElementById('practiceInput').value = '';
+            document.getElementById('practiceInput').focus();
+            document.getElementById('practiceFeedback').textContent = '';
+            document.getElementById('practiceFeedback').className = 'feedback';
+            document.getElementById('practiceCheckBtn').classList.remove('hidden');
+            document.getElementById('practiceNextBtn').classList.add('hidden');
+        }
+
+        function checkPracticeAnswer() {
+            const input = document.getElementById('practiceInput');
+            const userAnswer = parseInt(input.value);
+            const feedback = document.getElementById('practiceFeedback');
+            const correctAnswer = state.practice.currentQuestion.answer;
+
+            if (isNaN(userAnswer)) {
+                feedback.textContent = 'נא להזין מספר';
+                feedback.className = 'feedback wrong';
+                return;
+            }
+
+            if (userAnswer === correctAnswer) {
+                state.practice.correct++;
+                state.practice.streak++;
+                feedback.textContent = `✅ נכון! ${state.practice.currentQuestion.num1} × ${state.practice.currentQuestion.num2} = ${correctAnswer}`;
+                feedback.className = 'feedback correct';
+                createConfetti();
+            } else {
+                state.practice.wrong++;
+                state.practice.streak = 0;
+                feedback.textContent = `❌ לא נכון. התשובה הנכונה היא ${correctAnswer}`;
+                feedback.className = 'feedback wrong';
+            }
+
+            updatePracticeStats();
+            document.getElementById('practiceCheckBtn').classList.add('hidden');
+            document.getElementById('practiceNextBtn').classList.remove('hidden');
+            saveProgress();
+        }
+
+        function nextPracticeQuestion() {
+            generatePracticeQuestion();
+        }
+
+        function handlePracticeKeyPress(event) {
+            if (event.key === 'Enter') {
+                const checkBtn = document.getElementById('practiceCheckBtn');
+                const nextBtn = document.getElementById('practiceNextBtn');
+
+                if (!checkBtn.classList.contains('hidden')) {
+                    checkPracticeAnswer();
+                } else if (!nextBtn.classList.contains('hidden')) {
+                    nextPracticeQuestion();
+                }
+            }
+        }
+
+        function updatePracticeStats() {
+            document.getElementById('practiceCorrect').textContent = state.practice.correct;
+            document.getElementById('practiceWrong').textContent = state.practice.wrong;
+            document.getElementById('practiceStreak').textContent = state.practice.streak;
+        }
+
+        // GAME MODE
+        function toggleGameTable(num) {
+            const index = state.game.selectedTables.indexOf(num);
+            if (index > -1) {
+                if (state.game.selectedTables.length > 1) {
+                    state.game.selectedTables.splice(index, 1);
+                }
+            } else {
+                state.game.selectedTables.push(num);
+            }
+            createTableSelectors();
+        }
+
+        function startGame() {
+            state.game.timeLeft = 60;
+            state.game.correct = 0;
+            state.game.total = 0;
+
+            document.getElementById('gameStart').classList.add('hidden');
+            document.getElementById('gamePlaying').classList.remove('hidden');
+            document.getElementById('gameEnd').classList.add('hidden');
+
+            updateGameStats();
+            generateGameQuestion();
+            startGameTimer();
+        }
+
+        function startGameTimer() {
+            const timerEl = document.getElementById('gameTimer');
+
+            state.game.timer = setInterval(() => {
+                state.game.timeLeft--;
+                timerEl.textContent = state.game.timeLeft;
+
+                if (state.game.timeLeft <= 10) {
+                    timerEl.classList.add('warning');
+                }
+
+                if (state.game.timeLeft <= 0) {
+                    endGame();
+                }
+            }, 1000);
+        }
+
+        function generateGameQuestion() {
+            const tables = state.game.selectedTables;
+            const table = tables[Math.floor(Math.random() * tables.length)];
+            const multiplier = Math.floor(Math.random() * 10) + 1;
+            const correctAnswer = table * multiplier;
+
+            state.game.currentQuestion = {
+                num1: table,
+                num2: multiplier,
+                answer: correctAnswer
+            };
+
+            document.getElementById('gameQuestion').textContent =
+                `${table} × ${multiplier} = ?`;
+            document.getElementById('gameFeedback').textContent = '';
+            document.getElementById('gameFeedback').className = 'feedback';
+
+            // Generate choices
+            const choices = [correctAnswer];
+            while (choices.length < 4) {
+                const wrong = correctAnswer + Math.floor(Math.random() * 20) - 10;
+                if (wrong > 0 && !choices.includes(wrong)) {
+                    choices.push(wrong);
+                }
+            }
+
+            // Shuffle choices
+            choices.sort(() => Math.random() - 0.5);
+
+            const choicesEl = document.getElementById('gameChoices');
+            choicesEl.innerHTML = '';
+            choices.forEach(choice => {
+                const btn = document.createElement('button');
+                btn.className = 'choice-btn';
+                btn.textContent = choice;
+                btn.onclick = () => checkGameAnswer(choice, correctAnswer, btn);
+                choicesEl.appendChild(btn);
+            });
+        }
+
+        function checkGameAnswer(userAnswer, correctAnswer, btnEl) {
+            state.game.total++;
+            const feedback = document.getElementById('gameFeedback');
+
+            // Disable all buttons
+            document.querySelectorAll('.choice-btn').forEach(btn => {
+                btn.style.pointerEvents = 'none';
+            });
+
+            if (userAnswer === correctAnswer) {
+                state.game.correct++;
+                btnEl.classList.add('correct');
+                feedback.textContent = '✅ נכון!';
+                feedback.className = 'feedback correct';
+            } else {
+                btnEl.classList.add('wrong');
+                // Highlight correct answer
+                document.querySelectorAll('.choice-btn').forEach(btn => {
+                    if (parseInt(btn.textContent) === correctAnswer) {
+                        btn.classList.add('correct');
+                    }
+                });
+                feedback.textContent = '❌ לא נכון';
+                feedback.className = 'feedback wrong';
+            }
+
+            updateGameStats();
+
+            setTimeout(() => {
+                if (state.game.timeLeft > 0) {
+                    generateGameQuestion();
+                }
+            }, 1000);
+        }
+
+        function updateGameStats() {
+            document.getElementById('gameCorrect').textContent = state.game.correct;
+            document.getElementById('gameTotal').textContent = state.game.total;
+        }
+
+        function endGame() {
+            clearInterval(state.game.timer);
+            document.getElementById('gamePlaying').classList.add('hidden');
+            document.getElementById('gameEnd').classList.remove('hidden');
+
+            const accuracy = state.game.total > 0
+                ? Math.round((state.game.correct / state.game.total) * 100)
+                : 0;
+
+            document.getElementById('finalCorrect').textContent = state.game.correct;
+            document.getElementById('finalTotal').textContent = state.game.total;
+            document.getElementById('finalAccuracy').textContent = accuracy;
+
+            if (accuracy >= 80) {
+                createMassiveConfetti();
+            }
+
+            saveProgress();
+        }
+
+        function resetGame() {
+            document.getElementById('gameStart').classList.remove('hidden');
+            document.getElementById('gameEnd').classList.add('hidden');
+            document.getElementById('gameTimer').classList.remove('warning');
+        }
+
+        // Confetti effects
+        function createConfetti() {
+            const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff'];
+            for (let i = 0; i < 20; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * window.innerWidth + 'px';
+                confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.animationDelay = Math.random() * 0.5 + 's';
+                document.body.appendChild(confetti);
+                setTimeout(() => confetti.remove(), 3000);
+            }
+        }
+
+        function createMassiveConfetti() {
+            for (let i = 0; i < 100; i++) {
+                setTimeout(() => createConfetti(), i * 50);
+            }
+        }
+
+        // Toast notification
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.style.cssText = `
+                position: fixed;
+                top: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: #667eea;
+                color: white;
+                padding: 15px 30px;
+                border-radius: 10px;
+                font-size: 1.2rem;
+                font-weight: 700;
+                box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+                z-index: 1000;
+                animation: slideIn 0.3s ease;
+            `;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 2000);
+        }
+
+        // Progress persistence
+        function saveProgress() {
+            const progressData = {
+                practice: state.practice,
+                gameHighScore: state.game.correct,
+                lastUpdated: new Date().toISOString()
+            };
+            localStorage.setItem('multiplicationTableProgress', JSON.stringify(progressData));
+        }
+
+        function loadProgress() {
+            const saved = localStorage.getItem('multiplicationTableProgress');
+            if (saved) {
+                try {
+                    const data = JSON.parse(saved);
+                    if (data.practice) {
+                        state.practice.correct = data.practice.correct || 0;
+                        state.practice.wrong = data.practice.wrong || 0;
+                        updatePracticeStats();
+                    }
+                } catch (e) {
+                    console.error('Failed to load progress:', e);
+                }
+            }
+        }
+
+        // Initialize on load
+        init();
+    </script>
+</body>
+</html>
