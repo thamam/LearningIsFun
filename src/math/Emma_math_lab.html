@@ -662,6 +662,32 @@
         background: #ff9800;
       }
 
+      /* Flag Problem Button */
+      .flag-problem-btn {
+        background: #ff9800;
+        color: white;
+        font-size: 24pt;
+        font-weight: 700;
+        padding: 8px 16px;
+        border: 2px solid #f57c00;
+        border-radius: 8px;
+        cursor: pointer;
+        margin: 10px;
+        font-family: 'Noto Sans Hebrew', Arial, sans-serif;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 8px rgba(255, 152, 0, 0.3);
+      }
+
+      .flag-problem-btn:hover {
+        background: #f57c00;
+        transform: scale(1.1);
+        box-shadow: 0 4px 12px rgba(255, 152, 0, 0.5);
+      }
+
+      .flag-problem-btn:active {
+        transform: scale(0.95);
+      }
+
       .feedback {
         margin: 20px 0;
         padding: 20px;
@@ -1323,29 +1349,10 @@
 
                     <div class="feedback hidden" id="decimal-feedback">✅ את גאונית! תשובה נכונה!<br>🔊 כל הכבוד אמה!</div>
 
-                    <!-- Problem Reporting System -->
-                    <div class="report-problem-container">
-                        <button class="report-problem-btn" id="decimal-report-btn" onclick="showProblemReportForm('decimal')">
-                            ⚠️ יש בעיה בתרגיל הזה
-                        </button>
-                        <div class="problem-report-form hidden" id="decimal-report-form">
-                            <h4>מה הבעיה?</h4>
-                            <div class="report-option" data-type="wrong-answer" onclick="selectReportOption('decimal', 'wrong-answer')">
-                                ❌ התשובה הנכונה לא התקבלה
-                            </div>
-                            <div class="report-option" data-type="unclear" onclick="selectReportOption('decimal', 'unclear')">
-                                ❓ מטרת התרגיל לא ברורה
-                            </div>
-                            <div class="report-option" data-type="other" onclick="selectReportOption('decimal', 'other')">
-                                📝 אחר
-                            </div>
-                            <textarea class="report-other-text hidden" id="decimal-report-other-text" placeholder="תארי את הבעיה..."></textarea>
-                            <div>
-                                <button class="report-cancel-btn" onclick="cancelProblemReport('decimal')">ביטול</button>
-                                <button class="report-submit-btn" id="decimal-report-submit" onclick="submitProblemReport('decimal')" disabled>שלח דיווח</button>
-                            </div>
-                        </div>
-                    </div>
+                    <!-- Flag Problem Button -->
+                    <button class="flag-problem-btn" onclick="flagQuestion('decimal')" title="דגל בעיה">
+                        🚩
+                    </button>
                 </div>
 
                 <div class="sidebar">
@@ -1421,29 +1428,10 @@
 
                     <div class="feedback hidden" id="multiplication-feedback">✅ כל הכבוד! תשובה נכונה!<br>🔊 כל הכבוד אמה!</div>
 
-                    <!-- Problem Reporting System -->
-                    <div class="report-problem-container">
-                        <button class="report-problem-btn" id="multiplication-report-btn" onclick="showProblemReportForm('multiplication')">
-                            ⚠️ יש בעיה בתרגיל הזה
-                        </button>
-                        <div class="problem-report-form hidden" id="multiplication-report-form">
-                            <h4>מה הבעיה?</h4>
-                            <div class="report-option" data-type="wrong-answer" onclick="selectReportOption('multiplication', 'wrong-answer')">
-                                ❌ התשובה הנכונה לא התקבלה
-                            </div>
-                            <div class="report-option" data-type="unclear" onclick="selectReportOption('multiplication', 'unclear')">
-                                ❓ מטרת התרגיל לא ברורה
-                            </div>
-                            <div class="report-option" data-type="other" onclick="selectReportOption('multiplication', 'other')">
-                                📝 אחר
-                            </div>
-                            <textarea class="report-other-text hidden" id="multiplication-report-other-text" placeholder="תארי את הבעיה..."></textarea>
-                            <div>
-                                <button class="report-cancel-btn" onclick="cancelProblemReport('multiplication')">ביטול</button>
-                                <button class="report-submit-btn" id="multiplication-report-submit" onclick="submitProblemReport('multiplication')" disabled>שלח דיווח</button>
-                            </div>
-                        </div>
-                    </div>
+                    <!-- Flag Problem Button -->
+                    <button class="flag-problem-btn" onclick="flagQuestion('multiplication')" title="דגל בעיה">
+                        🚩
+                    </button>
                 </div>
 
                 <div class="sidebar">
@@ -1617,29 +1605,10 @@
 
                     <div class="feedback hidden" id="numberline-feedback"></div>
 
-                    <!-- Problem Reporting System -->
-                    <div class="report-problem-container">
-                        <button class="report-problem-btn" id="numberline-report-btn" onclick="showProblemReportForm('numberline')">
-                            ⚠️ יש בעיה בתרגיל הזה
-                        </button>
-                        <div class="problem-report-form hidden" id="numberline-report-form">
-                            <h4>מה הבעיה?</h4>
-                            <div class="report-option" data-type="wrong-answer" onclick="selectReportOption('numberline', 'wrong-answer')">
-                                ❌ התשובה הנכונה לא התקבלה
-                            </div>
-                            <div class="report-option" data-type="unclear" onclick="selectReportOption('numberline', 'unclear')">
-                                ❓ מטרת התרגיל לא ברורה
-                            </div>
-                            <div class="report-option" data-type="other" onclick="selectReportOption('numberline', 'other')">
-                                📝 אחר
-                            </div>
-                            <textarea class="report-other-text hidden" id="numberline-report-other-text" placeholder="תארי את הבעיה..."></textarea>
-                            <div>
-                                <button class="report-cancel-btn" onclick="cancelProblemReport('numberline')">ביטול</button>
-                                <button class="report-submit-btn" id="numberline-report-submit" onclick="submitProblemReport('numberline')" disabled>שלח דיווח</button>
-                            </div>
-                        </div>
-                    </div>
+                    <!-- Flag Problem Button -->
+                    <button class="flag-problem-btn" onclick="flagQuestion('numberline')" title="דגל בעיה">
+                        🚩
+                    </button>
                 </div>
 
                 <div class="sidebar">
@@ -4639,93 +4608,11 @@ ${'='.repeat(70)}
     <script src="js/modules/division_module.js"></script>
     <script src="js/modules/order_operations_module.js"></script>
 
-    <!-- Problem Reporting System -->
+    <!-- Flag Problem System -->
     <script>
-        // Global problem reports storage
-        window.problemReports = [];
-
-        // Selected report type per module
-        window.selectedReportType = {};
-
-        // Show problem report form
-        function showProblemReportForm(moduleName) {
-            const btn = document.getElementById(`${moduleName}-report-btn`);
-            const form = document.getElementById(`${moduleName}-report-form`);
-
-            if (btn && form) {
-                btn.classList.add('hidden');
-                form.classList.remove('hidden');
-            }
-        }
-
-        // Select report option
-        function selectReportOption(moduleName, reportType) {
-            // Clear previous selection
-            const options = document.querySelectorAll(`#${moduleName}-report-form .report-option`);
-            options.forEach(opt => opt.classList.remove('selected'));
-
-            // Select current option
-            const selectedOption = document.querySelector(`#${moduleName}-report-form .report-option[data-type="${reportType}"]`);
-            if (selectedOption) {
-                selectedOption.classList.add('selected');
-            }
-
-            // Store selected type
-            window.selectedReportType[moduleName] = reportType;
-
-            // Show/hide other text field
-            const otherText = document.getElementById(`${moduleName}-report-other-text`);
-            if (otherText) {
-                if (reportType === 'other') {
-                    otherText.classList.remove('hidden');
-                } else {
-                    otherText.classList.add('hidden');
-                }
-            }
-
-            // Enable submit button
-            const submitBtn = document.getElementById(`${moduleName}-report-submit`);
-            if (submitBtn) {
-                submitBtn.disabled = false;
-            }
-        }
-
-        // Cancel problem report
-        function cancelProblemReport(moduleName) {
-            const btn = document.getElementById(`${moduleName}-report-btn`);
-            const form = document.getElementById(`${moduleName}-report-form`);
-
-            if (btn && form) {
-                form.classList.add('hidden');
-                btn.classList.remove('hidden');
-            }
-
-            // Clear selections
-            const options = document.querySelectorAll(`#${moduleName}-report-form .report-option`);
-            options.forEach(opt => opt.classList.remove('selected'));
-
-            const otherText = document.getElementById(`${moduleName}-report-other-text`);
-            if (otherText) {
-                otherText.value = '';
-                otherText.classList.add('hidden');
-            }
-
-            const submitBtn = document.getElementById(`${moduleName}-report-submit`);
-            if (submitBtn) {
-                submitBtn.disabled = true;
-            }
-
-            delete window.selectedReportType[moduleName];
-        }
-
-        // Submit problem report
-        function submitProblemReport(moduleName) {
-            const reportType = window.selectedReportType[moduleName];
-            if (!reportType) {
-                return;
-            }
-
-            // Get current state
+        // Flag a problematic question - immediately downloads JSON file
+        function flagQuestion(moduleName) {
+            // Get module state
             const states = {
                 'decimal': window.decimalState,
                 'multiplication': window.multiplicationState,
@@ -4738,31 +4625,29 @@ ${'='.repeat(70)}
                 return;
             }
 
-            // Get additional notes if "other" was selected
-            let additionalNotes = '';
-            if (reportType === 'other') {
-                const otherText = document.getElementById(`${moduleName}-report-other-text`);
-                if (otherText) {
-                    additionalNotes = otherText.value;
-                }
+            // Get user's answer
+            const inputElement = document.getElementById(`${moduleName}-answer-input`);
+            let userAnswer = 'No answer provided';
+
+            if (inputElement && inputElement.style.display !== 'none') {
+                userAnswer = inputElement.value;
+            } else if (state.selectedChoice) {
+                userAnswer = state.selectedChoice;
             }
 
-            // Create problem report object with full context
-            const problemReport = {
+            // Create flag report object with full reproducibility data
+            const flagReport = {
                 timestamp: Date.now(),
-                dateString: new Date().toLocaleString('he-IL'),
+                date: new Date().toLocaleString('he-IL'),
                 module: moduleName,
-                reportType: reportType,
-                additionalNotes: additionalNotes,
                 question: {
                     text: state.currentQuestion ? state.currentQuestion.question : 'No question available',
                     type: state.currentQuestion ? state.currentQuestion.type : 'unknown',
-                    choices: state.currentQuestion ? state.currentQuestion.choices : [],
-                    fullQuestion: state.currentQuestion
+                    fullObject: state.currentQuestion || {}
                 },
-                userAnswer: getUserAnswer(moduleName),
+                userAnswer: userAnswer,
                 correctAnswer: state.currentAnswer,
-                moduleState: {
+                state: {
                     level: state.level,
                     totalQuestions: state.totalQuestions,
                     correctAnswers: state.correctAnswers,
@@ -4773,93 +4658,44 @@ ${'='.repeat(70)}
                 }
             };
 
-            // Store in global array
-            window.problemReports.push(problemReport);
+            // Create filename with timestamp
+            const now = new Date();
+            const dateStr = now.toISOString().split('T')[0]; // YYYY-MM-DD
+            const timeStr = now.toTimeString().split(' ')[0].replace(/:/g, ''); // HHMMSS
+            const filename = `בעיה-${moduleName}-${dateStr}-${timeStr}.json`;
 
-            // Save to localStorage
-            try {
-                localStorage.setItem('emmaProblemReports', JSON.stringify(window.problemReports));
-            } catch (e) {
-                console.error('Error saving problem reports:', e);
-            }
+            // Immediately download as JSON file
+            const dataStr = JSON.stringify(flagReport, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = filename;
+            link.click();
+            URL.revokeObjectURL(url);
 
             // Log to console for debugging
-            console.log('Problem Report Submitted:', problemReport);
+            console.log('🚩 Question Flagged:', flagReport);
+            console.log('📥 Downloaded:', filename);
 
-            // Show feedback (using safe text content)
+            // Show brief feedback
             const feedback = document.getElementById(`${moduleName}-feedback`);
             if (feedback) {
                 feedback.className = 'feedback';
                 feedback.style.background = '#fff3e0';
                 feedback.style.color = '#e65100';
                 feedback.style.border = '3px solid #ff9800';
-                feedback.textContent = '✅ תודה על הדיווח! נעבור לשאלה הבאה...';
+                feedback.textContent = '🚩 השאלה סומנה והורדה!';
                 feedback.classList.remove('hidden');
+
+                // Hide feedback after 2 seconds
+                setTimeout(() => {
+                    feedback.classList.add('hidden');
+                }, 2000);
             }
-
-            // Reset form
-            cancelProblemReport(moduleName);
-
-            // Move to next question after a short delay
-            setTimeout(() => {
-                if (moduleName === 'decimal' && typeof generateDecimalQuestion === 'function') {
-                    generateDecimalQuestion();
-                } else if (moduleName === 'multiplication' && typeof generateMultiplicationQuestion === 'function') {
-                    generateMultiplicationQuestion();
-                } else if (moduleName === 'numberline' && typeof generateNumberlineQuestion === 'function') {
-                    generateNumberlineQuestion();
-                }
-            }, 1500);
         }
 
-        // Helper function to get user's answer
-        function getUserAnswer(moduleName) {
-            const inputElement = document.getElementById(`${moduleName}-answer-input`);
-            if (inputElement && inputElement.style.display !== 'none') {
-                return inputElement.value;
-            }
-
-            // Check for selected choice
-            const states = {
-                'decimal': window.decimalState,
-                'multiplication': window.multiplicationState,
-                'numberline': window.numberlineState
-            };
-
-            const state = states[moduleName];
-            if (state && state.selectedChoice) {
-                return state.selectedChoice;
-            }
-
-            return 'No answer provided';
-        }
-
-        // Load existing reports on page load
-        try {
-            const savedReports = localStorage.getItem('emmaProblemReports');
-            if (savedReports) {
-                window.problemReports = JSON.parse(savedReports);
-                console.log(`Loaded ${window.problemReports.length} existing problem reports`);
-            }
-        } catch (e) {
-            console.error('Error loading problem reports:', e);
-            window.problemReports = [];
-        }
-
-        // Export problem reports function (can be called from console)
-        window.exportProblemReports = function() {
-            const dataStr = JSON.stringify(window.problemReports, null, 2);
-            const dataBlob = new Blob([dataStr], {type: 'application/json'});
-            const url = URL.createObjectURL(dataBlob);
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = `בעיות-תרגילים-אמה-${new Date().toISOString().split('T')[0]}.json`;
-            link.click();
-            URL.revokeObjectURL(url);
-            console.log(`Exported ${window.problemReports.length} problem reports`);
-        };
-
-        console.log('✅ Problem Reporting System Loaded Successfully!');
+        console.log('✅ Flag Problem System Loaded Successfully!');
     </script>
 
     <!-- Feature 4: Navigation System (Previous/Next/Skip) -->
