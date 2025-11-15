@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LearningIsFun - Learn Through Play!</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Fredoka', 'Comic Neue', cursive, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Floating background elements */
+        .floating-shapes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .shape {
+            position: absolute;
+            opacity: 0.3;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .shape:nth-child(1) { left: 10%; top: 20%; animation-delay: 0s; }
+        .shape:nth-child(2) { left: 70%; top: 10%; animation-delay: 1s; }
+        .shape:nth-child(3) { left: 20%; top: 70%; animation-delay: 2s; }
+        .shape:nth-child(4) { left: 80%; top: 60%; animation-delay: 3s; }
+        .shape:nth-child(5) { left: 50%; top: 80%; animation-delay: 4s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            animation: bounceIn 1s ease-out;
+        }
+
+        @keyframes bounceIn {
+            0% { transform: scale(0.3); opacity: 0; }
+            50% { transform: scale(1.05); }
+            70% { transform: scale(0.9); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .logo {
+            font-size: 4rem;
+            margin-bottom: 10px;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            color: white;
+            text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .tagline {
+            font-size: 1.5rem;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            font-weight: 500;
+        }
+
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .module-card {
+            background: white;
+            border-radius: 24px;
+            padding: 40px 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+            display: block;
+        }
+
+        .module-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .module-card:hover::before {
+            left: 100%;
+        }
+
+        .module-card:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .module-card:active {
+            transform: translateY(-5px) scale(1.02);
+        }
+
+        .module-icon {
+            font-size: 5rem;
+            margin-bottom: 20px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .module-card:hover .module-icon {
+            animation: wiggle 0.5s ease-in-out;
+        }
+
+        @keyframes wiggle {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-10deg); }
+            75% { transform: rotate(10deg); }
+        }
+
+        .module-title {
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .module-description {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .module-language {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        .math-card {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+        }
+
+        .english-card {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 60px;
+            color: white;
+            font-size: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .stars {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .tagline {
+                font-size: 1.2rem;
+            }
+
+            .logo {
+                font-size: 3rem;
+            }
+
+            .module-title {
+                font-size: 1.6rem;
+            }
+
+            .module-description {
+                font-size: 1rem;
+            }
+
+            .modules-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+
+        /* Coming Soon Badge */
+        .coming-soon {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #ff6b6b;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transform: rotate(10deg);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .available-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #51cf66;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            animation: tada 2s ease-in-out infinite;
+        }
+
+        @keyframes tada {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            10%, 20% { transform: scale(0.9) rotate(-3deg); }
+            30%, 50%, 70%, 90% { transform: scale(1.1) rotate(3deg); }
+            40%, 60%, 80% { transform: scale(1.1) rotate(-3deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating Background Shapes -->
+    <div class="floating-shapes">
+        <div class="shape" style="font-size: 4rem;">📚</div>
+        <div class="shape" style="font-size: 3rem;">🌟</div>
+        <div class="shape" style="font-size: 3.5rem;">🎨</div>
+        <div class="shape" style="font-size: 4rem;">🚀</div>
+        <div class="shape" style="font-size: 3rem;">🎯</div>
+    </div>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">🎓✨</div>
+            <h1>LearningIsFun</h1>
+            <p class="tagline">Where Learning Meets Adventure!</p>
+        </div>
+
+        <!-- Modules Grid -->
+        <div class="modules-grid">
+            <!-- Math Module (Hebrew) -->
+            <a href="src/math/Emma_math_lab.html" class="module-card math-card">
+                <span class="available-badge">✓ Available</span>
+                <div class="module-icon">🔢</div>
+                <h2 class="module-title">Math Lab</h2>
+                <p class="module-description">
+                    Practice math with fun exercises! Work on decimals, multiplication, and number lines.
+                </p>
+                <span class="module-language">🇮🇱 Hebrew</span>
+            </a>
+
+            <!-- English Module -->
+            <a href="English/index.html" class="module-card english-card">
+                <span class="available-badge">✓ Available</span>
+                <div class="module-icon">📝</div>
+                <h2 class="module-title">English Practice</h2>
+                <p class="module-description">
+                    Learn English through listening, speaking, reading, and writing activities!
+                </p>
+                <span class="module-language">🇬🇧 English</span>
+            </a>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <div class="stars">⭐ ⭐ ⭐</div>
+            <p>Made with love for curious minds</p>
+            <p style="margin-top: 10px; font-size: 0.9rem;">Keep learning, keep growing!</p>
+        </div>
+    </div>
+
+    <script>
+        // Add a fun welcome message
+        console.log('%c🎉 Welcome to LearningIsFun! 🎉', 'font-size: 20px; color: #667eea; font-weight: bold;');
+        console.log('%cReady to learn something new today?', 'font-size: 14px; color: #764ba2;');
+
+        // Add click animation feedback
+        document.querySelectorAll('.module-card').forEach(card => {
+            card.addEventListener('click', function(e) {
+                const icon = this.querySelector('.module-icon');
+                icon.style.animation = 'none';
+                setTimeout(() => {
+                    icon.style.animation = '';
+                }, 10);
+            });
+        });
+    </script>
+</body>
+</html>
