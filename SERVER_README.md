@@ -4,20 +4,29 @@ Backend server for Emma's Math Practice app that silently logs flagged questions
 
 ## Quick Start
 
-### 1. Install Dependencies
+### One-Command Launch (Recommended)
+
 ```bash
-npm install
+npm install           # First time only
+npm run launch        # Starts server + opens browser automatically
 ```
 
-### 2. Start Server
+That's it! The launcher will:
+- ✅ Start the backend server on port 3000
+- ✅ Wait for server to be ready
+- ✅ Open `src/math/Emma_math_lab.html` in your browser
+- ✅ Handle graceful shutdown on Ctrl+C
+
+### Manual Start (Alternative)
+
+If you prefer to start server and browser separately:
+
 ```bash
-npm start
+npm install           # First time only
+npm start             # Start server only
 ```
 
-Server will run on `http://localhost:3000`
-
-### 3. Open Math Practice App
-Open `src/math/Emma_math_lab.html` in your browser while the server is running.
+Then manually open `src/math/Emma_math_lab.html` in your browser.
 
 ## How It Works
 
