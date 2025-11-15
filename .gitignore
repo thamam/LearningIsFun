@@ -34,3 +34,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# flag logging
+logs/**/*.json
+!logs/**/.gitkeep
