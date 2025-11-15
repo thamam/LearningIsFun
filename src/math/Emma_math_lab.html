@@ -4610,8 +4610,11 @@ ${'='.repeat(70)}
 
     <!-- Flag Problem System -->
     <script>
-        // Flag a problematic question - immediately downloads JSON file
-        function flagQuestion(moduleName) {
+        // Server configuration
+        const FLAG_SERVER_URL = 'http://localhost:3000/api/flag';
+
+        // Flag a problematic question - sends to backend server for logging
+        async function flagQuestion(moduleName) {
             // Get module state
             const states = {
                 'decimal': window.decimalState,
@@ -4658,34 +4661,54 @@ ${'='.repeat(70)}
                 }
             };
 
-            // Create filename with timestamp
-            const now = new Date();
-            const dateStr = now.toISOString().split('T')[0]; // YYYY-MM-DD
-            const timeStr = now.toTimeString().split(' ')[0].replace(/:/g, ''); // HHMMSS
-            const filename = `בעיה-${moduleName}-${dateStr}-${timeStr}.json`;
+            // Send to backend server
+            try {
+                const response = await fetch(FLAG_SERVER_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(flagReport)
+                });
 
-            // Immediately download as JSON file
-            const dataStr = JSON.stringify(flagReport, null, 2);
-            const dataBlob = new Blob([dataStr], {type: 'application/json'});
-            const url = URL.createObjectURL(dataBlob);
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = filename;
-            link.click();
-            URL.revokeObjectURL(url);
+                const result = await response.json();
 
-            // Log to console for debugging
-            console.log('🚩 Question Flagged:', flagReport);
-            console.log('📥 Downloaded:', filename);
+                if (result.success) {
+                    console.log('🚩 Question Flagged:', flagReport);
+                    console.log('✅ Saved to:', result.logFile);
+                    console.log('📊 Total flags today:', result.totalFlags);
 
-            // Show brief feedback
+                    // Show success feedback
+                    showFlagFeedback(moduleName, '🚩 השאלה נשמרה ביומן!', 'success');
+                } else {
+                    console.error('❌ Server error:', result.error);
+                    showFlagFeedback(moduleName, '⚠️ שגיאה בשמירה', 'error');
+                }
+
+            } catch (error) {
+                console.error('❌ Failed to send flag to server:', error);
+                console.error('💡 Make sure the server is running: npm start');
+                showFlagFeedback(moduleName, '⚠️ השרת לא זמין', 'error');
+            }
+        }
+
+        // Show feedback message
+        function showFlagFeedback(moduleName, message, type) {
             const feedback = document.getElementById(`${moduleName}-feedback`);
             if (feedback) {
                 feedback.className = 'feedback';
-                feedback.style.background = '#fff3e0';
-                feedback.style.color = '#e65100';
-                feedback.style.border = '3px solid #ff9800';
-                feedback.textContent = '🚩 השאלה סומנה והורדה!';
+
+                if (type === 'success') {
+                    feedback.style.background = '#e8f5e9';
+                    feedback.style.color = '#2e7d32';
+                    feedback.style.border = '3px solid #4caf50';
+                } else {
+                    feedback.style.background = '#fff3e0';
+                    feedback.style.color = '#e65100';
+                    feedback.style.border = '3px solid #ff9800';
+                }
+
+                feedback.textContent = message;
                 feedback.classList.remove('hidden');
 
                 // Hide feedback after 2 seconds
@@ -4696,6 +4719,7 @@ ${'='.repeat(70)}
         }
 
         console.log('✅ Flag Problem System Loaded Successfully!');
+        console.log('📡 Server URL:', FLAG_SERVER_URL);
     </script>
 
     <!-- Feature 4: Navigation System (Previous/Next/Skip) -->
