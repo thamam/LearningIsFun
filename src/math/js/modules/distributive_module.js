@@ -35,6 +35,9 @@ const distributiveState = {
     selectedChoice: null
 };
 
+// Expose to window for navigation patch
+window.distributiveState = distributiveState;
+
 // ============================================================================
 // Question Generation
 // ============================================================================

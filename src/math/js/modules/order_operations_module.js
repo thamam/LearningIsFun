@@ -31,6 +31,9 @@ const orderState = {
     selectedChoice: null
 };
 
+// Expose to window for navigation patch
+window.orderState = orderState;
+
 // ============================================================================
 // Question Generation
 // ============================================================================
