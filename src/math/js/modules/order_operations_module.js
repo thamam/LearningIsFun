@@ -65,7 +65,8 @@ function generateOrderQuestion() {
                 const expr = `(${a} + ${b}) × ${c}`;
                 answer = (a + b) * c;
                 question = {
-                    question: `חשב: ${expr}`,
+                    question: `חשבי:`,
+                    equation: `${expr} = ___`,
                     type: 'input',
                     explanation: `קודם פותרים את הסוגריים: ${a} + ${b} = ${a+b}, ואז: ${a+b} × ${c} = ${answer}`,
                     step1: `${a} + ${b} = ${a+b}`,
@@ -75,7 +76,8 @@ function generateOrderQuestion() {
                 const expr = `${a} × (${b} + ${c})`;
                 answer = a * (b + c);
                 question = {
-                    question: `חשב: ${expr}`,
+                    question: `חשבי:`,
+                    equation: `${expr} = ___`,
                     type: 'input',
                     explanation: `קודם פותרים את הסוגריים: ${b} + ${c} = ${b+c}, ואז: ${a} × ${b+c} = ${answer}`,
                     step1: `${b} + ${c} = ${b+c}`,
@@ -91,7 +93,8 @@ function generateOrderQuestion() {
             const expr = `${a} + ${b} × ${c}`;
             answer = a + (b * c);
             question = {
-                question: `חשב: ${expr}`,
+                question: `חשבי:`,
+                equation: `${expr} = ___`,
                 type: 'input',
                 explanation: `קודם פותרים את הכפל: ${b} × ${c} = ${b*c}, ואז: ${a} + ${b*c} = ${answer}`,
                 step1: `${b} × ${c} = ${b*c}`,
@@ -117,7 +120,8 @@ function generateOrderQuestion() {
                 const step2Result = step1Result * c;
                 answer = step2Result - d;
                 question = {
-                    question: `חשב: ${expr}`,
+                    question: `חשבי:`,
+                    equation: `${expr} = ___`,
                     type: 'input',
                     explanation: `1) סוגריים: ${a} + ${b} = ${step1Result}\n2) כפל: ${step1Result} × ${c} = ${step2Result}\n3) חיסור: ${step2Result} - ${d} = ${answer}`,
                     step1: `${a} + ${b} = ${step1Result}`,
@@ -130,7 +134,8 @@ function generateOrderQuestion() {
                 const mult2 = c * d;
                 answer = mult1 + mult2;
                 question = {
-                    question: `חשב: ${expr}`,
+                    question: `חשבי:`,
+                    equation: `${expr} = ___`,
                     type: 'input',
                     explanation: `1) כפל ראשון: ${a} × ${b} = ${mult1}\n2) כפל שני: ${c} × ${d} = ${mult2}\n3) חיבור: ${mult1} + ${mult2} = ${answer}`,
                     step1: `${a} × ${b} = ${mult1}`,
@@ -149,7 +154,8 @@ function generateOrderQuestion() {
             const diff = a - b;
             answer = Math.floor(diff / c);
             question = {
-                question: `חשב: ${expr}`,
+                question: `חשבי:`,
+                equation: `${expr} = ___`,
                 type: 'input',
                 explanation: `1) סוגריים: ${a} - ${b} = ${diff}\n2) חילוק: ${diff} ÷ ${c} = ${answer}`,
                 step1: `${a} - ${b} = ${diff}`,
@@ -248,13 +254,33 @@ function generateOrderQuestion() {
     orderState.currentQuestion = question;
     orderState.currentAnswer = answer;
 
-    // Display question
-    document.getElementById('order-question').textContent = question.question;
+    // Display question with proper formatting
+    const questionEl = document.getElementById('order-question');
+    const equationEl = document.getElementById('order-equation');
+
+    if (question.equation) {
+        // Use separate containers for Hebrew text and equation
+        questionEl.textContent = question.question;
+        equationEl.textContent = question.equation;
+        equationEl.style.display = 'block';
+    } else {
+        // Word problems - just show the question text
+        questionEl.textContent = question.question;
+        equationEl.style.display = 'none';
+    }
 
     // Setup answer interface
-    document.getElementById('order-answer-input').style.display = 'inline-block';
-    document.getElementById('order-answer-input').value = '';
-    document.getElementById('order-answer-input').focus();
+    const inputEl = document.getElementById('order-answer-input');
+    inputEl.style.display = 'inline-block';
+    inputEl.value = '';
+    inputEl.focus();
+
+    // Add Enter key support
+    inputEl.onkeypress = function(e) {
+        if (e.key === 'Enter') {
+            checkOrderAnswer();
+        }
+    };
 
     // Hide/show expression hint for word problems
     const expressionHint = document.getElementById('order-expression-hint');

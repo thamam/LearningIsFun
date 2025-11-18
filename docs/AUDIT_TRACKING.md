@@ -31,7 +31,7 @@ For each module and question type, we will:
 - **Example**: "4,521 = 4,000 + 500 + ? + 1"
 - **Answer**: Missing place value (e.g., 20)
 - **Visual**: Base-10 blocks displayed
-- **Status**: ⬜ Not Reviewed
+- **Status**: ✅ Reviewed
 
 #### 1.2 Digit Value (digitValue)
 - **Code Lines**: 2139-2152
@@ -39,7 +39,7 @@ For each module and question type, we will:
 - **Example**: "מה ערך הספרה 8 במספר 28,885?"
 - **Answer**: Value of the digit (e.g., 8000)
 - **Visual**: Base-10 blocks displayed
-- **Status**: ⬜ Not Reviewed | **BUG REPORTED** (see screenshots 15.54.23)
+- **Status**: ✅ Reviewed & Fixed - Now generates numbers with distinct digits
 
 #### 1.3 Next/Previous (nextPrevious)
 - **Code Lines**: 2154-2162
@@ -47,7 +47,7 @@ For each module and question type, we will:
 - **Example**: "מהו המספר העוקב של 4,521?"
 - **Answer**: num + 1 or num - 1
 - **Visual**: None
-- **Status**: ⬜ Not Reviewed
+- **Status**: ✅ Reviewed
 
 #### 1.4 Compare (compare)
 - **Code Lines**: 2164-2188
@@ -56,7 +56,7 @@ For each module and question type, we will:
 - **Example**: "4,521 ___ 3,891"
 - **Answer**: Comparison symbol
 - **Visual**: None
-- **Status**: ⬜ Not Reviewed
+- **Status**: ✅ Reviewed
 
 #### 1.5 Missing Digit (missingDigit)
 - **Code Lines**: 2190-2252
@@ -64,7 +64,7 @@ For each module and question type, we will:
 - **Example**: "מהי הספרה החסרה? 2_,885 (המספר נמצא בין 9,647 ל-9,641)"
 - **Answer Type**: OBJECT `{type: 'range', min, max, pattern, missingPos, originalDigit}`
 - **Visual**: None
-- **Status**: ⬜ Not Reviewed | **BUG REPORTED** (see screenshot 15.52.51 - "[object Object]" displayed)
+- **Status**: ✅ Reviewed & Fixed - Multi-attempt wrapper now validates range objects
 
 ---
 
@@ -83,7 +83,7 @@ For each module and question type, we will:
 - **Example**: "7 × ___ = 35"
 - **Answer**: num2
 - **Visual**: None
-- **Status**: ⬜ Not Reviewed
+- **Status**: ✅ Reviewed & Fixed - LTR Unicode embedding for equations
 
 #### 2.2 Missing Multiplicand (missingMultiplicand)
 - **Code Lines**: 2838-2844
@@ -91,7 +91,7 @@ For each module and question type, we will:
 - **Example**: "___ × 5 = 35"
 - **Answer**: num1
 - **Visual**: None
-- **Status**: ⬜ Not Reviewed
+- **Status**: ✅ Reviewed & Fixed - LTR Unicode embedding for equations
 
 #### 2.3 Missing Product (missingProduct)
 - **Code Lines**: 2846-2852
@@ -99,7 +99,7 @@ For each module and question type, we will:
 - **Example**: "7 × 5 = ___"
 - **Answer**: product
 - **Visual**: None
-- **Status**: ⬜ Not Reviewed
+- **Status**: ✅ Reviewed & Fixed - LTR Unicode embedding for equations
 
 #### 2.4 Division (division)
 - **Code Lines**: 2854-2860
@@ -107,7 +107,7 @@ For each module and question type, we will:
 - **Example**: "אם 7 × 5 = 35, אז 35 ÷ 7 = ___"
 - **Answer**: num2
 - **Visual**: None
-- **Status**: ⬜ Not Reviewed
+- **Status**: ✅ Reviewed & Fixed - LTR Unicode embedding for equations
 
 ---
 
@@ -126,7 +126,7 @@ For each module and question type, we will:
 - **Example**: "איזה מספר מסומן בחץ?"
 - **Answer**: arrowPosition
 - **Visual**: Number line with arrow
-- **Status**: ⬜ Not Reviewed
+- **Status**: ✅ Reviewed & Fixed - Two versions (exact/approximate), zoom, minor ticks, specific hints
 
 #### 3.2 Between Numbers (betweenNumbers)
 - **Code Lines**: 3010-3019
@@ -134,7 +134,7 @@ For each module and question type, we will:
 - **Example**: "איזה מספר נמצא בדיוק באמצע בין 20 ל-40?"
 - **Answer**: (num1 + num2) / 2
 - **Visual**: None
-- **Status**: ⬜ Not Reviewed
+- **Status**: ✅ Reviewed
 
 #### 3.3 Closer To (closerTo)
 - **Code Lines**: 3021-3032
@@ -143,7 +143,7 @@ For each module and question type, we will:
 - **Example**: "המספר 23 קרוב יותר ל-20 או ל-30?"
 - **Answer**: Closer number
 - **Visual**: None
-- **Status**: ⬜ Not Reviewed
+- **Status**: ✅ Reviewed
 
 ---
 
@@ -151,51 +151,41 @@ For each module and question type, we will:
 
 **Module ID**: `fraction`
 **State Object**: `fractionState`
-**Code Location**: `src/math/js/modules/fraction_module.js:1-200`
+**Code Location**: `src/math/js/modules/fraction_module.js:1-274`
 **Difficulty Levels**: קל (denominators 2,4), בינוני (denominators 2-6), קשה (denominators 2-12)
 
 ### Question Types
 
 #### 4.1 Compare (compare)
-- **Code Lines**: 21-30
+- **Code Lines**: 27-51
 - **Question Type**: `choice`
 - **Choices**: ['>', '<', '=']
 - **Example**: "מה הסימן הנכון? 3/4 ___ 1/4"
 - **Answer**: Comparison symbol
 - **Visual**: None
-- **Status**: ⬜ Not Reviewed
+- **Status**: ✅ Reviewed & Fixed - Separate containers for text/equation, LTR buttons
 
 #### 4.2 Add Same Denominator (addSameDenominator)
-- **Code Lines**: 31-46
+- **Code Lines**: 53-84
 - **Question Type**: `input`
-- **Example**: "2/5 + 1/5 = ___/5" or "1/2 + 1/2 = ___ (צמצמי!)"
-- **Answer**: Sum or simplified fraction
+- **Example**: "2/5 + 1/5 = ___/5" or "1/2 + 1/2 = ___"
+- **Answer**: Just numerator when denominator shown, or simplified fraction
 - **Visual**: None
-- **Status**: ⬜ Not Reviewed
+- **Status**: ✅ Reviewed & Fixed - Accepts just numerator when denominator in question
 
 #### 4.3 Simplify (simplify)
-- **Code Lines**: 48-56
+- **Code Lines**: 85-97
 - **Question Type**: `input`
 - **Example**: "צמצמי: 4/8 = ___"
 - **Answer**: Simplified fraction (e.g., "1/2")
 - **Visual**: None
-- **Status**: ⬜ Not Reviewed
+- **Status**: ✅ Reviewed & Fixed - Uses equation format for proper display
 
 #### 4.4 Fraction to Decimal (fractionToDecimal)
-- **Code Lines**: 57-68
-- **Question Type**: `input`
-- **Example**: "כתבי כעשרוני: 1/2 = ___"
-- **Answer**: Decimal (e.g., 0.5)
-- **Visual**: None
-- **Status**: ⬜ Not Reviewed
+- **REMOVED** - Not yet in curriculum
 
 #### 4.5 Decimal to Fraction (decimalToFraction)
-- **Code Lines**: 69-78
-- **Question Type**: `input`
-- **Example**: "כתבי כשבר: 0.5 = ___"
-- **Answer**: Fraction string (e.g., "1/2")
-- **Visual**: None
-- **Status**: ⬜ Not Reviewed
+- **REMOVED** - Not yet in curriculum
 
 ---
 
@@ -402,10 +392,21 @@ For each module and question type, we will:
 ## Progress Tracking
 
 **Total Modules**: 7
-**Total Question Types**: 40+
-**Reviewed**: 0
-**Bugs Found**: 2
-**Status**: 🔴 Not Started
+**Total Question Types**: 35+ (2 removed from fractions)
+**Reviewed**: 4 modules (15 question types)
+**Bugs Found & Fixed**: 10+
+**Status**: 🟡 In Progress
+
+### Completed Modules
+- ✅ Module 1: Decimal Numbers (5/5 question types)
+- ✅ Module 2: Multiplication (4/4 question types)
+- ✅ Module 3: Number Line (3/3 question types)
+- ✅ Module 4: Fractions (3/3 question types - 2 removed)
+
+### Remaining Modules
+- ⬜ Module 5: Division (5 question types)
+- ⬜ Module 6: Order of Operations (7 question types)
+- ⬜ Module 7: Distributive Property (6 question types)
 
 ---
 

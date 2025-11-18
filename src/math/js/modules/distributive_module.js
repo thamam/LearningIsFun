@@ -195,9 +195,17 @@ function generateDistributiveQuestion() {
     }
 
     // Setup answer interface
-    document.getElementById('distributive-answer-input').style.display = 'inline-block';
-    document.getElementById('distributive-answer-input').value = '';
-    document.getElementById('distributive-answer-input').focus();
+    const inputEl = document.getElementById('distributive-answer-input');
+    inputEl.style.display = 'inline-block';
+    inputEl.value = '';
+    inputEl.focus();
+
+    // Add Enter key support
+    inputEl.onkeypress = function(e) {
+        if (e.key === 'Enter') {
+            checkDistributiveAnswer();
+        }
+    };
 
     // Reset buttons and feedback
     document.getElementById('distributive-check-btn').style.display = 'inline-block';
