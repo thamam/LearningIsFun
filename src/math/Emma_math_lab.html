@@ -1671,6 +1671,7 @@
             <div class="main-content">
                 <div class="exercise-area">
                     <div class="question" id="fraction-question">לחצי על "שאלה חדשה" כדי להתחיל! 🚀</div>
+                    <div class="equation-display" id="fraction-equation" style="direction: ltr; unicode-bidi: isolate; font-size: 1.3em; margin: 15px 0; display: none;"></div>
 
                     <div class="answer-area">
                         <input type="text" class="answer-input" id="fraction-answer-input" placeholder="התשובה שלך" style="display: none;">
@@ -2032,11 +2033,17 @@
             const states = {
                 decimal: decimalState,
                 multiplication: multiplicationState,
-                numberline: numberlineState
+                numberline: numberlineState,
+                fraction: fractionState,
+                division: divisionState
             };
 
             const state = states[toolName];
-            const percentage = state.totalQuestions > 0 ? 
+            if (!state) {
+                console.warn(`No state found for ${toolName}`);
+                return;
+            }
+            const percentage = state.totalQuestions > 0 ?
                 Math.round((state.correctAnswers / state.totalQuestions) * 100) : 0;
 
             const celebration = document.getElementById('celebration');
@@ -3038,12 +3045,68 @@
 
             switch (type) {
                 case 'whatIsNumber':
-                    const arrowPosition = Math.floor(Math.random() * (range.max / range.interval)) * range.interval;
+                    // Two versions: exact with hint, or approximate without hint
+                    const useExactWithHint = Math.random() < 0.5;
+
+                    // Pick a random segment between two markers
+                    const numSegments = (range.max / range.interval) - 1;
+                    const segment = Math.floor(Math.random() * numSegments);
+                    const segmentStart = segment * range.interval;
+
+                    let arrowPosition;
+                    let questionText;
+                    let acceptableRange;
+
+                    if (useExactWithHint) {
+                        // Version 1: Exact answer with hint about last digit
+                        // Use positions that end with 5 or half-interval for clean answers
+                        const halfInterval = range.interval / 2;
+                        arrowPosition = segmentStart + halfInterval;
+
+                        // Determine what digit it ends with
+                        const lastDigit = arrowPosition % 10;
+                        questionText = `איזה מספר מסומן בחץ? (מסתיים ב-${lastDigit})`;
+
+                        // Exact answer required
+                        acceptableRange = null;
+                    } else {
+                        // Version 2: Approximate answer with hint about divisibility or ending
+                        // Use any position in the segment
+                        const possibleOffsets = [];
+                        for (let i = 1; i < range.interval / 5; i++) {
+                            possibleOffsets.push(i * 5); // Every 5 units
+                        }
+                        const offset = possibleOffsets[Math.floor(Math.random() * possibleOffsets.length)];
+                        arrowPosition = segmentStart + offset;
+
+                        // Determine hint based on the number
+                        let hint;
+                        if (arrowPosition % 10 === 0) {
+                            hint = 'מתחלק ב-10';  // Divisible by 10
+                        } else if (arrowPosition % 5 === 0) {
+                            hint = 'מסתיים ב-5';  // Ends with 5
+                        } else {
+                            // For other numbers, give last digit hint
+                            const lastDigit = arrowPosition % 10;
+                            hint = `מסתיים ב-${lastDigit}`;
+                        }
+
+                        questionText = `איזה מספר מסומן בחץ? (${hint})`;
+
+                        // Accept within 25% of interval
+                        const tolerance = range.interval * 0.25;
+                        acceptableRange = {
+                            min: arrowPosition - tolerance,
+                            max: arrowPosition + tolerance
+                        };
+                    }
+
                     question = {
-                        question: `איזה מספר מסומן בחץ?`,
+                        question: questionText,
                         type: 'visual-input',
                         range: range,
-                        arrowPosition: arrowPosition
+                        arrowPosition: arrowPosition,
+                        acceptableRange: acceptableRange // null for exact, object for range
                     };
                     answer = arrowPosition;
                     break;
@@ -3115,17 +3178,43 @@
         function displayNumberLine(question) {
             const container = document.getElementById('numberline-visual');
             container.style.display = 'block';
-            
+
             const lineElement = document.getElementById('numberline-line');
             lineElement.innerHTML = '';
 
             const range = question.range;
-            const steps = range.max / range.interval;
 
-            // Create markers
-            for (let i = 0; i <= steps; i++) {
-                const value = i * range.interval;
-                const position = (i / steps) * 100;
+            // Zoom feature: if arrow exists, show focused segment
+            let displayMin, displayMax;
+            if (question.arrowPosition !== undefined) {
+                // Find the segment containing the arrow
+                const arrowSegment = Math.floor(question.arrowPosition / range.interval);
+
+                // Show 3 segments centered on arrow (or adjusted at edges)
+                const segmentsToShow = 3;
+                const totalSegments = range.max / range.interval;
+
+                let startSegment = Math.max(0, arrowSegment - 1);
+                let endSegment = Math.min(totalSegments, startSegment + segmentsToShow);
+
+                // Adjust if at the end
+                if (endSegment === totalSegments) {
+                    startSegment = Math.max(0, endSegment - segmentsToShow);
+                }
+
+                displayMin = startSegment * range.interval;
+                displayMax = endSegment * range.interval;
+            } else {
+                // No arrow, show full range
+                displayMin = range.min;
+                displayMax = range.max;
+            }
+
+            const displayRange = displayMax - displayMin;
+
+            // Create major markers (labeled)
+            for (let value = displayMin; value <= displayMax; value += range.interval) {
+                const position = ((value - displayMin) / displayRange) * 100;
 
                 const marker = document.createElement('div');
                 marker.className = 'marker';
@@ -3139,9 +3228,28 @@
                 lineElement.appendChild(label);
             }
 
+            // Create minor ticks (unlabeled, between major markers)
+            const minorTickInterval = range.interval / 5; // 5 minor ticks per major interval
+            for (let value = displayMin; value <= displayMax; value += minorTickInterval) {
+                // Skip if this is a major marker position
+                if (value % range.interval === 0) continue;
+
+                const position = ((value - displayMin) / displayRange) * 100;
+
+                const minorTick = document.createElement('div');
+                minorTick.className = 'minor-tick';
+                minorTick.style.left = position + '%';
+                minorTick.style.position = 'absolute';
+                minorTick.style.width = '1px';
+                minorTick.style.height = '10px';
+                minorTick.style.background = '#bbb';
+                minorTick.style.top = '-3px';
+                lineElement.appendChild(minorTick);
+            }
+
             // Add arrow if specified
             if (question.arrowPosition !== undefined) {
-                const arrowPos = (question.arrowPosition / range.max) * 100;
+                const arrowPos = ((question.arrowPosition - displayMin) / displayRange) * 100;
                 const arrow = document.createElement('div');
                 arrow.className = 'arrow';
                 arrow.textContent = '⬇️';
@@ -3181,7 +3289,16 @@
                 return;
             }
 
-            const isCorrect = userAnswer == numberlineState.currentAnswer;
+            // Check if this question has an acceptable range (for approximate answers)
+            let isCorrect;
+            if (numberlineState.currentQuestion.acceptableRange) {
+                // Version 2: Accept answers within the range
+                const range = numberlineState.currentQuestion.acceptableRange;
+                isCorrect = (userAnswer >= range.min && userAnswer <= range.max);
+            } else {
+                // Version 1 or other question types: Exact answer required
+                isCorrect = userAnswer == numberlineState.currentAnswer;
+            }
             
             // Update statistics
             numberlineState.totalQuestions++;
