@@ -33,6 +33,8 @@ const orderState = {
 
 // Expose to window for navigation patch
 window.orderState = orderState;
+window.generateOrderQuestion = generateOrderQuestion;
+window.checkOrderAnswer = checkOrderAnswer;
 
 // ============================================================================
 // Question Generation
@@ -147,15 +149,15 @@ function generateOrderQuestion() {
                 };
             }
         } else if (type === 'subtract_divide') {
-            // (a - b) ÷ c
-            const c = Math.floor(Math.random() * 5) + 2;
-            const quotient = Math.floor(Math.random() * 10) + 3;
-            const a = c * quotient + Math.floor(Math.random() * 10) + 5;
-            const b = Math.floor(Math.random() * Math.min(10, a - c));
+            // (a - b) ÷ c - ensure integer result
+            const c = Math.floor(Math.random() * 5) + 2;  // divisor: 2-6
+            const quotient = Math.floor(Math.random() * 10) + 3;  // answer: 3-12
+            const diff = c * quotient;  // ensure diff is exactly divisible by c
+            const b = Math.floor(Math.random() * 15) + 5;  // subtrahend: 5-19
+            const a = diff + b;  // so that a - b = diff
 
             const expr = `(${a} - ${b}) ÷ ${c}`;
-            const diff = a - b;
-            answer = Math.floor(diff / c);
+            answer = quotient;  // exact integer result
             question = {
                 question: `חשבי:`,
                 equation: `${expr} = ___`,
@@ -226,16 +228,36 @@ function generateOrderQuestion() {
             },
             {
                 setup: () => {
-                    const groups = Math.floor(Math.random() * 5) + 4;
-                    const perGroup = Math.floor(Math.random() * 6) + 5;
-                    const additional = Math.floor(Math.random() * 8) + 3;
-                    const divisor = Math.floor(Math.random() * 4) + 2;
-                    const total = groups * perGroup + additional;
+                    // Ensure integer result: pick divisor and quotient first
+                    const divisor = Math.floor(Math.random() * 4) + 2;  // 2-5
+                    const quotient = Math.floor(Math.random() * 8) + 5;  // 5-12 (answer)
+                    const total = divisor * quotient;  // ensure exact division
+
+                    // Now distribute total into groups * perGroup + additional
+                    const groups = Math.floor(Math.random() * 4) + 3;  // 3-6
+                    const perGroup = Math.floor(Math.random() * 5) + 4;  // 4-8
+                    const groupTotal = groups * perGroup;
+                    const additional = total - groupTotal;  // calculate additional to make it work
+
+                    // Only use this scenario if additional is positive and reasonable
+                    if (additional < 1 || additional > 20) {
+                        // Fallback to simpler values
+                        const fallbackGroups = 4;
+                        const fallbackPerGroup = Math.floor(total / fallbackGroups) - 2;
+                        const fallbackAdditional = total - (fallbackGroups * fallbackPerGroup);
+                        return {
+                            text: `בגן יש ${fallbackGroups} קבוצות של ${fallbackPerGroup} ילדים, ועוד ${fallbackAdditional} ילדים. מחלקים אותם ל-${divisor} כיתות שווים. כמה ילדים בכל כיתה?`,
+                            expr: `(${fallbackGroups} × ${fallbackPerGroup} + ${fallbackAdditional}) ÷ ${divisor}`,
+                            answer: quotient,
+                            explanation: `1) ילדים בקבוצות: ${fallbackGroups} × ${fallbackPerGroup} = ${fallbackGroups * fallbackPerGroup}\n2) סה"כ ילדים: ${fallbackGroups * fallbackPerGroup} + ${fallbackAdditional} = ${total}\n3) בכל כיתה: ${total} ÷ ${divisor} = ${quotient}`
+                        };
+                    }
+
                     return {
                         text: `בגן יש ${groups} קבוצות של ${perGroup} ילדים, ועוד ${additional} ילדים. מחלקים אותם ל-${divisor} כיתות שווים. כמה ילדים בכל כיתה?`,
                         expr: `(${groups} × ${perGroup} + ${additional}) ÷ ${divisor}`,
-                        answer: Math.floor(total / divisor),
-                        explanation: `1) ילדים בקבוצות: ${groups} × ${perGroup} = ${groups * perGroup}\n2) סה"כ ילדים: ${groups * perGroup} + ${additional} = ${total}\n3) בכל כיתה: ${total} ÷ ${divisor} = ${Math.floor(total / divisor)}`
+                        answer: quotient,
+                        explanation: `1) ילדים בקבוצות: ${groups} × ${perGroup} = ${groupTotal}\n2) סה"כ ילדים: ${groupTotal} + ${additional} = ${total}\n3) בכל כיתה: ${total} ÷ ${divisor} = ${quotient}`
                     };
                 }
             }
@@ -288,7 +310,8 @@ function generateOrderQuestion() {
     // Hide/show expression hint for word problems
     const expressionHint = document.getElementById('order-expression-hint');
     if (question.wordProblem && question.showExpression) {
-        expressionHint.textContent = `רמז: ${question.showExpression}`;
+        // Use LTR isolation for the mathematical expression
+        expressionHint.innerHTML = `רמז: <span style="direction: ltr; unicode-bidi: isolate;">${question.showExpression}</span>`;
         expressionHint.style.display = 'block';
     } else {
         expressionHint.style.display = 'none';
