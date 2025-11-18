@@ -2137,13 +2137,48 @@
                     break;
 
                 case 'digitValue':
-                    const digitStr = num.toString();
+                    // Generate number with all distinct digits to avoid ambiguity
+                    let distinctNum;
+                    let targetDigits;
+
+                    // Determine number of digits based on level
+                    if (decimalState.level === 'קל') {
+                        targetDigits = 2; // two-digit
+                    } else if (decimalState.level === 'בינוני') {
+                        targetDigits = 3; // three-digit
+                    } else {
+                        targetDigits = 4; // four-digit for קשה
+                    }
+
+                    // Generate number with distinct digits using random selection without replacement
+                    const availableDigits = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+                    const selectedDigits = [];
+
+                    // First digit cannot be 0 (numbers don't start with 0)
+                    const firstDigitPool = availableDigits.filter(d => d !== 0);
+                    const firstDigit = firstDigitPool[Math.floor(Math.random() * firstDigitPool.length)];
+                    selectedDigits.push(firstDigit);
+
+                    // Remove first digit from available pool
+                    const remainingDigits = availableDigits.filter(d => d !== firstDigit);
+
+                    // Select remaining digits randomly without replacement
+                    for (let i = 1; i < targetDigits; i++) {
+                        const randomIndex = Math.floor(Math.random() * remainingDigits.length);
+                        selectedDigits.push(remainingDigits[randomIndex]);
+                        remainingDigits.splice(randomIndex, 1);
+                    }
+
+                    // Build the number from selected digits
+                    distinctNum = parseInt(selectedDigits.join(''));
+
+                    const digitStr = distinctNum.toString();
                     const digitPos = Math.floor(Math.random() * digitStr.length);
                     const digit = parseInt(digitStr[digitPos]);
                     const value = digit * Math.pow(10, digitStr.length - 1 - digitPos);
 
                     // Format number with comma for readability
-                    const formattedNumForDigit = num.toLocaleString('en-US');
+                    const formattedNumForDigit = distinctNum.toLocaleString('en-US');
                     question = {
                         question: `מה ערך הספרה ${digit} במספר ${formattedNumForDigit}?`,
                         type: 'input'
@@ -2828,32 +2863,38 @@
 
             switch (type) {
                 case 'missingMultiplier':
+                    // Use LTR embedding to prevent RTL scrambling of equations
                     question = {
-                        question: `${num1} × ___ = ${product}`,
+                        question: '\u202A' + `${num1} × ___ = ${product}` + '\u202C',
                         type: 'input'
                     };
                     answer = num2;
                     break;
 
                 case 'missingMultiplicand':
+                    // Use LTR embedding to prevent RTL scrambling of equations
                     question = {
-                        question: `___ × ${num2} = ${product}`,
+                        question: '\u202A' + `___ × ${num2} = ${product}` + '\u202C',
                         type: 'input'
                     };
                     answer = num1;
                     break;
 
                 case 'missingProduct':
+                    // Use LTR embedding to prevent RTL scrambling of equations
                     question = {
-                        question: `${num1} × ${num2} = ___`,
+                        question: '\u202A' + `${num1} × ${num2} = ___` + '\u202C',
                         type: 'input'
                     };
                     answer = product;
                     break;
 
                 case 'division':
+                    // Separate Hebrew text from equations using LTR embedding
+                    const eq1 = '\u202A' + `${num1} × ${num2} = ${product}` + '\u202C';
+                    const eq2 = '\u202A' + `${product} ÷ ${num1} = ___` + '\u202C';
                     question = {
-                        question: `אם ${num1} × ${num2} = ${product}, אז ${product} ÷ ${num1} = ___`,
+                        question: `אם ${eq1}, אז ${eq2}`,
                         type: 'input'
                     };
                     answer = num2;
@@ -4363,20 +4404,35 @@ ${'='.repeat(70)}
                         // Initialize tracking if needed
                         initAttemptTracking(toolName);
 
-                        // Get user answer before calling original
+                        // Get user answer before validation
                         const input = document.getElementById(`${toolName}-answer-input`);
                         let userAnswer = null;
 
                         // Check if input is VISIBLE and being used (not just exists)
                         if (input && input.style.display !== 'none' && input.offsetParent !== null) {
-                            userAnswer = parseInt(input.value);
+                            userAnswer = parseFloat(input.value);
                         } else {
                             // For choice-based questions
                             userAnswer = state.selectedChoice;
                         }
 
                         const correctAnswer = state.currentAnswer;
-                        const isCorrect = (userAnswer === correctAnswer);
+
+                        // Determine correctness based on answer type
+                        let isCorrect;
+                        if (typeof correctAnswer === 'object' && correctAnswer.type === 'range') {
+                            // Missing digit with range validation
+                            const answerInfo = correctAnswer;
+                            const userNum = parseInt(
+                                answerInfo.pattern.substring(0, answerInfo.missingPos) +
+                                userAnswer +
+                                answerInfo.pattern.substring(answerInfo.missingPos + 1)
+                            );
+                            isCorrect = (userNum >= answerInfo.min && userNum <= answerInfo.max);
+                        } else {
+                            // Standard validation
+                            isCorrect = (userAnswer == correctAnswer);
+                        }
 
                         // Record attempt
                         recordAttempt(toolName, userAnswer, isCorrect);
