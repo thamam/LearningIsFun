@@ -1494,7 +1494,8 @@
 
             <div class="main-content">
                 <div class="exercise-area">
-                    <div class="question order" id="order-question">חשב: (5 + 3) × 2</div>
+                    <div class="question order" id="order-question">לחצי על "שאלה חדשה" כדי להתחיל! 🚀</div>
+                    <div class="equation-display" id="order-equation" style="direction: ltr; unicode-bidi: isolate; font-size: 1.3em; margin: 15px 0; display: none;"></div>
 
                     <!-- Expression hint for word problems -->
                     <div id="order-expression-hint" style="display: none; text-align: center; font-size: 11pt; color: #666; margin: 10px 0; font-style: italic;"></div>
@@ -1504,11 +1505,16 @@
                     </div>
 
                     <div style="text-align: center;">
-                        <button class="check-btn order" id="order-check-btn" onclick="checkOrderAnswer()" style="display: inline-block;">בדוק תשובה</button>
-                        <button class="check-btn order" id="order-new-question-btn" onclick="generateOrderQuestion()" style="display: none;">שאלה חדשה</button>
+                        <button class="check-btn order" id="order-check-btn" onclick="checkOrderAnswer()" style="display: none;">בדוק תשובה</button>
+                        <button class="check-btn order" id="order-new-question-btn" onclick="generateOrderQuestion()">שאלה חדשה</button>
                     </div>
 
                     <div class="feedback hidden" id="order-feedback">✅ מעולה! תשובה נכונה!</div>
+
+                    <!-- Flag Problem Button -->
+                    <button class="flag-problem-btn" onclick="flagQuestion('order')" title="דגל בעיה">
+                        🚩
+                    </button>
                 </div>
 
                 <div class="sidebar">
@@ -1671,6 +1677,7 @@
             <div class="main-content">
                 <div class="exercise-area">
                     <div class="question" id="fraction-question">לחצי על "שאלה חדשה" כדי להתחיל! 🚀</div>
+                    <div class="equation-display" id="fraction-equation" style="direction: ltr; unicode-bidi: isolate; font-size: 1.3em; margin: 15px 0; display: none;"></div>
 
                     <div class="answer-area">
                         <input type="text" class="answer-input" id="fraction-answer-input" placeholder="התשובה שלך" style="display: none;">
@@ -1683,6 +1690,11 @@
                     </div>
 
                     <div class="feedback hidden" id="fraction-feedback"></div>
+
+                    <!-- Flag Problem Button -->
+                    <button class="flag-problem-btn" onclick="flagQuestion('fraction')" title="דגל בעיה">
+                        🚩
+                    </button>
                 </div>
 
                 <div class="sidebar">
@@ -1743,6 +1755,7 @@
             <div class="main-content">
                 <div class="exercise-area">
                     <div class="question" id="division-question">לחצי על "שאלה חדשה" כדי להתחיל! 🚀</div>
+                    <div class="equation-display" id="division-equation" style="direction: ltr; unicode-bidi: isolate; font-size: 1.3em; margin: 15px 0; display: none;"></div>
 
                     <div class="answer-area">
                         <input type="text" class="answer-input" id="division-answer-input" placeholder="התשובה שלך" style="display: inline-block;">
@@ -1754,6 +1767,11 @@
                     </div>
 
                     <div class="feedback hidden" id="division-feedback"></div>
+
+                    <!-- Flag Problem Button -->
+                    <button class="flag-problem-btn" onclick="flagQuestion('division')" title="דגל בעיה">
+                        🚩
+                    </button>
                 </div>
 
                 <div class="sidebar">
@@ -2032,11 +2050,17 @@
             const states = {
                 decimal: decimalState,
                 multiplication: multiplicationState,
-                numberline: numberlineState
+                numberline: numberlineState,
+                fraction: fractionState,
+                division: divisionState
             };
 
             const state = states[toolName];
-            const percentage = state.totalQuestions > 0 ? 
+            if (!state) {
+                console.warn(`No state found for ${toolName}`);
+                return;
+            }
+            const percentage = state.totalQuestions > 0 ?
                 Math.round((state.correctAnswers / state.totalQuestions) * 100) : 0;
 
             const celebration = document.getElementById('celebration');
@@ -2137,13 +2161,48 @@
                     break;
 
                 case 'digitValue':
-                    const digitStr = num.toString();
+                    // Generate number with all distinct digits to avoid ambiguity
+                    let distinctNum;
+                    let targetDigits;
+
+                    // Determine number of digits based on level
+                    if (decimalState.level === 'קל') {
+                        targetDigits = 2; // two-digit
+                    } else if (decimalState.level === 'בינוני') {
+                        targetDigits = 3; // three-digit
+                    } else {
+                        targetDigits = 4; // four-digit for קשה
+                    }
+
+                    // Generate number with distinct digits using random selection without replacement
+                    const availableDigits = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+                    const selectedDigits = [];
+
+                    // First digit cannot be 0 (numbers don't start with 0)
+                    const firstDigitPool = availableDigits.filter(d => d !== 0);
+                    const firstDigit = firstDigitPool[Math.floor(Math.random() * firstDigitPool.length)];
+                    selectedDigits.push(firstDigit);
+
+                    // Remove first digit from available pool
+                    const remainingDigits = availableDigits.filter(d => d !== firstDigit);
+
+                    // Select remaining digits randomly without replacement
+                    for (let i = 1; i < targetDigits; i++) {
+                        const randomIndex = Math.floor(Math.random() * remainingDigits.length);
+                        selectedDigits.push(remainingDigits[randomIndex]);
+                        remainingDigits.splice(randomIndex, 1);
+                    }
+
+                    // Build the number from selected digits
+                    distinctNum = parseInt(selectedDigits.join(''));
+
+                    const digitStr = distinctNum.toString();
                     const digitPos = Math.floor(Math.random() * digitStr.length);
                     const digit = parseInt(digitStr[digitPos]);
                     const value = digit * Math.pow(10, digitStr.length - 1 - digitPos);
 
                     // Format number with comma for readability
-                    const formattedNumForDigit = num.toLocaleString('en-US');
+                    const formattedNumForDigit = distinctNum.toLocaleString('en-US');
                     question = {
                         question: `מה ערך הספרה ${digit} במספר ${formattedNumForDigit}?`,
                         type: 'input'
@@ -2828,32 +2887,38 @@
 
             switch (type) {
                 case 'missingMultiplier':
+                    // Use LTR embedding to prevent RTL scrambling of equations
                     question = {
-                        question: `${num1} × ___ = ${product}`,
+                        question: '\u202A' + `${num1} × ___ = ${product}` + '\u202C',
                         type: 'input'
                     };
                     answer = num2;
                     break;
 
                 case 'missingMultiplicand':
+                    // Use LTR embedding to prevent RTL scrambling of equations
                     question = {
-                        question: `___ × ${num2} = ${product}`,
+                        question: '\u202A' + `___ × ${num2} = ${product}` + '\u202C',
                         type: 'input'
                     };
                     answer = num1;
                     break;
 
                 case 'missingProduct':
+                    // Use LTR embedding to prevent RTL scrambling of equations
                     question = {
-                        question: `${num1} × ${num2} = ___`,
+                        question: '\u202A' + `${num1} × ${num2} = ___` + '\u202C',
                         type: 'input'
                     };
                     answer = product;
                     break;
 
                 case 'division':
+                    // Separate Hebrew text from equations using LTR embedding
+                    const eq1 = '\u202A' + `${num1} × ${num2} = ${product}` + '\u202C';
+                    const eq2 = '\u202A' + `${product} ÷ ${num1} = ___` + '\u202C';
                     question = {
-                        question: `אם ${num1} × ${num2} = ${product}, אז ${product} ÷ ${num1} = ___`,
+                        question: `אם ${eq1}, אז ${eq2}`,
                         type: 'input'
                     };
                     answer = num2;
@@ -2997,12 +3062,68 @@
 
             switch (type) {
                 case 'whatIsNumber':
-                    const arrowPosition = Math.floor(Math.random() * (range.max / range.interval)) * range.interval;
+                    // Two versions: exact with hint, or approximate without hint
+                    const useExactWithHint = Math.random() < 0.5;
+
+                    // Pick a random segment between two markers
+                    const numSegments = (range.max / range.interval) - 1;
+                    const segment = Math.floor(Math.random() * numSegments);
+                    const segmentStart = segment * range.interval;
+
+                    let arrowPosition;
+                    let questionText;
+                    let acceptableRange;
+
+                    if (useExactWithHint) {
+                        // Version 1: Exact answer with hint about last digit
+                        // Use positions that end with 5 or half-interval for clean answers
+                        const halfInterval = range.interval / 2;
+                        arrowPosition = segmentStart + halfInterval;
+
+                        // Determine what digit it ends with
+                        const lastDigit = arrowPosition % 10;
+                        questionText = `איזה מספר מסומן בחץ? (מסתיים ב-${lastDigit})`;
+
+                        // Exact answer required
+                        acceptableRange = null;
+                    } else {
+                        // Version 2: Approximate answer with hint about divisibility or ending
+                        // Use any position in the segment
+                        const possibleOffsets = [];
+                        for (let i = 1; i < range.interval / 5; i++) {
+                            possibleOffsets.push(i * 5); // Every 5 units
+                        }
+                        const offset = possibleOffsets[Math.floor(Math.random() * possibleOffsets.length)];
+                        arrowPosition = segmentStart + offset;
+
+                        // Determine hint based on the number
+                        let hint;
+                        if (arrowPosition % 10 === 0) {
+                            hint = 'מתחלק ב-10';  // Divisible by 10
+                        } else if (arrowPosition % 5 === 0) {
+                            hint = 'מסתיים ב-5';  // Ends with 5
+                        } else {
+                            // For other numbers, give last digit hint
+                            const lastDigit = arrowPosition % 10;
+                            hint = `מסתיים ב-${lastDigit}`;
+                        }
+
+                        questionText = `איזה מספר מסומן בחץ? (${hint})`;
+
+                        // Accept within 25% of interval
+                        const tolerance = range.interval * 0.25;
+                        acceptableRange = {
+                            min: arrowPosition - tolerance,
+                            max: arrowPosition + tolerance
+                        };
+                    }
+
                     question = {
-                        question: `איזה מספר מסומן בחץ?`,
+                        question: questionText,
                         type: 'visual-input',
                         range: range,
-                        arrowPosition: arrowPosition
+                        arrowPosition: arrowPosition,
+                        acceptableRange: acceptableRange // null for exact, object for range
                     };
                     answer = arrowPosition;
                     break;
@@ -3074,17 +3195,43 @@
         function displayNumberLine(question) {
             const container = document.getElementById('numberline-visual');
             container.style.display = 'block';
-            
+
             const lineElement = document.getElementById('numberline-line');
             lineElement.innerHTML = '';
 
             const range = question.range;
-            const steps = range.max / range.interval;
 
-            // Create markers
-            for (let i = 0; i <= steps; i++) {
-                const value = i * range.interval;
-                const position = (i / steps) * 100;
+            // Zoom feature: if arrow exists, show focused segment
+            let displayMin, displayMax;
+            if (question.arrowPosition !== undefined) {
+                // Find the segment containing the arrow
+                const arrowSegment = Math.floor(question.arrowPosition / range.interval);
+
+                // Show 3 segments centered on arrow (or adjusted at edges)
+                const segmentsToShow = 3;
+                const totalSegments = range.max / range.interval;
+
+                let startSegment = Math.max(0, arrowSegment - 1);
+                let endSegment = Math.min(totalSegments, startSegment + segmentsToShow);
+
+                // Adjust if at the end
+                if (endSegment === totalSegments) {
+                    startSegment = Math.max(0, endSegment - segmentsToShow);
+                }
+
+                displayMin = startSegment * range.interval;
+                displayMax = endSegment * range.interval;
+            } else {
+                // No arrow, show full range
+                displayMin = range.min;
+                displayMax = range.max;
+            }
+
+            const displayRange = displayMax - displayMin;
+
+            // Create major markers (labeled)
+            for (let value = displayMin; value <= displayMax; value += range.interval) {
+                const position = ((value - displayMin) / displayRange) * 100;
 
                 const marker = document.createElement('div');
                 marker.className = 'marker';
@@ -3098,9 +3245,28 @@
                 lineElement.appendChild(label);
             }
 
+            // Create minor ticks (unlabeled, between major markers)
+            const minorTickInterval = range.interval / 5; // 5 minor ticks per major interval
+            for (let value = displayMin; value <= displayMax; value += minorTickInterval) {
+                // Skip if this is a major marker position
+                if (value % range.interval === 0) continue;
+
+                const position = ((value - displayMin) / displayRange) * 100;
+
+                const minorTick = document.createElement('div');
+                minorTick.className = 'minor-tick';
+                minorTick.style.left = position + '%';
+                minorTick.style.position = 'absolute';
+                minorTick.style.width = '1px';
+                minorTick.style.height = '10px';
+                minorTick.style.background = '#bbb';
+                minorTick.style.top = '-3px';
+                lineElement.appendChild(minorTick);
+            }
+
             // Add arrow if specified
             if (question.arrowPosition !== undefined) {
-                const arrowPos = (question.arrowPosition / range.max) * 100;
+                const arrowPos = ((question.arrowPosition - displayMin) / displayRange) * 100;
                 const arrow = document.createElement('div');
                 arrow.className = 'arrow';
                 arrow.textContent = '⬇️';
@@ -3140,7 +3306,16 @@
                 return;
             }
 
-            const isCorrect = userAnswer == numberlineState.currentAnswer;
+            // Check if this question has an acceptable range (for approximate answers)
+            let isCorrect;
+            if (numberlineState.currentQuestion.acceptableRange) {
+                // Version 2: Accept answers within the range
+                const range = numberlineState.currentQuestion.acceptableRange;
+                isCorrect = (userAnswer >= range.min && userAnswer <= range.max);
+            } else {
+                // Version 1 or other question types: Exact answer required
+                isCorrect = userAnswer == numberlineState.currentAnswer;
+            }
             
             // Update statistics
             numberlineState.totalQuestions++;
@@ -4363,20 +4538,35 @@ ${'='.repeat(70)}
                         // Initialize tracking if needed
                         initAttemptTracking(toolName);
 
-                        // Get user answer before calling original
+                        // Get user answer before validation
                         const input = document.getElementById(`${toolName}-answer-input`);
                         let userAnswer = null;
 
                         // Check if input is VISIBLE and being used (not just exists)
                         if (input && input.style.display !== 'none' && input.offsetParent !== null) {
-                            userAnswer = parseInt(input.value);
+                            userAnswer = parseFloat(input.value);
                         } else {
                             // For choice-based questions
                             userAnswer = state.selectedChoice;
                         }
 
                         const correctAnswer = state.currentAnswer;
-                        const isCorrect = (userAnswer === correctAnswer);
+
+                        // Determine correctness based on answer type
+                        let isCorrect;
+                        if (typeof correctAnswer === 'object' && correctAnswer.type === 'range') {
+                            // Missing digit with range validation
+                            const answerInfo = correctAnswer;
+                            const userNum = parseInt(
+                                answerInfo.pattern.substring(0, answerInfo.missingPos) +
+                                userAnswer +
+                                answerInfo.pattern.substring(answerInfo.missingPos + 1)
+                            );
+                            isCorrect = (userNum >= answerInfo.min && userNum <= answerInfo.max);
+                        } else {
+                            // Standard validation
+                            isCorrect = (userAnswer == correctAnswer);
+                        }
 
                         // Record attempt
                         recordAttempt(toolName, userAnswer, isCorrect);
@@ -4724,7 +4914,7 @@ ${'='.repeat(70)}
 
     <!-- Feature 4: Navigation System (Previous/Next/Skip) -->
     <script>
-(function(){console.log("🚀 Loading Navigation Feature Patch...");if(!document.querySelector("style[data-nav-patch]")){const navCSS=document.createElement("style");navCSS.setAttribute("data-nav-patch","true");navCSS.textContent=`.question-navigation{margin:20px 0;padding:15px;background:#f5f7fa;border-radius:10px}.nav-buttons{display:flex;gap:10px;justify-content:center;margin-bottom:10px}.nav-btn{font-size:14pt;font-weight:600;padding:10px 20px;border:2px solid #2196f3;background:white;border-radius:8px;cursor:pointer;font-family:"Noto Sans Hebrew",Arial,sans-serif;transition:all 0.3s ease}.nav-btn:hover:not(:disabled){background:#e3f2fd}.nav-btn:disabled{opacity:0.5;cursor:not-allowed}.skip-btn{border-color:#ff9800;color:#ff9800}.question-indicator{text-align:center;font-size:12pt;font-weight:600;color:#666}.skipped-counter{color:#ff9800;font-weight:700}`;document.head.appendChild(navCSS)}function extendStates(){[window.decimalState,window.multiplicationState,window.numberlineState,window.fractionState,window.divisionState].forEach(state=>{if(state&&!state.questionBank){state.questionBank=[];state.currentQuestionIndex=0;state.skippedQuestions=[];state.answeredQuestions=[];state.questionStatus={}}})}function injectNavigationUI(){["decimal","multiplication","numberline","fraction","division"].forEach(tool=>{const answerArea=document.querySelector(`#${tool}-section .answer-area`);if(!answerArea||document.getElementById(`nav-container-${tool}`))return;const navHTML=`<div class="question-navigation" id="nav-container-${tool}"><div class="nav-buttons"><button class="nav-btn" id="prev-btn-${tool}">◄ הקודם</button><button class="nav-btn skip-btn" id="skip-btn-${tool}">⏭️ דלג</button><button class="nav-btn" id="next-btn-${tool}">הבא ►</button></div><div class="question-indicator">שאלה <span id="current-q-${tool}">1</span> | נענו: <span id="answered-count-${tool}">0</span> | דולגו: <span id="skipped-count-${tool}" class="skipped-counter">0</span></div></div>`;answerArea.insertAdjacentHTML("afterend",navHTML);document.getElementById(`prev-btn-${tool}`).onclick=()=>window.goToPrevious(tool);document.getElementById(`skip-btn-${tool}`).onclick=()=>window.skipQuestion(tool);document.getElementById(`next-btn-${tool}`).onclick=()=>window.goToNext(tool)})}window.goToPrevious=function(toolName){const state=getState(toolName);if(state.currentQuestionIndex>0){state.currentQuestionIndex--;displayQuestionFromBank(toolName);window.updateNavigationUI(toolName)}};window.goToNext=function(toolName){const state=getState(toolName);if(state.currentQuestionIndex<state.questionBank.length-1){state.currentQuestionIndex++;displayQuestionFromBank(toolName)}else{if(toolName==="decimal"&&typeof window.generateDecimalQuestion==="function")window.generateDecimalQuestion();else if(toolName==="multiplication"&&typeof window.generateMultiplicationQuestion==="function")window.generateMultiplicationQuestion();else if(toolName==="numberline"&&typeof window.generateNumberlineQuestion==="function")window.generateNumberlineQuestion();else if(toolName==="fraction"&&typeof window.generateFractionQuestion==="function")window.generateFractionQuestion();else if(toolName==="division"&&typeof window.generateDivisionQuestion==="function")window.generateDivisionQuestion()}window.updateNavigationUI(toolName)};window.skipQuestion=function(toolName){const state=getState(toolName);let currentQ=state.questionBank[state.currentQuestionIndex];if(!currentQ&&state.currentQuestion){currentQ={id:Date.now()+Math.random(),question:state.currentQuestion.question||"",questionText:state.currentQuestion.question||"",correctAnswer:state.currentAnswer,type:state.currentQuestion.type||"input",choices:state.currentQuestion.choices||[]};state.questionBank.push(currentQ);state.currentQuestionIndex=state.questionBank.length-1}if(!currentQ)return;if(!currentQ.id)currentQ.id=Date.now()+Math.random();if(!state.skippedQuestions.includes(currentQ.id))state.skippedQuestions.push(currentQ.id);state.questionStatus[currentQ.id]="skipped";const feedback=document.getElementById(`${toolName}-feedback`);if(feedback){feedback.className="feedback";feedback.style.background="#fff3e0";feedback.style.color="#e65100";feedback.style.border="3px solid #ff9800";feedback.innerHTML="⏭️ דילגת על השאלה<br>זה בסדר! נחזור אליה אחר כך";feedback.classList.remove("hidden")}if(typeof window.saveProgress==="function")window.saveProgress(toolName);window.updateNavigationUI(toolName);setTimeout(()=>window.goToNext(toolName),1000)};window.updateNavigationUI=function(toolName){const state=getState(toolName);const currentEl=document.getElementById(`current-q-${toolName}`);const answeredEl=document.getElementById(`answered-count-${toolName}`);const skippedEl=document.getElementById(`skipped-count-${toolName}`);if(currentEl)currentEl.textContent=state.currentQuestionIndex+1;if(answeredEl)answeredEl.textContent=state.answeredQuestions.length;if(skippedEl)skippedEl.textContent=state.skippedQuestions.length;const prevBtn=document.getElementById(`prev-btn-${toolName}`);if(prevBtn)prevBtn.disabled=state.currentQuestionIndex===0};function displayQuestionFromBank(toolName){const state=getState(toolName);if(!state.questionBank||state.questionBank.length===0)return;const question=state.questionBank[state.currentQuestionIndex];if(!question)return;state.currentQuestion=question;state.currentAnswer=question.correctAnswer;document.getElementById(`${toolName}-question`).textContent=question.questionText||question.question;const inputElement=document.getElementById(`${toolName}-answer-input`);const choicesContainer=document.getElementById(`${toolName}-choice-buttons`);if(inputElement)inputElement.style.display="none";if(choicesContainer){choicesContainer.style.display="none";choicesContainer.innerHTML=""}if(question.type==="input"||question.type==="visual-input"){if(inputElement){inputElement.style.display="inline-block";inputElement.value="";inputElement.focus()}}else if((question.type==="choice"||question.type==="visual-choice")&&question.choices){if(choicesContainer){choicesContainer.style.display="flex";question.choices.forEach(choice=>{const btn=document.createElement("button");btn.className="choice-btn";btn.textContent=choice;btn.onclick=function(){if(toolName==="decimal"&&typeof window.selectDecimalChoice==="function")window.selectDecimalChoice(choice,this);else if(toolName==="numberline"&&typeof window.selectNumberlineChoice==="function")window.selectNumberlineChoice(choice,this);else if(toolName==="fraction"&&typeof window.selectFractionChoice==="function")window.selectFractionChoice(choice,this);getState(toolName).selectedChoice=choice};choicesContainer.appendChild(btn)})}}const checkBtn=document.getElementById(`${toolName}-check-btn`);const newBtn=document.getElementById(`${toolName}-new-question-btn`);if(checkBtn)checkBtn.style.display="inline-block";if(newBtn)newBtn.style.display="none";const feedback=document.getElementById(`${toolName}-feedback`);if(feedback)feedback.className="feedback hidden";if(toolName==="numberline"&&(question.type==="visual"||question.type==="visual-input"||question.type==="visual-choice")){if(typeof window.displayNumberLine==="function")window.displayNumberLine(question)}window.updateNavigationUI(toolName)}function wrapGenerateFunctions(){["decimal","multiplication","numberline","fraction","division"].forEach(toolName=>{const funcName=`generate${toolName.charAt(0).toUpperCase()+toolName.slice(1)}Question`;if(typeof window[funcName]==="function"){const original=window[funcName];window[funcName]=function(){original.call(this);addCurrentQuestionToBank(toolName)}}})}function addCurrentQuestionToBank(toolName){const state=getState(toolName);if(!state.currentQuestion)return;const questionObj={id:Date.now()+Math.random(),question:state.currentQuestion.question||"",questionText:state.currentQuestion.question||"",correctAnswer:state.currentAnswer,type:state.currentQuestion.type||"input",choices:state.currentQuestion.choices||[],range:state.currentQuestion.range,arrowPosition:state.currentQuestion.arrowPosition,targetNum:state.currentQuestion.targetNum};state.questionBank.push(questionObj);state.currentQuestionIndex=state.questionBank.length-1;window.updateNavigationUI(toolName)}function wrapCheckAnswerFunctions(){["decimal","multiplication","numberline","fraction","division"].forEach(toolName=>{const funcName=`check${toolName.charAt(0).toUpperCase()+toolName.slice(1)}Answer`;if(typeof window[funcName]==="function"){const original=window[funcName];window[funcName]=function(){const result=original.call(this);const state=getState(toolName);const currentQ=state.questionBank[state.currentQuestionIndex];if(currentQ&&currentQ.id&&state.correctAnswers>(state._prevCorrectAnswers||0)){if(!state.answeredQuestions.includes(currentQ.id))state.answeredQuestions.push(currentQ.id);state.questionStatus[currentQ.id]="answered";window.updateNavigationUI(toolName)}state._prevCorrectAnswers=state.correctAnswers;return result}}})}function wrapSaveLoadFunctions(){if(typeof window.saveProgress==="function"){const originalSave=window.saveProgress;window.saveProgress=function(toolName){const state=getState(toolName);const navData={questionBank:state.questionBank||[],currentQuestionIndex:state.currentQuestionIndex||0,skippedQuestions:state.skippedQuestions||[],answeredQuestions:state.answeredQuestions||[],questionStatus:state.questionStatus||{}};Object.assign(state,navData);return originalSave.call(this,toolName)}}if(typeof window.loadProgress==="function"){const originalLoad=window.loadProgress;window.loadProgress=function(toolName){const result=originalLoad.call(this,toolName);const state=getState(toolName);if(state){state.questionBank=state.questionBank||[];state.currentQuestionIndex=state.currentQuestionIndex||0;state.skippedQuestions=state.skippedQuestions||[];state.answeredQuestions=state.answeredQuestions||[];state.questionStatus=state.questionStatus||{};window.updateNavigationUI(toolName)}return result}}}function getState(toolName){const states={decimal:window.decimalState,multiplication:window.multiplicationState,numberline:window.numberlineState,fraction:window.fractionState,division:window.divisionState};return states[toolName]}function init(){try{extendStates();injectNavigationUI();wrapGenerateFunctions();wrapCheckAnswerFunctions();wrapSaveLoadFunctions();console.log("✅ Navigation Feature Patch Loaded Successfully!");["decimal","multiplication","numberline","fraction","division"].forEach(tool=>{if(getState(tool))window.updateNavigationUI(tool)})}catch(error){console.error("❌ Navigation patch failed:",error)}}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init);else init()})();
+(function(){console.log("🚀 Loading Navigation Feature Patch...");if(!document.querySelector("style[data-nav-patch]")){const navCSS=document.createElement("style");navCSS.setAttribute("data-nav-patch","true");navCSS.textContent=`.question-navigation{margin:20px 0;padding:15px;background:#f5f7fa;border-radius:10px}.nav-buttons{display:flex;gap:10px;justify-content:center;margin-bottom:10px}.nav-btn{font-size:14pt;font-weight:600;padding:10px 20px;border:2px solid #2196f3;background:white;border-radius:8px;cursor:pointer;font-family:"Noto Sans Hebrew",Arial,sans-serif;transition:all 0.3s ease}.nav-btn:hover:not(:disabled){background:#e3f2fd}.nav-btn:disabled{opacity:0.5;cursor:not-allowed}.skip-btn{border-color:#ff9800;color:#ff9800}.question-indicator{text-align:center;font-size:12pt;font-weight:600;color:#666}.skipped-counter{color:#ff9800;font-weight:700}`;document.head.appendChild(navCSS)}function extendStates(){[window.decimalState,window.multiplicationState,window.numberlineState,window.fractionState,window.divisionState,window.orderState,window.distributiveState].forEach(state=>{if(state&&!state.questionBank){state.questionBank=[];state.currentQuestionIndex=0;state.skippedQuestions=[];state.answeredQuestions=[];state.questionStatus={}}})}function injectNavigationUI(){["decimal","multiplication","numberline","fraction","division","order"].forEach(tool=>{const answerArea=document.querySelector(`#${tool}-section .answer-area`);if(!answerArea||document.getElementById(`nav-container-${tool}`))return;const navHTML=`<div class="question-navigation" id="nav-container-${tool}"><div class="nav-buttons"><button class="nav-btn" id="prev-btn-${tool}">◄ הקודם</button><button class="nav-btn skip-btn" id="skip-btn-${tool}">⏭️ דלג</button><button class="nav-btn" id="next-btn-${tool}">הבא ►</button></div><div class="question-indicator">שאלה <span id="current-q-${tool}">1</span> | נענו: <span id="answered-count-${tool}">0</span> | דולגו: <span id="skipped-count-${tool}" class="skipped-counter">0</span></div></div>`;answerArea.insertAdjacentHTML("afterend",navHTML);document.getElementById(`prev-btn-${tool}`).onclick=()=>window.goToPrevious(tool);document.getElementById(`skip-btn-${tool}`).onclick=()=>window.skipQuestion(tool);document.getElementById(`next-btn-${tool}`).onclick=()=>window.goToNext(tool)})}window.goToPrevious=function(toolName){const state=getState(toolName);if(state.currentQuestionIndex>0){state.currentQuestionIndex--;displayQuestionFromBank(toolName);window.updateNavigationUI(toolName)}};window.goToNext=function(toolName){const state=getState(toolName);if(state.currentQuestionIndex<state.questionBank.length-1){state.currentQuestionIndex++;displayQuestionFromBank(toolName)}else{if(toolName==="decimal"&&typeof window.generateDecimalQuestion==="function")window.generateDecimalQuestion();else if(toolName==="multiplication"&&typeof window.generateMultiplicationQuestion==="function")window.generateMultiplicationQuestion();else if(toolName==="numberline"&&typeof window.generateNumberlineQuestion==="function")window.generateNumberlineQuestion();else if(toolName==="fraction"&&typeof window.generateFractionQuestion==="function")window.generateFractionQuestion();else if(toolName==="division"&&typeof window.generateDivisionQuestion==="function")window.generateDivisionQuestion();else if(toolName==="order"&&typeof window.generateOrderQuestion==="function")window.generateOrderQuestion()}window.updateNavigationUI(toolName)};window.skipQuestion=function(toolName){const state=getState(toolName);let currentQ=state.questionBank[state.currentQuestionIndex];if(!currentQ&&state.currentQuestion){currentQ={id:Date.now()+Math.random(),question:state.currentQuestion.question||"",questionText:state.currentQuestion.question||"",correctAnswer:state.currentAnswer,type:state.currentQuestion.type||"input",choices:state.currentQuestion.choices||[]};state.questionBank.push(currentQ);state.currentQuestionIndex=state.questionBank.length-1}if(!currentQ)return;if(!currentQ.id)currentQ.id=Date.now()+Math.random();if(!state.skippedQuestions.includes(currentQ.id))state.skippedQuestions.push(currentQ.id);state.questionStatus[currentQ.id]="skipped";const feedback=document.getElementById(`${toolName}-feedback`);if(feedback){feedback.className="feedback";feedback.style.background="#fff3e0";feedback.style.color="#e65100";feedback.style.border="3px solid #ff9800";feedback.innerHTML="⏭️ דילגת על השאלה<br>זה בסדר! נחזור אליה אחר כך";feedback.classList.remove("hidden")}if(typeof window.saveProgress==="function")window.saveProgress(toolName);window.updateNavigationUI(toolName);setTimeout(()=>window.goToNext(toolName),1000)};window.updateNavigationUI=function(toolName){const state=getState(toolName);const currentEl=document.getElementById(`current-q-${toolName}`);const answeredEl=document.getElementById(`answered-count-${toolName}`);const skippedEl=document.getElementById(`skipped-count-${toolName}`);if(currentEl)currentEl.textContent=state.currentQuestionIndex+1;if(answeredEl)answeredEl.textContent=state.answeredQuestions.length;if(skippedEl)skippedEl.textContent=state.skippedQuestions.length;const prevBtn=document.getElementById(`prev-btn-${toolName}`);if(prevBtn)prevBtn.disabled=state.currentQuestionIndex===0};function displayQuestionFromBank(toolName){const state=getState(toolName);if(!state.questionBank||state.questionBank.length===0)return;const question=state.questionBank[state.currentQuestionIndex];if(!question)return;state.currentQuestion=question;state.currentAnswer=question.correctAnswer;document.getElementById(`${toolName}-question`).textContent=question.questionText||question.question;const equationEl=document.getElementById(`${toolName}-equation`);if(equationEl){if(question.equation){equationEl.textContent=question.equation;equationEl.style.display="block"}else{equationEl.style.display="none"}}const inputElement=document.getElementById(`${toolName}-answer-input`);const choicesContainer=document.getElementById(`${toolName}-choice-buttons`);if(inputElement)inputElement.style.display="none";if(choicesContainer){choicesContainer.style.display="none";choicesContainer.innerHTML=""}if(question.type==="input"||question.type==="visual-input"){if(inputElement){inputElement.style.display="inline-block";inputElement.value="";inputElement.focus()}}else if((question.type==="choice"||question.type==="visual-choice")&&question.choices){if(choicesContainer){choicesContainer.style.display="flex";question.choices.forEach(choice=>{const btn=document.createElement("button");btn.className="choice-btn";btn.textContent=choice;btn.onclick=function(){if(toolName==="decimal"&&typeof window.selectDecimalChoice==="function")window.selectDecimalChoice(choice,this);else if(toolName==="numberline"&&typeof window.selectNumberlineChoice==="function")window.selectNumberlineChoice(choice,this);else if(toolName==="fraction"&&typeof window.selectFractionChoice==="function")window.selectFractionChoice(choice,this);getState(toolName).selectedChoice=choice};choicesContainer.appendChild(btn)})}}const checkBtn=document.getElementById(`${toolName}-check-btn`);const newBtn=document.getElementById(`${toolName}-new-question-btn`);if(checkBtn)checkBtn.style.display="inline-block";if(newBtn)newBtn.style.display="none";const feedback=document.getElementById(`${toolName}-feedback`);if(feedback)feedback.className="feedback hidden";if(toolName==="numberline"&&(question.type==="visual"||question.type==="visual-input"||question.type==="visual-choice")){if(typeof window.displayNumberLine==="function")window.displayNumberLine(question)}window.updateNavigationUI(toolName)}function wrapGenerateFunctions(){["decimal","multiplication","numberline","fraction","division","order"].forEach(toolName=>{const funcName=`generate${toolName.charAt(0).toUpperCase()+toolName.slice(1)}Question`;if(typeof window[funcName]==="function"){const original=window[funcName];window[funcName]=function(){original.call(this);addCurrentQuestionToBank(toolName)}}})}function addCurrentQuestionToBank(toolName){const state=getState(toolName);if(!state.currentQuestion)return;const questionObj={id:Date.now()+Math.random(),question:state.currentQuestion.question||"",questionText:state.currentQuestion.question||"",equation:state.currentQuestion.equation||"",correctAnswer:state.currentAnswer,type:state.currentQuestion.type||"input",choices:state.currentQuestion.choices||[],range:state.currentQuestion.range,arrowPosition:state.currentQuestion.arrowPosition,targetNum:state.currentQuestion.targetNum,acceptableRange:state.currentQuestion.acceptableRange,leftFraction:state.currentQuestion.leftFraction,rightFraction:state.currentQuestion.rightFraction};state.questionBank.push(questionObj);state.currentQuestionIndex=state.questionBank.length-1;window.updateNavigationUI(toolName)}function wrapCheckAnswerFunctions(){["decimal","multiplication","numberline","fraction","division","order"].forEach(toolName=>{const funcName=`check${toolName.charAt(0).toUpperCase()+toolName.slice(1)}Answer`;if(typeof window[funcName]==="function"){const original=window[funcName];window[funcName]=function(){const result=original.call(this);const state=getState(toolName);const currentQ=state.questionBank[state.currentQuestionIndex];if(currentQ&&currentQ.id&&state.correctAnswers>(state._prevCorrectAnswers||0)){if(!state.answeredQuestions.includes(currentQ.id))state.answeredQuestions.push(currentQ.id);state.questionStatus[currentQ.id]="answered";window.updateNavigationUI(toolName)}state._prevCorrectAnswers=state.correctAnswers;return result}}})}function wrapSaveLoadFunctions(){if(typeof window.saveProgress==="function"){const originalSave=window.saveProgress;window.saveProgress=function(toolName){const state=getState(toolName);const navData={questionBank:state.questionBank||[],currentQuestionIndex:state.currentQuestionIndex||0,skippedQuestions:state.skippedQuestions||[],answeredQuestions:state.answeredQuestions||[],questionStatus:state.questionStatus||{}};Object.assign(state,navData);return originalSave.call(this,toolName)}}if(typeof window.loadProgress==="function"){const originalLoad=window.loadProgress;window.loadProgress=function(toolName){const result=originalLoad.call(this,toolName);const state=getState(toolName);if(state){state.questionBank=state.questionBank||[];state.currentQuestionIndex=state.currentQuestionIndex||0;state.skippedQuestions=state.skippedQuestions||[];state.answeredQuestions=state.answeredQuestions||[];state.questionStatus=state.questionStatus||{};window.updateNavigationUI(toolName)}return result}}}function getState(toolName){const states={decimal:window.decimalState,multiplication:window.multiplicationState,numberline:window.numberlineState,fraction:window.fractionState,division:window.divisionState,order:window.orderState,distributive:window.distributiveState};return states[toolName]}function init(){try{extendStates();injectNavigationUI();wrapGenerateFunctions();wrapCheckAnswerFunctions();wrapSaveLoadFunctions();console.log("✅ Navigation Feature Patch Loaded Successfully!");["decimal","multiplication","numberline","fraction","division","order"].forEach(tool=>{if(getState(tool))window.updateNavigationUI(tool)})}catch(error){console.error("❌ Navigation patch failed:",error)}}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init);else init()})();
     </script>
 
 </body></html>

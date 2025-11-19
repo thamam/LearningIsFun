@@ -1,5 +1,6 @@
 function generateDivisionQuestion() {
-    const types = ['basicDivision', 'divisionWithRemainder', 'missingDividend', 'missingDivisor', 'wordProblem'];
+    // Removed divisionWithRemainder - not yet in curriculum
+    const types = ['basicDivision', 'missingDividend', 'missingDivisor', 'wordProblem'];
     const type = types[Math.floor(Math.random() * types.length)];
     let question = {};
     let answer;
@@ -19,7 +20,11 @@ function generateDivisionQuestion() {
             const quotient1 = Math.floor(Math.random() * range.maxQuotient) + 1;
             const dividend1 = divisor1 * quotient1;
             answer = quotient1;
-            question = { question: `${dividend1} ÷ ${divisor1} = ___`, type: 'input' };
+            question = {
+                question: `חשבי:`,
+                equation: `${dividend1} ÷ ${divisor1} = ___`,
+                type: 'input'
+            };
             break;
         case 'divisionWithRemainder':
             const divisor2 = range.divisors[Math.floor(Math.random() * range.divisors.length)];
@@ -27,42 +32,82 @@ function generateDivisionQuestion() {
             const remainder = Math.floor(Math.random() * (divisor2 - 1)) + 1;
             const dividend2 = (divisor2 * quotient2) + remainder;
             answer = `${quotient2} שארית ${remainder}`;
-            question = { question: `${dividend2} ÷ ${divisor2} = ___ (כולל שארית)`, type: 'input' };
+            question = {
+                question: `חשבי (כולל שארית):`,
+                equation: `${dividend2} ÷ ${divisor2} = ___`,
+                type: 'input'
+            };
             break;
         case 'missingDividend':
             const divisor3 = range.divisors[Math.floor(Math.random() * range.divisors.length)];
             const quotient3 = Math.floor(Math.random() * range.maxQuotient) + 1;
             const dividend3 = divisor3 * quotient3;
             answer = dividend3;
-            question = { question: `___ ÷ ${divisor3} = ${quotient3}`, type: 'input' };
+            question = {
+                question: `מצאי את המספר החסר:`,
+                equation: `___ ÷ ${divisor3} = ${quotient3}`,
+                type: 'input'
+            };
             break;
         case 'missingDivisor':
             const divisor4 = range.divisors[Math.floor(Math.random() * range.divisors.length)];
             const quotient4 = Math.floor(Math.random() * range.maxQuotient) + 1;
             const dividend4 = divisor4 * quotient4;
             answer = divisor4;
-            question = { question: `${dividend4} ÷ ___ = ${quotient4}`, type: 'input' };
+            question = {
+                question: `מצאי את המספר החסר:`,
+                equation: `${dividend4} ÷ ___ = ${quotient4}`,
+                type: 'input'
+            };
             break;
         case 'wordProblem':
             const problems = [
                 'לאמה יש {total} עוגיות. היא רוצה לחלק אותן שווה ב-{groups} קבוצות. כמה עוגיות בכל קבוצה?',
                 'יש {total} תפוחים ו-{groups} סלים. כמה תפוחים יהיו בכל סל אם נחלק שווה?',
-                'אמה קראה {total} עמודים ב-{groups} ימים. כמה עמודים ביום בממוצע?'
+                'אמה קראה {total} עמודים ב-{groups} ימים, כל יום אותו מספר עמודים. כמה עמודים קראה כל יום?'
             ];
             const problem = problems[Math.floor(Math.random() * problems.length)];
             const groups = range.divisors[Math.floor(Math.random() * range.divisors.length)];
             const perGroup = Math.floor(Math.random() * range.maxQuotient) + 1;
             const total = groups * perGroup;
             answer = perGroup;
-            question = { question: problem.replace('{total}', total).replace('{groups}', groups), type: 'input' };
+            // Word problems don't need equation field - Hebrew text with numbers embedded
+            question = {
+                question: problem.replace('{total}', total).replace('{groups}', groups),
+                type: 'input'
+            };
             break;
     }
     divisionState.currentQuestion = question;
     divisionState.currentAnswer = answer;
-    document.getElementById('division-question').textContent = question.question;
-    document.getElementById('division-answer-input').style.display = 'inline-block';
-    document.getElementById('division-answer-input').value = '';
-    document.getElementById('division-answer-input').focus();
+
+    // Display question with proper formatting
+    const questionEl = document.getElementById('division-question');
+    const equationEl = document.getElementById('division-equation');
+
+    if (question.equation) {
+        // Use separate containers for Hebrew text and equation
+        questionEl.textContent = question.question;
+        equationEl.textContent = question.equation;
+        equationEl.style.display = 'block';
+    } else {
+        // Word problems - just show the question text
+        questionEl.textContent = question.question;
+        equationEl.style.display = 'none';
+    }
+
+    const inputEl = document.getElementById('division-answer-input');
+    inputEl.style.display = 'inline-block';
+    inputEl.value = '';
+    inputEl.focus();
+
+    // Add Enter key support
+    inputEl.onkeypress = function(e) {
+        if (e.key === 'Enter') {
+            checkDivisionAnswer();
+        }
+    };
+
     document.getElementById('division-check-btn').style.display = 'inline-block';
     document.getElementById('division-new-question-btn').style.display = 'none';
     document.getElementById('division-feedback').className = 'feedback hidden';
