@@ -38,3 +38,12 @@ next-env.d.ts
 # flag logging
 logs/**/*.json
 !logs/**/.gitkeep
+
+# bmad
+.cursor
+.bmad
+.claude
+
+#temp 
+temp/
+tmp/
