@@ -1,352 +1,535 @@
-# Global Context: LearningIsFun Refactoring
+# Global Context: LearningIsFun Migration to Next.js
 
 **Repository:** LearningIsFun
-**Language Stack:** JavaScript (ES6), HTML5, CSS3, Node.js (Express)
-**Architecture:** Dual-module educational application (Hebrew Math + English Language)
-**Target Users:** Children (Grade 3, ~8 years old)
+**Current Stack:** jQuery/HTML monolith (4,919 lines)
+**Target Stack:** Next.js/React (PR #10)
+**Migration Strategy:** Extract business logic → Headless modules → API routes
 **Current Health Score:** 67/100 (Functional MVP with Technical Debt)
+
+---
+
+## 🎯 Strategic Context: The Great Migration
+
+### The Reality
+We are **NOT renovating the old house**. We are **moving to a new house** (Next.js/React).
+
+**Current Architecture (The "Old House"):**
+- `src/math/Emma_math_lab.html` - 4,919-line monolithic HTML/jQuery app
+- Math logic **tightly coupled** to DOM manipulation
+- State management mixed with UI rendering
+- Cannot be reused in modern React architecture
+
+**Target Architecture (The "New House"):**
+- Next.js/React application (PR #10 waiting)
+- Server Components + API Routes
+- Headless business logic (pure JavaScript classes)
+- JSON-based data exchange (no DOM coupling)
+
+### The Problem
+Our **core intellectual property** (math question generation, answer validation, difficulty progression) is **trapped inside DOM-coupled spaghetti code**.
+
+**Example of the problem:**
+```javascript
+// Current code in division_module.js (COUPLED TO DOM)
+function generateDivisionQuestion() {
+    const questionEl = document.getElementById('division-question');  // ❌ DOM ACCESS
+    questionEl.textContent = question.question;  // ❌ DOM MANIPULATION
+
+    const inputEl = document.getElementById('division-answer-input');  // ❌ DOM ACCESS
+    inputEl.value = '';  // ❌ DOM MANIPULATION
+}
+```
+
+**What we need:**
+```javascript
+// Headless module (NO DOM ACCESS)
+class DivisionModule {
+    generateQuestion(level) {
+        // Pure business logic
+        const question = this._createQuestion(level);
+
+        // Return JSON (View Object)
+        return {
+            questionText: question.text,
+            questionType: 'input',
+            inputPlaceholder: 'הכניסי תשובה',
+            correctAnswer: question.answer,
+            difficulty: level
+        };
+    }
+}
+```
+
+### The Migration Path
+
+**Phase 1: Clean Up & Secure (Week 1)**
+- Fix critical security issues in backend (Stories 01-05)
+- Remove duplicate files
+- Prepare backend for API service role
+
+**Phase 2: Extract Business Logic (Weeks 2-4)**
+- Extract math modules into **Headless Classes**
+- Zero DOM access (no `window`, `document`, `jQuery`)
+- Output: JSON "View Objects" for UI rendering
+- Console-testable (run with `node`, no browser)
+
+**Phase 3: Integration (Week 5)**
+- Import extracted modules into Next.js API routes
+- Build React components consuming the JSON data
+- Parallel development: Frontend (React) + Backend (Pure JS)
+
+**Phase 4: Cutover (Week 6)**
+- Deprecate old HTML app
+- Launch Next.js app
+- Archive legacy code
 
 ---
 
 ## System Architecture Overview
 
-### Frontend Applications
+### Current Architecture (Legacy - Being Replaced)
 
-#### 1. Hebrew Math Application
+#### Hebrew Math Application (LEGACY)
 **Entry Point:** `src/math/Emma_math_lab.html` (4,919 lines - monolithic)
 
-**Built-in Modules (Inline in HTML):**
-- Decimal Numbers (מבנה עשרוני)
-- Multiplication (כפל)
-- Number Line (ישר מספרים)
+**Built-in Modules (Inline, DOM-coupled):**
+- Decimal Numbers (מבנה עשרוני) - ~800 lines in HTML
+- Multiplication (כפל) - ~600 lines in HTML
+- Number Line (ישר מספרים) - ~500 lines in HTML
 
-**Registered Modules (External JS):**
-- Division (`src/math/js/modules/division_module.js`)
-- Fractions (`src/math/js/modules/fraction_module.js`)
-- Order of Operations (`src/math/js/modules/order_operations_module.js`)
-- Distributive Property (`src/math/js/modules/distributive_module.js`)
+**Registered Modules (External JS, DOM-coupled):**
+- Division (`src/math/js/modules/division_module.js`) - 190 lines
+- Fractions (`src/math/js/modules/fraction_module.js`) - 273 lines
+- Order of Operations (`src/math/js/modules/order_operations_module.js`) - 458 lines
+- Distributive Property (`src/math/js/modules/distributive_module.js`) - 351 lines
 
-**Core Systems:**
-- Module Registry: `src/math/js/module-registry.js` ⚠️ **DUPLICATE EXISTS** at `src/math/js/features/module-registry.js`
-- State Management: Individual state objects per module (e.g., `decimalState`, `divisionState`)
-- Persistence: LocalStorage with keys like `emmaDecimalProgress`, `emmaDivisionProgress`
+**Problems:**
+- ❌ All modules call `document.getElementById()`, `querySelector()`, etc.
+- ❌ State mixed with rendering (`divisionState` vs `questionEl`)
+- ❌ Cannot be unit tested (requires browser DOM)
+- ❌ Cannot be imported into Next.js without massive refactoring
 
-#### 2. English Language Application
-**Entry Point:** `English/index.html`
-
-**Modules:**
-- Listen & Respond (`English/js/app.js`)
-- Speak & Practice (uses Web Speech API)
-- Read & Match
-- Write & Create
-
-**Core Systems:**
-- Voice Manager: `English/js/voice-manager.js` (Web Speech API wrapper)
-- Storage Manager: `English/js/utils/storage.js`
-- Validation Utils: `English/js/utils/validation.js`
-- Data: `English/js/data/stories.js`, `English/js/data/vocabulary.js`
-
-### Backend
-
+#### Backend (KEEP - Will Become API Service)
 **Server:** `server.js` (Express.js, 106 lines)
-- **Purpose:** Flag logging for problematic questions
-- **Endpoints:**
-  - `POST /api/flag` - Logs flagged questions to `logs/[module]/[date].json`
-  - `GET /api/health` - Health check
-- **Port:** 3000 (configurable via `process.env.PORT`)
+- **Endpoints:** `POST /api/flag`, `GET /api/health`
+- **Purpose:** Flag logging, health checks
+- **Status:** Needs security fixes (Stories 02-05), then reusable
 
-**Launcher:** `launch.js` (Orchestrates server startup + browser opening)
+### Target Architecture (Next.js - PR #10)
 
----
+#### Frontend
+```
+nextjs-app/
+├── app/
+│   ├── page.tsx                    # Landing page
+│   ├── math/
+│   │   ├── [module]/page.tsx       # Dynamic module pages
+│   │   └── components/
+│   │       ├── QuestionCard.tsx    # Renders question from JSON
+│   │       ├── AnswerInput.tsx     # Captures user answer
+│   │       └── FeedbackDisplay.tsx # Shows results
+│   └── api/
+│       └── math/
+│           ├── division/route.ts   # API route using DivisionModule
+│           ├── decimal/route.ts    # API route using DecimalModule
+│           └── ...
+```
 
-## Architectural Rules
+#### Extracted Business Logic (NEW - Phase 2)
+```
+extracted-modules/
+├── core/
+│   ├── BaseModule.js               # Abstract base class
+│   ├── DifficultyManager.js        # Difficulty progression logic
+│   └── ValidationEngine.js         # Answer validation
+├── modules/
+│   ├── DivisionModule.js           # Pure JS, returns JSON
+│   ├── DecimalModule.js            # Pure JS, returns JSON
+│   ├── FractionModule.js           # Pure JS, returns JSON
+│   └── ...
+└── tests/
+    ├── division.test.js            # Jest tests (no DOM)
+    └── console-test.js             # Node.js smoke test
+```
 
-### 1. Security & Privacy (COPPA/GDPR Compliance)
-- ❌ **No hardcoded secrets** (API keys, credentials)
-- ❌ **No PII in logs without parental consent**
-- ✅ **LocalStorage only for educational progress** (no personal identifiers)
-- ✅ **Voice data must be disclosed** (Web Speech API sends to Google)
-- ✅ **All network requests must use HTTPS in production**
-
-### 2. Data Validation
-- ✅ **All user input must be sanitized** (prevent XSS)
-- ✅ **All AI-generated content must be validated** against schemas
-- ✅ **Backend endpoints must validate all fields** (type, format, whitelist)
-
-### 3. State Management
-- ✅ **State structure must be consistent** across all modules:
-  ```javascript
-  {
-    level: 'קל' | 'בינוני' | 'קשה',
-    totalQuestions: number,
-    correctAnswers: number,
-    currentStreak: number,
-    sessionHistory: array,
-    startTime: timestamp,
-    lastSaved: timestamp
-  }
-  ```
-- ✅ **All state changes must call `saveProgress(moduleName)`**
-- ✅ **Race conditions must be prevented** (use write queues for concurrent operations)
-
-### 4. Error Handling & Observability
-- ✅ **All errors must be logged** (client and server)
-- ✅ **No silent failures** - user must see feedback
-- ❌ **No `console.error()` only** - must also send to backend telemetry
-- ✅ **Performance metrics must be tracked** (question generation time, load times)
-
-### 5. Code Quality
-- ❌ **No magic numbers** - use named constants
-- ❌ **No global namespace pollution** - use modules or namespaced objects
-- ❌ **No duplicate code** - extract to shared utilities
-- ✅ **All functions must have single responsibility**
-- ✅ **Use JSDoc for all public APIs**
-
-### 6. Testing & Deployment
-- ✅ **All PRs must pass existing tests** (currently none - add tests first!)
-- ✅ **New code must include tests** (unit + integration)
-- ✅ **No breaking changes to LocalStorage schema** without migration
-- ✅ **Backward compatibility with existing user data**
+**Key Principle:** Each module is a **Headless Class** that:
+1. Takes input (level, user answer)
+2. Performs business logic (generate question, validate answer)
+3. Returns JSON (View Object for rendering)
 
 ---
 
-## Definition of Done (Per Story)
+## Architectural Rules (Updated for Migration)
 
-Every completed story must satisfy:
+### 1. Extraction Rules (CRITICAL - Phase 2)
 
-### ✅ Code Quality
-- [ ] No ESLint errors (once configured)
-- [ ] No hardcoded values (use constants)
-- [ ] JSDoc comments on all new/modified functions
-- [ ] No duplicate code introduced
+#### ❌ FORBIDDEN in Extracted Modules:
+- `window.*` - No global browser objects
+- `document.*` - No DOM access
+- `getElementById()`, `querySelector()` - No DOM queries
+- `innerHTML`, `textContent` - No DOM manipulation
+- `addEventListener()` - No event binding
+- `localStorage`, `sessionStorage` - No browser storage (use params)
+- `alert()`, `confirm()` - No browser dialogs
+- jQuery (`$()`) - No jQuery
 
-### ✅ Testing
-- [ ] All existing tests pass (`npm test`)
-- [ ] New tests added for the fix (unit or integration)
-- [ ] Manual testing completed (see story's Verification Plan)
-- [ ] No regressions in other modules
+#### ✅ ALLOWED in Extracted Modules:
+- Pure JavaScript (ES6+ classes, functions)
+- Math operations (`Math.random()`, `Math.floor()`, etc.)
+- Array/Object manipulation
+- String formatting
+- JSON serialization (`JSON.stringify()`)
+- `console.log()` (for debugging)
+- `require()` or `import` (Node.js modules)
 
-### ✅ Security
-- [ ] No secrets committed
-- [ ] Input validation added/verified
-- [ ] XSS vulnerabilities checked
-- [ ] CORS configuration secure
+#### 📦 Output Format: View Object
+Every extracted method must return a **View Object** (JSON) containing all data needed to render the UI.
 
-### ✅ Documentation
-- [ ] CHANGELOG.md updated with change summary
-- [ ] Relevant docs updated (if architectural change)
-- [ ] PR description matches template (see story file)
-- [ ] Code comments explain "why" not "what"
+**Example - Question Generation:**
+```javascript
+// ❌ OLD (DOM-coupled)
+function generateDivisionQuestion() {
+    document.getElementById('question').textContent = 'What is 12 ÷ 4?';
+    document.getElementById('input').value = '';
+}
 
-### ✅ Deployment Readiness
-- [ ] Changes tested in browser (manual QA)
-- [ ] LocalStorage backward compatibility verified
-- [ ] No breaking API changes
-- [ ] Can be deployed independently (no dependencies on other PRs)
+// ✅ NEW (Headless)
+generateQuestion(level) {
+    return {
+        type: 'question',
+        questionText: 'What is 12 ÷ 4?',
+        questionType: 'input',
+        difficulty: level,
+        correctAnswer: 3,
+        hint: 'Think about division tables',
+        metadata: {
+            dividend: 12,
+            divisor: 4,
+            timestamp: Date.now()
+        }
+    };
+}
+```
+
+**Example - Answer Validation:**
+```javascript
+// ❌ OLD (DOM-coupled)
+function checkDivisionAnswer() {
+    const userAnswer = document.getElementById('input').value;
+    const feedback = document.getElementById('feedback');
+    feedback.innerHTML = isCorrect ? '✅ Correct!' : '❌ Wrong';
+}
+
+// ✅ NEW (Headless)
+checkAnswer(userAnswer, correctAnswer) {
+    const isCorrect = parseFloat(userAnswer) === correctAnswer;
+
+    return {
+        type: 'feedback',
+        isCorrect: isCorrect,
+        message: isCorrect ? 'מעולה! תשובה נכונה!' : 'לא נכונה, נסה שוב',
+        userAnswer: userAnswer,
+        correctAnswer: correctAnswer,
+        encouragement: this._getRandomEncouragement(isCorrect),
+        nextAction: isCorrect ? 'generate_next' : 'show_hint'
+    };
+}
+```
+
+### 2. Testing Requirements (Phase 2)
+
+#### Console Test (MANDATORY)
+Every extracted module must pass a **Node.js console test** proving it works without a browser.
+
+**Test Template:**
+```javascript
+// console-test.js
+const DivisionModule = require('./DivisionModule');
+
+console.log('🧪 Testing DivisionModule (Headless)\n');
+
+const module = new DivisionModule();
+
+// Test 1: Generate question
+console.log('Test 1: Generate Question (Easy)');
+const question = module.generateQuestion('קל');
+console.log(JSON.stringify(question, null, 2));
+console.assert(question.questionText, 'Should have questionText');
+console.assert(question.correctAnswer !== undefined, 'Should have correctAnswer');
+
+// Test 2: Validate correct answer
+console.log('\nTest 2: Check Correct Answer');
+const feedback1 = module.checkAnswer(question.correctAnswer, question.correctAnswer);
+console.log(JSON.stringify(feedback1, null, 2));
+console.assert(feedback1.isCorrect === true, 'Should be correct');
+
+// Test 3: Validate wrong answer
+console.log('\nTest 3: Check Wrong Answer');
+const feedback2 = module.checkAnswer(999, question.correctAnswer);
+console.log(JSON.stringify(feedback2, null, 2));
+console.assert(feedback2.isCorrect === false, 'Should be incorrect');
+
+console.log('\n✅ All tests passed!');
+```
+
+**Run test:**
+```bash
+node console-test.js
+# Should print JSON output, no browser required
+```
+
+### 3. Next.js Integration Pattern
+
+**API Route Example (`app/api/math/division/route.ts`):**
+```typescript
+import { NextRequest, NextResponse } from 'next/server';
+import { DivisionModule } from '@/lib/modules/DivisionModule';
+
+export async function POST(request: NextRequest) {
+    const { action, level, userAnswer, correctAnswer } = await request.json();
+
+    const module = new DivisionModule();
+
+    if (action === 'generate') {
+        const question = module.generateQuestion(level);
+        return NextResponse.json(question);
+    }
+
+    if (action === 'check') {
+        const feedback = module.checkAnswer(userAnswer, correctAnswer);
+        return NextResponse.json(feedback);
+    }
+
+    return NextResponse.json({ error: 'Invalid action' }, { status: 400 });
+}
+```
+
+**React Component Example:**
+```typescript
+'use client';
+
+export default function DivisionPractice() {
+    const [question, setQuestion] = useState(null);
+
+    async function generateQuestion() {
+        const response = await fetch('/api/math/division', {
+            method: 'POST',
+            body: JSON.stringify({ action: 'generate', level: 'קל' })
+        });
+        const data = await response.json();
+        setQuestion(data);  // Use JSON View Object
+    }
+
+    return (
+        <div>
+            <h2>{question?.questionText}</h2>
+            <input placeholder={question?.inputPlaceholder} />
+            {/* Render from JSON, no DOM coupling */}
+        </div>
+    );
+}
+```
 
 ---
 
-## Repository Map
+## Revised Definition of Done (Per Story)
 
-### Core Logic Location
+### ✅ Phase 1 Stories (Backend Security)
+- [ ] All existing tests pass (once we add Jest)
+- [ ] No security vulnerabilities introduced
+- [ ] Backend endpoints still functional
+- [ ] No breaking changes to current HTML app (we still need it running during migration)
+
+### ✅ Phase 2 Stories (Extraction)
+- [ ] **Zero DOM access** - No `window`, `document`, `jQuery` references
+- [ ] **Console test passes** - `node console-test.js` runs successfully
+- [ ] **View Object schema documented** - TypeScript interface provided
+- [ ] **Copy-paste ready** - Can be imported into Next.js without changes
+- [ ] **Business logic preserved** - Same question generation, validation logic
+- [ ] **No regressions** - Extracted module produces same results as original
+- [ ] **JSDoc complete** - All public methods documented
+- [ ] **Integration example** - Sample Next.js API route provided
+
+---
+
+## Repository Map (Migration-Focused)
 
 ```
 LearningIsFun/
-├── src/math/                           # Hebrew Math Application
-│   ├── Emma_math_lab.html              # Main entry (MONOLITHIC - needs refactoring)
-│   ├── css/
-│   │   └── main.css                    # All styles (1,231 lines)
-│   ├── js/
-│   │   ├── module-registry.js          # ⚠️ PRIMARY (keep this)
-│   │   ├── features/
-│   │   │   └── module-registry.js      # ⚠️ DUPLICATE (delete this)
-│   │   └── modules/
-│   │       ├── division_module.js
-│   │       ├── fraction_module.js
-│   │       ├── order_operations_module.js
-│   │       └── distributive_module.js
-│   └── docs/                           # Documentation (20 files)
+├── src/math/                           # LEGACY (Will be archived after migration)
+│   ├── Emma_math_lab.html              # 4,919 lines (DOM-coupled, being replaced)
+│   └── js/modules/                     # DOM-coupled modules (extraction source)
+│       ├── division_module.js          # 🎯 EXTRACT → DivisionModule.js
+│       ├── fraction_module.js          # 🎯 EXTRACT → FractionModule.js
+│       ├── order_operations_module.js  # 🎯 EXTRACT → OrderOperationsModule.js
+│       └── distributive_module.js      # 🎯 EXTRACT → DistributiveModule.js
 │
-├── English/                            # English Language Application
-│   ├── index.html                      # Main entry
-│   ├── css/
-│   │   └── main.css                    # English styles (926 lines)
-│   └── js/
-│       ├── app.js                      # Main application logic (1,176 lines)
-│       ├── voice-manager.js            # Web Speech API wrapper
-│       ├── data/
-│       │   ├── stories.js              # Story content (5 easy + 1 medium)
-│       │   └── vocabulary.js           # Vocabulary words (80 words, 3 tiers)
-│       └── utils/
-│           ├── storage.js              # LocalStorage wrapper
-│           └── validation.js           # Input validation utilities
+├── extracted-modules/                  # NEW (Phase 2 output)
+│   ├── core/
+│   │   ├── BaseModule.js               # Abstract base class
+│   │   ├── DifficultyManager.js        # Difficulty progression logic
+│   │   └── constants.js                # Magic numbers extracted
+│   ├── modules/
+│   │   ├── DivisionModule.js           # ✅ Headless, console-testable
+│   │   ├── DecimalModule.js            # ✅ Headless, console-testable
+│   │   ├── FractionModule.js           # ✅ Headless, console-testable
+│   │   └── ...
+│   └── tests/
+│       ├── division.test.js            # Jest unit tests
+│       └── console-tests/
+│           ├── division-console.js     # Node.js smoke test
+│           └── decimal-console.js      # Node.js smoke test
 │
-├── server.js                           # Backend API (Express, 106 lines)
-├── launch.js                           # Launcher script (173 lines)
-├── package.json                        # Dependencies (express, cors, open)
+├── server.js                           # Backend API (Phase 1 fixes, then reuse)
+├── package.json                        # Update with Jest, testing deps
 │
-├── logs/                               # Backend logs (gitignored)
-│   ├── decimal/[date].json
-│   ├── multiplication/[date].json
-│   └── numberline/[date].json
+├── health_refactor/                    # THIS DIRECTORY (Migration plan)
+│   ├── 00_global_context.md            # This file
+│   ├── 01_orchestration_plan.md        # Master schedule
+│   ├── MIGRATION_BRIDGE.md             # DOM ID → JSON property mapping
+│   ├── story_01_duplicate_registry.md  # Phase 1 (cleanup)
+│   ├── story_02-05_*.md                # Phase 1 (security)
+│   ├── story_06_extract_division.md    # Phase 2 (extraction)
+│   ├── story_07_extract_decimal.md     # Phase 2 (extraction)
+│   └── ...
 │
-├── docs/                               # Root-level documentation
-│   ├── reports/
-│   │   ├── SECURITY_ARCHITECTURE_AUDIT_2025.md  # Latest audit
-│   │   └── STABILITY_UX_AUDIT_REPORT.md
-│   ├── grade3/                         # Curriculum materials
-│   └── research/                       # Study plans
-│
-└── archive/                            # Archived files (backups, test results)
+└── docs/
+    └── reports/
+        └── SECURITY_ARCHITECTURE_AUDIT_2025.md
 ```
 
 ---
 
-## Critical Interdependencies
+## Critical Interdependencies (Migration Context)
 
-### 1. Module Registry System
-**Files:** `src/math/js/module-registry.js`, all module files
-**Dependency:** All modules must register with `ModuleRegistry.register()`
-**Risk:** Changing registry API breaks all modules
+### Phase 1 → Phase 2 Dependency
+- **Story 01 (Duplicate Registry)** must complete BEFORE extraction
+- **Reason:** Extraction needs single source of truth for module patterns
 
-### 2. State Persistence
-**Files:** All modules, `English/js/utils/storage.js`
-**Dependency:** LocalStorage schema must remain backward compatible
-**Risk:** Schema changes break existing user progress
+### Extraction Order (Phase 2)
+**Recommended sequence:**
 
-### 3. Backend Flag Logging
-**Files:** `server.js`, `src/math/Emma_math_lab.html` (inline flag submission code)
-**Dependency:** Flag submission format must match server expectations
-**Risk:** API changes break flag logging feature
+1. **Story 06: Extract Division** (Simplest, 190 lines, good learning case)
+2. **Story 07: Extract Decimal** (Moderate complexity, multiple question types)
+3. **Story 08: Extract Fraction** (Similar to Division)
+4. **Story 09: Extract Multiplication** (Built-in module, needs HTML extraction)
+5. **Story 10: Extract Order of Operations** (Complex, 458 lines)
+6. **Story 11: Extract Distributive** (Complex, 351 lines)
+7. **Story 12: Extract Number Line** (Visual module, needs special handling)
 
-### 4. Web Speech API (English App)
-**Files:** `English/js/voice-manager.js`, `English/js/app.js`
-**Dependency:** Browser must support `SpeechRecognition` and `SpeechSynthesis`
-**Risk:** Changes to voice manager break all speaking/listening activities
+**Why this order:**
+- Start simple (Division) to establish pattern
+- Build confidence before tackling built-in modules (Decimal, Multiplication)
+- Complex modules last (Order of Operations, Distributive)
+- Visual modules need special View Object design (Number Line)
 
 ---
 
-## Known Issues (From Audit Report)
+## Success Metrics (Revised)
 
-### 🔴 Critical (P0 - Fix Immediately)
-1. **Duplicate `module-registry.js`** - Version drift risk
-2. **No client-side error telemetry** - Silent failures
-3. **Blocking file I/O in `server.js`** - Server hangs under load
-4. **No rate limiting on `/api/flag`** - DDoS vulnerability
-5. **CORS allows all origins** - Security vulnerability
-6. **No input validation on flag endpoint** - XSS/data integrity risk
+### Phase 1 Success (Week 1)
+- ✅ Backend secure (rate limiting, input validation, CORS)
+- ✅ No duplicate files
+- ✅ `server.js` ready to become API service
 
-### 🟡 High Priority (P1 - Fix Within 2 Weeks)
-7. **4,919-line monolithic HTML** - Maintainability nightmare
-8. **Inconsistent module registration** - 3 built-in modules not using registry
-9. **Hardcoded strings** - No i18n system, prevents AI personalization
-10. **Magic numbers throughout** - Difficulty tuning requires code changes
-11. **No content validation layer** - AI-generated content unsafe
-12. **LocalStorage PII exposure** - GDPR concern (timestamps, user answers)
-13. **No parental consent mechanism** - COPPA violation
+### Phase 2 Success (Weeks 2-4)
+- ✅ **7 modules extracted** (Division, Decimal, Fraction, Multiplication, Order, Distributive, Number Line)
+- ✅ **Zero DOM references** in extracted code
+- ✅ **All console tests pass** (`node console-test.js` for each module)
+- ✅ **Copy-paste ready** for Next.js API routes
+- ✅ **Business logic preserved** (same questions, validation, difficulty)
+
+### Phase 3 Success (Week 5)
+- ✅ Extracted modules integrated into Next.js API routes
+- ✅ React components consuming JSON View Objects
+- ✅ Feature parity with legacy app
+
+### Phase 4 Success (Week 6)
+- ✅ Next.js app launched
+- ✅ Legacy app archived
+- ✅ Migration complete
 
 ---
 
 ## Communication Protocols
 
-### Git Workflow
-- **Branch naming:** `fix/story-[ID]-[slug]` (e.g., `fix/story-01-duplicate-registry`)
-- **Commit messages:** Conventional Commits format
+### Git Workflow (Updated)
+- **Branch naming:**
+  - Phase 1: `fix/story-[ID]-[slug]` (e.g., `fix/story-01-duplicate-registry`)
+  - Phase 2: `extract/story-[ID]-[module]` (e.g., `extract/story-06-division`)
+- **Commit messages:** Conventional Commits
   ```
-  type(scope): Short description
+  extract(division): create headless DivisionModule class
 
-  Longer explanation if needed
+  Extracted division logic from division_module.js into pure
+  JavaScript class with zero DOM access. Returns JSON View Objects
+  for question generation and answer validation.
 
-  Fixes: Story [ID]
+  - Add DivisionModule.js (headless)
+  - Add console-test-division.js (passes)
+  - Add TypeScript interface for View Object
+  - Add Next.js integration example
+
+  Console test: ✅ All tests passed
+  DOM references: ✅ Zero
+
+  Fixes: Story 06
   ```
-  Types: `fix`, `feat`, `refactor`, `test`, `docs`, `chore`
 
-### PR Process
+### PR Process (Phase 2 Extractions)
 1. Create branch from `main`
-2. Implement fix according to story requirements
-3. Run verification plan locally
-4. Commit with conventional commit message
-5. Push and create PR using story's PR template
-6. Ensure all CI checks pass (once configured)
-7. Request review
-8. Merge to `main` (squash or rebase preferred)
-
----
-
-## Testing Strategy
-
-### Current State
-⚠️ **No automated tests exist** - Manual testing only
-
-### Target State (Per Story)
-- **Unit tests:** For utility functions, data validation, state management
-- **Integration tests:** For module interactions, API endpoints
-- **E2E tests:** For critical user flows (question generation → answer → feedback)
-
-### Test Framework Recommendations
-- **Frontend:** Jest + Testing Library
-- **Backend:** Jest + Supertest (for API testing)
-- **E2E:** Playwright (browser automation)
-
----
-
-## Deployment Context
-
-### Current Deployment
-- **Development:** `npm run launch` (starts server + opens HTML in browser)
-- **Entry point:** `file:///.../src/math/Emma_math_lab.html` (direct file access)
-- **Backend:** `http://localhost:3000`
-
-### Production Requirements (Future)
-- **Frontend:** Static hosting (S3, Netlify, Vercel)
-- **Backend:** Cloud deployment (AWS Lambda, Cloud Run, Heroku)
-- **HTTPS:** Required for production (voice API, CORS, security)
-- **CDN:** For assets (fonts, CSS, JS)
+2. Extract module (headless)
+3. Write console test
+4. Run `node console-test.js` (must pass)
+5. Document View Object schema (TypeScript interface)
+6. Provide Next.js integration example
+7. Commit with conventional message
+8. Create PR with extraction evidence (console test output)
 
 ---
 
 ## Key Contacts & Resources
 
 ### Documentation
-- **Project Overview:** `README.md`
-- **Claude Guidelines:** `CLAUDE.md`
+- **Migration Plan:** `health_refactor/01_orchestration_plan.md`
+- **DOM-to-JSON Mapping:** `health_refactor/MIGRATION_BRIDGE.md`
 - **Latest Audit:** `docs/reports/SECURITY_ARCHITECTURE_AUDIT_2025.md`
-- **Original Requirements:** `original_prompt.md`
+- **Next.js Target:** PR #10 (waiting for extracted modules)
 
 ### External Dependencies
-- **Fonts:** Google Fonts (Noto Sans Hebrew, Poppins)
-- **CSS Framework:** Pico CSS (CDN)
-- **Web APIs:** Web Speech API (browser native)
+- **Testing:** Jest (for unit tests), Node.js (for console tests)
+- **Target Framework:** Next.js 14+ (App Router)
+- **TypeScript:** For type safety in Next.js integration
 
 ---
 
-## Success Metrics
+## Migration Philosophy
 
-### Code Health
-- ✅ Reduce monolithic HTML from 4,919 lines to < 500 lines
-- ✅ Eliminate all duplicate files
-- ✅ Extract all magic numbers to constants
-- ✅ Achieve 80%+ test coverage
+### The Strangler Fig Pattern
+We are using the **Strangler Fig** pattern:
+1. Build new functionality around the old system
+2. Extract business logic incrementally
+3. Route traffic to new system gradually
+4. Remove old system when no longer needed
 
-### Performance
-- ✅ Question generation < 100ms
-- ✅ LocalStorage operations < 50ms
-- ✅ Server response time < 200ms
+**NOT a Big Bang rewrite** - we keep the old app running during migration.
 
-### Security
-- ✅ Zero XSS vulnerabilities
-- ✅ All endpoints rate-limited
-- ✅ Input validation on 100% of user inputs
-- ✅ COPPA/GDPR compliance achieved
+### The Headless Module Pattern
+Every extracted module is a **Headless Class**:
+- No UI dependencies
+- Returns JSON (View Objects)
+- Console-testable
+- Framework-agnostic (can be used in Next.js, Vue, Angular, etc.)
 
-### AI Readiness
-- ✅ All strings externalized (i18n system)
-- ✅ Content validation layer implemented
-- ✅ AI injection API operational
-- ✅ Question templates data-driven
+**Benefits:**
+- **Testable:** Unit tests without browser
+- **Portable:** Copy-paste into any framework
+- **Maintainable:** Business logic separate from rendering
+- **Reusable:** Same module for web, mobile, CLI, etc.
 
 ---
 
 **Last Updated:** 2025-11-20
-**Audit Report:** `docs/reports/SECURITY_ARCHITECTURE_AUDIT_2025.md`
-**Health Score:** 67/100 → Target: 90/100
+**Migration Status:** Phase 1 Ready, Phase 2 Planning
+**Target:** Next.js/React (PR #10)
+**Strategy:** Extract → Test → Integrate → Cutover

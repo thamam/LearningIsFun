@@ -1,64 +1,63 @@
-# Refactoring Orchestration Plan
+# Refactoring Orchestration Plan (Migration Strategy)
 
-**Project:** LearningIsFun
-**Plan Version:** 1.0
+**Project:** LearningIsFun → Next.js Migration
+**Plan Version:** 2.0 (Migration-Focused)
 **Created:** 2025-11-20
-**Target Completion:** 6 weeks
-**Current Health Score:** 67/100 → **Target:** 90/100
+**Target Completion:** 4 weeks
+**Current Health Score:** 67/100 → **Target:** Migrated to Next.js
 
 ---
 
 ## Executive Summary
 
-This plan addresses **6 Critical (P0)** and **7 High Priority (P1)** issues identified in the Security & Architecture Audit. The work is broken into **15 atomic, independent user stories** designed for sequential or parallel execution by an AI coding agent.
+**STRATEGIC PIVOT:** We are NOT renovating the old house. We are moving to a new house (Next.js/React in PR #10).
 
-### Principles
-1. **Atomic & Independent:** Each story produces a deployable, green-test PR
-2. **No Breaking Changes:** Main branch always deployable
-3. **Coupling-Aware:** Cross-file changes bundled into single stories
-4. **Test-First:** Add testing infrastructure before refactoring
+This plan focuses on:
+1. **Phase 1 (Week 1):** Clean up & secure the backend (will become API service)
+2. **Phase 2 (Weeks 2-4):** Extract business logic into **Headless Modules** (zero DOM coupling)
+
+**DELETED from original plan:**
+- ❌ Client-side telemetry (will be in Next.js)
+- ❌ Performance monitoring (will be in Next.js)
+- ❌ i18n system (will be in Next.js)
+- ❌ UI refactoring (deleting the UI)
+
+**The Goal:** Create **pure JavaScript classes** that can be copy-pasted into Next.js API routes without changing a single line.
 
 ---
 
 ## Story Sequencing Strategy
 
-### Phase 1: Critical Security Fixes (Week 1)
-**Goal:** Eliminate immediate security vulnerabilities
+### Phase 1: Backend Cleanup & Security (Week 1)
+**Goal:** Prepare backend for API service role
 **Parallelization:** Stories 01-05 can run in parallel (no dependencies)
+**Rationale:** `server.js` will be reused as an API endpoint service
 
-### Phase 2: Infrastructure & Observability (Week 2)
-**Goal:** Enable monitoring and prevent silent failures
-**Parallelization:** Stories 06-08 can run in parallel
-
-### Phase 3: Code Quality & Maintainability (Weeks 3-4)
-**Goal:** Reduce technical debt, prepare for AI integration
-**Parallelization:** Stories 09-11 sequential (architectural changes)
-
-### Phase 4: AI-Readiness (Weeks 5-6)
-**Goal:** Enable AI-driven content generation and personalization
-**Parallelization:** Stories 12-15 can run in parallel after Story 11
+### Phase 2: Headless Extraction (Weeks 2-4)
+**Goal:** Extract math modules into framework-agnostic JavaScript classes
+**Parallelization:** Stories 06-12 must run sequentially (learning from each extraction)
+**Rationale:** Build pattern with simple module (Division), then scale to complex modules
 
 ---
 
 ## Master Schedule
 
-| Seq ID | Story Name | Risk Addressed | Target Files | Complexity | Dependencies | Week |
-|--------|------------|----------------|--------------|------------|--------------|------|
-| **01** | Eliminate Duplicate Module Registry | Version Drift, Maintenance | `src/math/js/features/module-registry.js`, `Emma_math_lab.html` | **Low (2)** | None | 1 |
-| **02** | Add Backend Rate Limiting | DDoS Vulnerability | `server.js`, `package.json` | **Low (2)** | None | 1 |
-| **03** | Implement Backend Input Validation | XSS, Data Integrity | `server.js` | **Medium (4)** | None | 1 |
-| **04** | Restrict CORS to Whitelist | Security Vulnerability | `server.js` | **Low (1)** | None | 1 |
-| **05** | Fix Blocking File I/O with Async Queue | Server Hangs Under Load | `server.js` | **Medium (5)** | None | 1 |
-| **06** | Add Client-Side Error Telemetry | Silent Failures | `Emma_math_lab.html`, `English/index.html`, `server.js` | **Medium (4)** | None | 2 |
-| **07** | Add Performance Monitoring | Observability Gap | `Emma_math_lab.html`, `English/js/app.js` | **Medium (3)** | None | 2 |
-| **08** | Implement Backend Health Metrics | SRE Readiness | `server.js` | **Low (2)** | None | 2 |
-| **09** | Extract Magic Numbers to Constants | Maintainability | All module files, `src/math/js/core/constants.js` (new) | **Medium (5)** | ⚠️ Must complete before Story 10 | 3 |
-| **10** | Standardize Module Registration | Inconsistent Architecture | `Emma_math_lab.html`, `src/math/js/modules/decimal.js` (new), `multiplication.js` (new), `numberline.js` (new) | **High (7)** | ⚠️ Requires Story 09 | 3 |
-| **11** | Implement Content Validation Layer | AI Injection Safety | `src/math/js/core/content-validator.js` (new), `English/js/data/stories.js`, `English/js/data/vocabulary.js` | **High (6)** | None | 4 |
-| **12** | Externalize Strings to i18n System | AI Personalization Blocker | `src/math/js/core/i18n.js` (new), all module files | **High (8)** | ⚠️ Requires Story 11 | 5 |
-| **13** | Implement Data Retention Policy | GDPR Compliance | `English/js/utils/storage.js`, `src/math/Emma_math_lab.html` | **Medium (4)** | None | 5 |
-| **14** | Add Parental Consent Mechanism | COPPA Compliance | `index.html` (landing), `src/math/Emma_math_lab.html`, `English/index.html` | **Medium (5)** | None | 6 |
-| **15** | Build AI Content Injection API | AI-First Architecture | `src/math/js/core/ai-content-manager.js` (new), `server.js` | **High (7)** | ⚠️ Requires Stories 11, 12 | 6 |
+| Seq ID | Story Name | Target | Output | Complexity | Dependencies | Week |
+|--------|------------|--------|--------|------------|--------------|------|
+| **PHASE 1: BACKEND CLEANUP** |
+| **01** | Eliminate Duplicate Module Registry | Cleanup | Single `module-registry.js` | **Low (2)** | None | 1 |
+| **02** | Add Backend Rate Limiting | Security | Rate-limited `/api/flag` | **Low (2)** | None | 1 |
+| **03** | Implement Backend Input Validation | Security | Validated `/api/flag` | **Medium (4)** | None | 1 |
+| **04** | Restrict CORS to Whitelist | Security | Whitelisted CORS | **Low (1)** | None | 1 |
+| **05** | Fix Blocking File I/O | Performance | Async file writes | **Medium (5)** | None | 1 |
+| **PHASE 2: HEADLESS EXTRACTION** |
+| **06** | Extract Division Module | Extraction | `DivisionModule.js` (headless) | **High (7)** | ⚠️ Requires Story 01 | 2 |
+| **07** | Extract Decimal Module | Extraction | `DecimalModule.js` (headless) | **High (8)** | ⚠️ Requires Story 06 (pattern) | 2 |
+| **08** | Extract Fraction Module | Extraction | `FractionModule.js` (headless) | **Medium (6)** | ⚠️ Requires Story 06 (pattern) | 3 |
+| **09** | Extract Multiplication Module | Extraction | `MultiplicationModule.js` (headless) | **High (7)** | ⚠️ Requires Story 07 (HTML extraction) | 3 |
+| **10** | Extract Order of Operations Module | Extraction | `OrderOperationsModule.js` (headless) | **High (8)** | ⚠️ Requires Story 06 (pattern) | 3 |
+| **11** | Extract Distributive Module | Extraction | `DistributiveModule.js` (headless) | **High (7)** | ⚠️ Requires Story 06 (pattern) | 4 |
+| **12** | Extract Number Line Module | Extraction | `NumberLineModule.js` (headless) | **High (9)** | ⚠️ Requires Story 06 (visual pattern) | 4 |
 
 ---
 
@@ -68,380 +67,417 @@ This plan addresses **6 Critical (P0)** and **7 High Priority (P1)** issues iden
 |-------|------------|----------------|------|
 | **1-2** | Low - Single file, simple change | 1-2 hours | Low |
 | **3-5** | Medium - Multiple files or moderate logic | 3-6 hours | Medium |
-| **6-8** | High - Architectural change or extensive refactoring | 1-2 days | Medium-High |
-| **9-10** | Critical - Major refactoring, high risk | 3+ days | High |
+| **6-8** | High - Architectural extraction, DOM decoupling | 1-2 days | Medium-High |
+| **9-10** | Critical - Complex extraction with edge cases | 2-3 days | High |
 
 ---
 
 ## Dependency Graph
 
 ```
-Phase 1 (Parallel)
+Phase 1 (Parallel) - Backend Cleanup
 ├── Story 01 ──┐
 ├── Story 02 ──┤
-├── Story 03 ──┤──→ Phase 2 (Parallel)
-├── Story 04 ──┤    ├── Story 06 ──┐
-└── Story 05 ──┘    ├── Story 07 ──┤──→ Phase 3 (Sequential)
-                    └── Story 08 ──┘    ├── Story 09 ──→ Story 10 ──┐
-                                         └── Story 11 ──────────────┤──→ Phase 4 (Parallel)
-                                                                     │    ├── Story 12 ──┐
-                                                                     │    ├── Story 13 ──┤──→ Story 15
-                                                                     └────→ Story 14 ────┘
+├── Story 03 ──┤──→ Phase 2 (Sequential) - Extraction
+├── Story 04 ──┤    │
+└── Story 05 ──┘    │
+                    Story 01 Complete
+                         ↓
+                    Story 06 (Division) ──→ Establishes Pattern
+                         ↓
+                    ┌────┴────┬────────────┬────────────┐
+                    │         │            │            │
+              Story 07    Story 08    Story 10    Story 11
+              (Decimal)   (Fraction)  (Order)     (Distributive)
+                    │         │            │            │
+                    └─────────┴────────────┴────────────┘
+                              ↓
+                         Story 09 (Multiplication)
+                              ↓
+                         Story 12 (Number Line)
 ```
 
-**Critical Path:** Stories 09 → 10 → 12 → 15 (must be sequential)
+**Critical Path:** 01 → 06 → 07 → 09 → 12
+
+**Why Sequential in Phase 2:**
+- Story 06 (Division) establishes the extraction pattern
+- Each extraction builds confidence and refines the pattern
+- Complex modules (Order, Distributive) require lessons learned
+- Visual module (Number Line) needs special View Object design
 
 ---
 
 ## Detailed Story Breakdown
 
-### Phase 1: Critical Security Fixes (Week 1)
+### Phase 1: Backend Cleanup & Security (Week 1)
 
 #### Story 01: Eliminate Duplicate Module Registry
 **Priority:** P0 (Critical)
-**Risk:** Version drift, maintenance confusion
-**Complexity:** Low (2)
-**Can Run in Parallel:** ✅ Yes
-
-**Target Files:**
-- `src/math/js/features/module-registry.js` (DELETE)
-- `src/math/Emma_math_lab.html` (UPDATE: script src reference)
-
-**Acceptance Criteria:**
-- Only one `module-registry.js` exists in codebase
-- All modules still register successfully
-- Console shows "✅ Module registered" for all 7 modules
+**Rationale:** Must have single source of truth before extraction
+**Output:** Single `module-registry.js` file
+**Time:** 1-2 hours
 
 ---
 
 #### Story 02: Add Backend Rate Limiting
 **Priority:** P0 (Critical)
-**Risk:** DDoS vulnerability on `/api/flag` endpoint
-**Complexity:** Low (2)
-**Can Run in Parallel:** ✅ Yes
-
-**Target Files:**
-- `server.js` (ADD: rate limiting middleware)
-- `package.json` (ADD: `express-rate-limit` dependency)
-
-**Acceptance Criteria:**
-- `/api/flag` limited to 10 requests/minute/IP
-- `/api/health` not rate-limited
-- Rate limit exceeded returns 429 status with clear message
+**Rationale:** Secure backend before promoting to API service
+**Output:** Rate-limited `/api/flag` endpoint
+**Time:** 1-2 hours
 
 ---
 
 #### Story 03: Implement Backend Input Validation
 **Priority:** P0 (Critical)
-**Risk:** XSS, data integrity, malformed requests
-**Complexity:** Medium (4)
-**Can Run in Parallel:** ✅ Yes
-
-**Target Files:**
-- `server.js` (ADD: validation middleware, sanitization functions)
-
-**Acceptance Criteria:**
-- `module` field validated against whitelist
-- `timestamp` validated as valid ISO8601 date
-- String fields sanitized (remove `<` and `>`)
-- Payload size limited to 10KB
-- Invalid requests return 400 with descriptive error
+**Rationale:** Prevent XSS, JSON bombs before API service role
+**Output:** Validated and sanitized `/api/flag` endpoint
+**Time:** 3-4 hours
 
 ---
 
 #### Story 04: Restrict CORS to Whitelist
 **Priority:** P0 (Critical)
-**Risk:** Unauthorized API access
-**Complexity:** Low (1)
-**Can Run in Parallel:** ✅ Yes
-
-**Target Files:**
-- `server.js` (UPDATE: CORS configuration)
-
-**Acceptance Criteria:**
-- CORS only allows: `file://`, `http://localhost:3000`
-- Other origins receive CORS error
-- OPTIONS preflight requests handled correctly
+**Rationale:** Security hardening for API service
+**Output:** CORS-protected endpoints
+**Time:** 1 hour
 
 ---
 
-#### Story 05: Fix Blocking File I/O with Async Queue
+#### Story 05: Fix Blocking File I/O
 **Priority:** P0 (Critical)
-**Risk:** Server hangs under concurrent load
-**Complexity:** Medium (5)
-**Can Run in Parallel:** ✅ Yes
-
-**Target Files:**
-- `server.js` (REFACTOR: Replace `fs.writeFileSync` with async queue)
-
-**Acceptance Criteria:**
-- All file operations use `fs.promises`
-- Write queue prevents race conditions
-- Server handles 100 concurrent `/api/flag` requests without timeout
-- Event loop not blocked (test with `ab` load testing)
+**Rationale:** API service must handle concurrent requests
+**Output:** Async file operations with queue
+**Time:** 3-4 hours
 
 ---
 
-### Phase 2: Infrastructure & Observability (Week 2)
+### Phase 2: Headless Extraction (Weeks 2-4)
 
-#### Story 06: Add Client-Side Error Telemetry
-**Priority:** P0 (Critical)
-**Risk:** Silent failures, no production debugging
-**Complexity:** Medium (4)
-**Can Run in Parallel:** ✅ Yes
-
-**Target Files:**
-- `src/math/Emma_math_lab.html` (ADD: global error handlers)
-- `English/index.html` (ADD: global error handlers)
-- `server.js` (ADD: `POST /api/error` endpoint)
-
-**Acceptance Criteria:**
-- All uncaught errors logged to backend
-- Unhandled promise rejections caught
-- Errors stored in LocalStorage if backend unreachable
-- Session ID tracks errors across session
-
----
-
-#### Story 07: Add Performance Monitoring
+#### Story 06: Extract Division Module
 **Priority:** P1 (High)
-**Risk:** Performance regressions undetected
-**Complexity:** Medium (3)
-**Can Run in Parallel:** ✅ Yes
-
-**Target Files:**
-- `src/math/Emma_math_lab.html` (ADD: performance monitor)
-- `English/js/app.js` (ADD: performance tracking)
-
-**Acceptance Criteria:**
-- Question generation time tracked
-- LocalStorage operations tracked
-- Slow operations (>1s) logged as warnings
-- Metrics exportable from console
-
----
-
-#### Story 08: Implement Backend Health Metrics
-**Priority:** P1 (High)
-**Risk:** No SRE visibility
-**Complexity:** Low (2)
-**Can Run in Parallel:** ✅ Yes
-
-**Target Files:**
-- `server.js` (ADD: `GET /api/metrics` endpoint)
-
-**Acceptance Criteria:**
-- `/api/metrics` returns uptime, memory, CPU usage
-- Endpoint not rate-limited
-- Metrics formatted as JSON
-
----
-
-### Phase 3: Code Quality & Maintainability (Weeks 3-4)
-
-#### Story 09: Extract Magic Numbers to Constants
-**Priority:** P1 (High)
-**Risk:** Maintainability, difficult difficulty tuning
-**Complexity:** Medium (5)
-**Can Run in Parallel:** ❌ No (required by Story 10)
-
-**Target Files:**
-- `src/math/js/core/constants.js` (NEW)
-- All module files (UPDATE: replace magic numbers)
-
-**Acceptance Criteria:**
-- All difficulty thresholds in `constants.js`
-- All difficulty ranges in `constants.js`
-- No hardcoded numbers in module logic
-- Constants exported and imported correctly
-
----
-
-#### Story 10: Standardize Module Registration
-**Priority:** P1 (High)
-**Risk:** Inconsistent architecture, hard to scale
 **Complexity:** High (7)
-**Can Run in Parallel:** ❌ No (depends on Story 09)
+**Rationale:** Simplest module (190 lines), establishes extraction pattern
+**Time:** 1-2 days
 
-**Target Files:**
-- `src/math/Emma_math_lab.html` (EXTRACT: decimal, multiplication, numberline modules)
-- `src/math/js/modules/decimal.js` (NEW)
-- `src/math/js/modules/multiplication.js` (NEW)
-- `src/math/js/modules/numberline.js` (NEW)
-- `src/math/js/module-registry.js` (UPDATE: remove conditional registration)
+**Input:** `src/math/js/modules/division_module.js` (DOM-coupled)
+**Output:** `extracted-modules/modules/DivisionModule.js` (headless)
 
-**Acceptance Criteria:**
-- All 7 modules use `ModuleRegistry.register()`
-- No conditional registration (`if (typeof ... !== 'undefined')`)
-- All modules work standalone (can be imported independently)
-- Backward compatibility with existing LocalStorage data
+**Success Criteria:**
+- ✅ Zero DOM references (`window`, `document`, `getElementById`, etc.)
+- ✅ Console test passes (`node console-test-division.js`)
+- ✅ View Object schema documented (TypeScript interface)
+- ✅ Copy-paste ready for Next.js API route
+- ✅ Same business logic (question generation, validation)
 
----
-
-#### Story 11: Implement Content Validation Layer
-**Priority:** P1 (High)
-**Risk:** AI-generated content unsafe, app crashes
-**Complexity:** High (6)
-**Can Run in Parallel:** ✅ Yes
-
-**Target Files:**
-- `src/math/js/core/content-validator.js` (NEW)
-- `English/js/data/stories.js` (UPDATE: validate on load)
-- `English/js/data/vocabulary.js` (UPDATE: validate on load)
-
-**Acceptance Criteria:**
-- Schema validation for questions, stories, vocabulary
-- Runtime validation catches invalid data
-- Validation failures logged to backend
-- Invalid content throws descriptive error
+**Deliverables:**
+1. `DivisionModule.js` - Headless class
+2. `console-test-division.js` - Node.js test
+3. `DivisionModule.d.ts` - TypeScript interface
+4. `example-api-route-division.ts` - Next.js integration example
 
 ---
 
-### Phase 4: AI-Readiness (Weeks 5-6)
-
-#### Story 12: Externalize Strings to i18n System
+#### Story 07: Extract Decimal Module
 **Priority:** P1 (High)
-**Risk:** AI cannot personalize feedback
 **Complexity:** High (8)
-**Can Run in Parallel:** ❌ No (depends on Story 11)
+**Rationale:** Built-in module, needs HTML extraction, multiple question types
+**Time:** 2 days
 
-**Target Files:**
-- `src/math/js/core/i18n.js` (NEW)
-- All module files (UPDATE: replace hardcoded Hebrew strings)
-- `English/js/app.js` (UPDATE: replace hardcoded English strings)
+**Input:** `src/math/Emma_math_lab.html` (lines ~1200-2000, inline code)
+**Output:** `extracted-modules/modules/DecimalModule.js` (headless)
 
-**Acceptance Criteria:**
-- Zero hardcoded Hebrew/English strings in JavaScript
-- All user-facing text in `i18n.js`
-- AI can inject custom strings via API
-- Fallback to key if translation missing
+**Challenges:**
+- Code is inline in HTML (not separate file)
+- Multiple question types (decomposition, digitValue, nextPrevious, compare, missingDigit)
+- Hebrew text embedded in JavaScript
 
----
-
-#### Story 13: Implement Data Retention Policy
-**Priority:** P1 (High)
-**Risk:** GDPR violation (data kept indefinitely)
-**Complexity:** Medium (4)
-**Can Run in Parallel:** ✅ Yes
-
-**Target Files:**
-- `English/js/utils/storage.js` (ADD: auto-cleanup function)
-- `src/math/Emma_math_lab.html` (ADD: cleanup on load)
-
-**Acceptance Criteria:**
-- Sessions older than 90 days auto-deleted
-- Cleanup runs on app load
-- User can manually delete all data
-- Data export function provided
+**Success Criteria:**
+- ✅ All question types extracted
+- ✅ Hebrew strings preserved (no corruption)
+- ✅ Console test covers all question types
+- ✅ View Object handles visual representations (number lines, place value charts)
 
 ---
 
-#### Story 14: Add Parental Consent Mechanism
+#### Story 08: Extract Fraction Module
 **Priority:** P1 (High)
-**Risk:** COPPA violation
-**Complexity:** Medium (5)
-**Can Run in Parallel:** ✅ Yes
+**Complexity:** Medium (6)
+**Rationale:** Similar to Division, good reinforcement
+**Time:** 1 day
 
-**Target Files:**
-- `index.html` (landing page) (ADD: consent banner)
-- `src/math/Emma_math_lab.html` (ADD: consent check)
-- `English/index.html` (ADD: consent check)
-
-**Acceptance Criteria:**
-- Consent banner shown on first visit
-- App blocked until consent given
-- Consent stored in LocalStorage
-- Privacy policy link provided
+**Input:** `src/math/js/modules/fraction_module.js`
+**Output:** `extracted-modules/modules/FractionModule.js` (headless)
 
 ---
 
-#### Story 15: Build AI Content Injection API
+#### Story 09: Extract Multiplication Module
 **Priority:** P1 (High)
-**Risk:** AI integration blocked
 **Complexity:** High (7)
-**Can Run in Parallel:** ❌ No (depends on Stories 11, 12)
+**Rationale:** Built-in module, needs HTML extraction, requires Decimal pattern
+**Time:** 1-2 days
 
-**Target Files:**
-- `src/math/js/core/ai-content-manager.js` (NEW)
-- `server.js` (ADD: `POST /api/ai-feedback` endpoint)
+**Input:** `src/math/Emma_math_lab.html` (lines ~800-1200, inline code)
+**Output:** `extracted-modules/modules/MultiplicationModule.js` (headless)
 
-**Acceptance Criteria:**
-- AI can inject questions via `aiContentManager.injectQuestion()`
-- All AI-generated content validated before use
-- Approval workflow for human review
-- Validation failures reported to backend
-- Approved questions persisted to LocalStorage
+**Dependency:** Requires Story 07 completion (same HTML extraction pattern)
+
+---
+
+#### Story 10: Extract Order of Operations Module
+**Priority:** P1 (High)
+**Complexity:** High (8)
+**Rationale:** Complex (458 lines), 6 question types
+**Time:** 2 days
+
+**Input:** `src/math/js/modules/order_operations_module.js`
+**Output:** `extracted-modules/modules/OrderOperationsModule.js` (headless)
+
+**Challenges:**
+- 6 question types (PEMDAS, parentheses, multi-step, etc.)
+- Complex expression generation
+- LaTeX-like formatting needs
+
+---
+
+#### Story 11: Extract Distributive Module
+**Priority:** P1 (High)
+**Complexity:** High (7)
+**Rationale:** Complex (351 lines), algebraic concepts
+**Time:** 1-2 days
+
+**Input:** `src/math/js/modules/distributive_module.js`
+**Output:** `extracted-modules/modules/DistributiveModule.js` (headless)
+
+---
+
+#### Story 12: Extract Number Line Module
+**Priority:** P1 (High)
+**Complexity:** Critical (9)
+**Rationale:** Visual module, needs special View Object design
+**Time:** 2-3 days
+
+**Input:** `src/math/Emma_math_lab.html` (lines ~2000-2500, inline code)
+**Output:** `extracted-modules/modules/NumberLineModule.js` (headless)
+
+**Challenges:**
+- Visual representation (drag-and-drop number line)
+- SVG/Canvas coordinates need JSON representation
+- Interactive elements need state management
+
+**View Object Design:**
+```json
+{
+  "type": "numberline",
+  "question": "מה המספר שמסומן בחץ?",
+  "numberLine": {
+    "min": 0,
+    "max": 100,
+    "interval": 10,
+    "arrowPosition": 45,
+    "markedPositions": [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
+    "correctAnswer": 45
+  },
+  "interactionType": "click" | "drag" | "input"
+}
+```
 
 ---
 
 ## Risk Mitigation Strategy
 
-### High-Risk Stories (Score 6+)
-- **Story 10:** Large refactoring, must not break existing modules
-  - **Mitigation:** Extract one module at a time, test after each extraction
-- **Story 12:** Touches all modules, high regression risk
-  - **Mitigation:** Use find/replace carefully, add i18n tests first
-- **Story 15:** Complex new system
-  - **Mitigation:** Build in isolation, integrate last
+### High-Risk Stories (Score 7+)
+- **Story 06 (Division):** First extraction, sets pattern for all others
+  - **Mitigation:** Over-document, create reusable extraction checklist
+- **Story 07 (Decimal):** HTML extraction, multiple question types
+  - **Mitigation:** Extract one question type at a time, test incrementally
+- **Story 12 (Number Line):** Visual module, complex View Object
+  - **Mitigation:** Design View Object first, validate with Next.js team
 
 ### Rollback Plan
-- All stories must be revertible via `git revert`
-- No database migrations (LocalStorage schema compatible)
-- Feature flags for new functionality (if applicable)
+- All stories create NEW files (`extracted-modules/`)
+- Original files unchanged until migration complete
+- Can revert extraction by deleting `extracted-modules/` directory
+- No breaking changes to legacy app
 
 ---
 
 ## Success Metrics
 
 ### By Phase 1 Completion (Week 1)
-- ✅ Zero critical security vulnerabilities
+- ✅ Backend secure (rate limiting, validation, CORS)
+- ✅ No duplicate files
 - ✅ Server handles 100 concurrent requests
-- ✅ All endpoints rate-limited and validated
+- ✅ `server.js` ready for API service role
 
-### By Phase 2 Completion (Week 2)
-- ✅ Error telemetry operational
-- ✅ Performance metrics tracked
-- ✅ Backend health monitoring enabled
+### By Phase 2 Completion (Week 4)
+- ✅ **7 modules extracted** (Division, Decimal, Fraction, Multiplication, Order, Distributive, Number Line)
+- ✅ **Zero DOM references** in any extracted module
+- ✅ **All console tests pass** (`node console-tests/run-all.js`)
+- ✅ **Copy-paste ready** - Each module works in Next.js API route without changes
+- ✅ **Business logic preserved** - Same questions, validation, difficulty progression
+- ✅ **TypeScript interfaces** - All View Objects typed
+- ✅ **Integration examples** - Sample Next.js API routes for each module
 
-### By Phase 3 Completion (Week 4)
-- ✅ All modules use standard registration
-- ✅ Zero magic numbers in code
-- ✅ Content validation layer operational
-
-### By Phase 4 Completion (Week 6)
-- ✅ i18n system operational (AI personalization ready)
-- ✅ GDPR/COPPA compliance achieved
-- ✅ AI content injection API functional
-- ✅ **Health Score: 90/100**
+### Integration Readiness (End of Week 4)
+- ✅ Extracted modules committed to repo
+- ✅ Documentation complete (`MIGRATION_BRIDGE.md`, extraction stories)
+- ✅ Ready for PR #10 (Next.js app) to import modules
+- ✅ Next.js team can begin integration immediately
 
 ---
 
 ## Execution Notes for AI Agent
 
-### General Workflow (Per Story)
-1. Read `00_global_context.md` and current story file
-2. Create branch: `fix/story-[ID]-[slug]`
-3. Implement changes according to "The Fix" section
-4. Run verification plan (section 4 of story)
-5. Commit with conventional commit message
-6. Create PR using provided template (section 5 of story)
-7. Merge to `main` after tests pass
+### General Workflow (Phase 1 - Backend)
+1. Read `00_global_context.md`
+2. Read specific story file (e.g., `story_02_backend_rate_limiting.md`)
+3. Create branch: `fix/story-[ID]-[slug]`
+4. Implement changes
+5. Run verification plan
+6. Create PR using template
+
+### General Workflow (Phase 2 - Extraction)
+1. Read `00_global_context.md` and `MIGRATION_BRIDGE.md`
+2. Read specific extraction story (e.g., `story_06_extract_division.md`)
+3. Create branch: `extract/story-[ID]-[module]`
+4. Extract module to `extracted-modules/modules/[Module].js`
+5. Create console test: `extracted-modules/tests/console-tests/[module]-console.js`
+6. Run console test: `node extracted-modules/tests/console-tests/[module]-console.js`
+7. Document View Object schema: TypeScript interface
+8. Create Next.js integration example
+9. Commit with extraction evidence
+10. Create PR with console test output
+
+### Critical Checklist (Per Extraction)
+- [ ] No `window` references (search: `grep -n "window\." [file]`)
+- [ ] No `document` references (search: `grep -n "document\." [file]`)
+- [ ] No `getElementById` (search: `grep -n "getElementById" [file]`)
+- [ ] No `querySelector` (search: `grep -n "querySelector" [file]`)
+- [ ] No `innerHTML` or `textContent` (search: `grep -n "innerHTML\|textContent" [file]`)
+- [ ] No `localStorage` (search: `grep -n "localStorage" [file]`)
+- [ ] No `alert` or `confirm` (search: `grep -n "alert\|confirm" [file]`)
+- [ ] Console test passes: `node console-test-[module].js`
+- [ ] Output is JSON (all methods return objects)
+- [ ] TypeScript interface complete
 
 ### When to Ask for Human Review
-- If verification plan fails and fix is not obvious
-- If architectural assumption conflicts with observed behavior
-- If new dependencies need to be added beyond those specified
-- If breaking change is unavoidable
+- If DOM dependency cannot be removed without breaking logic
+- If View Object schema is unclear (especially visual modules)
+- If original behavior is ambiguous
+- If console test fails and root cause is unclear
 
 ### Context Management
-- Load `00_global_context.md` once at start of work
+- Load `00_global_context.md` once at start
+- Load `MIGRATION_BRIDGE.md` for extraction stories
 - Load current story file for each new story
+- Refer to original module file for business logic
 - Do NOT load other stories (prevents context overflow)
-- Refer to audit report only if story references specific findings
+
+---
+
+## Extraction Quality Gates
+
+Each extraction must pass these gates before PR approval:
+
+### Gate 1: Zero DOM Access
+```bash
+# Must return zero matches
+grep -n "window\|document\|getElementById\|querySelector" extracted-modules/modules/[Module].js
+```
+
+### Gate 2: Console Test Passes
+```bash
+# Must print "✅ All tests passed!"
+node extracted-modules/tests/console-tests/[module]-console.js
+```
+
+### Gate 3: TypeScript Interface Exists
+```bash
+# File must exist with ViewObject interfaces
+ls extracted-modules/modules/[Module].d.ts
+```
+
+### Gate 4: Integration Example Exists
+```bash
+# File must exist showing Next.js usage
+ls extracted-modules/examples/api-route-[module].ts
+```
+
+### Gate 5: Business Logic Preserved
+- Generate question with extracted module
+- Compare output to original module
+- Verify same question structure, difficulty, validation logic
+
+---
+
+## Extraction Template (Reusable Pattern)
+
+Every extraction follows this structure:
+
+```javascript
+// extracted-modules/modules/DivisionModule.js
+
+/**
+ * Division Module (Headless)
+ * Extracted from: src/math/js/modules/division_module.js
+ * Zero DOM dependencies - returns JSON View Objects
+ */
+
+class DivisionModule {
+    constructor(config = {}) {
+        this.currentLevel = config.initialLevel || 'קל';
+        this.statistics = {
+            totalQuestions: 0,
+            correctAnswers: 0,
+            currentStreak: 0,
+            bestStreak: 0
+        };
+    }
+
+    /**
+     * Generate a new question
+     * @param {string} level - 'קל' | 'בינוני' | 'קשה'
+     * @returns {ViewObject} Question data for rendering
+     */
+    generateQuestion(level) {
+        // Business logic here (no DOM)
+        return {
+            type: 'question',
+            questionText: '...',
+            questionType: 'input',
+            correctAnswer: 42,
+            // ... all rendering data
+        };
+    }
+
+    /**
+     * Validate user answer
+     * @param {any} userAnswer - User's input
+     * @param {any} correctAnswer - Expected answer
+     * @returns {ViewObject} Feedback data for rendering
+     */
+    checkAnswer(userAnswer, correctAnswer) {
+        // Validation logic here (no DOM)
+        return {
+            type: 'feedback',
+            isCorrect: true,
+            message: '...',
+            // ... all rendering data
+        };
+    }
+
+    // Helper methods (private, prefixed with _)
+    _getDifficultyConfig(level) { /* ... */ }
+    _getRandomEncouragement(isCorrect) { /* ... */ }
+}
+
+module.exports = DivisionModule;
+```
 
 ---
 
 **Plan Status:** Ready for Execution
-**First Stories to Execute:** 01, 02, 03, 04, 05 (parallel batch)
-**Estimated Total Duration:** 6 weeks (30 working days)
-**Total Story Points:** 64 (average 4.3 per story)
+**First Story:** Story 01 (Duplicate Registry - Prerequisite)
+**First Extraction:** Story 06 (Division - Establishes Pattern)
+**Estimated Total Duration:** 4 weeks
+**Total Story Points:** 59 (average 4.9 per story)
