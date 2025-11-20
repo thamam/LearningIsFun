@@ -5,7 +5,8 @@
   "type": "commonjs",
   "main": "modules/DivisionModule.js",
   "scripts": {
-    "test:division": "node tests/console-tests/division-console.js"
+    "test:division": "node tests/console-tests/division-console.js",
+    "test:decimal": "node tests/console-tests/decimal-console.js"
   },
   "keywords": ["math", "education", "headless", "nextjs"],
   "author": "",
