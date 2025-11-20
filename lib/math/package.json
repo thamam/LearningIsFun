@@ -1,0 +1,19 @@
+{
+  "name": "extracted-modules",
+  "version": "1.0.0",
+  "description": "Headless math modules for Next.js migration",
+  "type": "commonjs",
+  "main": "modules/DivisionModule.js",
+  "scripts": {
+    "test:division": "node tests/console-tests/division-console.js",
+    "test:decimal": "node tests/console-tests/decimal-console.js",
+    "test:fraction": "node tests/console-tests/fraction-console.js",
+    "test:multiplication": "node tests/console-tests/multiplication-console.js",
+    "test:order": "node tests/console-tests/order-console.js",
+    "test:distributive": "node tests/console-tests/distributive-console.js",
+    "test:numberline": "node tests/console-tests/numberline-console.js"
+  },
+  "keywords": ["math", "education", "headless", "nextjs"],
+  "author": "",
+  "license": "ISC"
+}
