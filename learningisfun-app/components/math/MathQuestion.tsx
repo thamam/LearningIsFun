@@ -7,9 +7,10 @@ import NumberLineRenderer from './NumberLineRenderer';
 interface MathQuestionProps {
   moduleName: string;
   level: 'קל' | 'בינוני' | 'קשה';
+  onAnswerChecked?: (isCorrect: boolean) => void;
 }
 
-export default function MathQuestion({ moduleName, level }: MathQuestionProps) {
+export default function MathQuestion({ moduleName, level, onAnswerChecked }: MathQuestionProps) {
   const [question, setQuestion] = useState<Question | null>(null);
   const [userAnswer, setUserAnswer] = useState('');
   const [feedback, setFeedback] = useState<{
@@ -57,6 +58,11 @@ export default function MathQuestion({ moduleName, level }: MathQuestionProps) {
       correct: prev.correct + (isCorrect ? 1 : 0),
       total: prev.total + 1,
     }));
+
+    // Notify parent component if callback provided
+    if (onAnswerChecked) {
+      onAnswerChecked(isCorrect);
+    }
 
     setFeedback({
       show: true,

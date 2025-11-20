@@ -45,6 +45,13 @@ export default function DashboardPage() {
     setSelectedModule(null);
   };
 
+  const handleAnswerChecked = (isCorrect: boolean) => {
+    setSessionStats((prev) => ({
+      correct: prev.correct + (isCorrect ? 1 : 0),
+      total: prev.total + 1,
+    }));
+  };
+
   // If a module is selected, show the practice interface
   if (selectedModule) {
     const currentModule = mathModules.find((m) => m.id === selectedModule);
@@ -116,6 +123,7 @@ export default function DashboardPage() {
             key={`${selectedModule}-${selectedLevel}`}
             moduleName={selectedModule}
             level={selectedLevel}
+            onAnswerChecked={handleAnswerChecked}
           />
         </div>
       </div>
