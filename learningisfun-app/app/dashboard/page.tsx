@@ -1,12 +1,11 @@
-import Link from "next/link";
+'use client';
 
-interface Subject {
-  name: string;
-  emoji: string;
-  progress: number;
-  color: string;
-  bgColor: string;
-}
+import { useState } from 'react';
+import Link from 'next/link';
+import { getAllModules } from '@/lib/math';
+import MathQuestion from '@/components/math/MathQuestion';
+
+type Level = 'קל' | 'בינוני' | 'קשה';
 
 interface Achievement {
   name: string;
@@ -14,29 +13,116 @@ interface Achievement {
   earned: boolean;
 }
 
-const subjects: Subject[] = [
-  { name: "Math", emoji: "➕", progress: 75, color: "bg-red-500", bgColor: "bg-red-100" },
-  { name: "Reading", emoji: "📖", progress: 60, color: "bg-blue-500", bgColor: "bg-blue-100" },
-  { name: "Science", emoji: "🔬", progress: 45, color: "bg-green-500", bgColor: "bg-green-100" },
-  { name: "Writing", emoji: "✍️", progress: 30, color: "bg-yellow-500", bgColor: "bg-yellow-100" },
-];
-
 const achievements: Achievement[] = [
-  { name: "First Lesson", emoji: "🌟", earned: true },
-  { name: "Week Streak", emoji: "🔥", earned: true },
-  { name: "Math Master", emoji: "🧮", earned: true },
-  { name: "Bookworm", emoji: "📚", earned: false },
-  { name: "Science Star", emoji: "⭐", earned: false },
-  { name: "Perfect Score", emoji: "💯", earned: false },
+  { name: 'First Lesson', emoji: '🌟', earned: true },
+  { name: 'Week Streak', emoji: '🔥', earned: true },
+  { name: 'Math Master', emoji: '🧮', earned: true },
+  { name: 'Bookworm', emoji: '📚', earned: false },
+  { name: 'Science Star', emoji: '⭐', earned: false },
+  { name: 'Perfect Score', emoji: '💯', earned: false },
 ];
 
 const dailyChallenges = [
-  { title: "Complete 3 Math Lessons", progress: 2, total: 3, reward: "50 coins" },
-  { title: "Read for 15 minutes", progress: 10, total: 15, reward: "30 coins" },
-  { title: "Try a new subject", progress: 0, total: 1, reward: "100 coins" },
+  { title: 'Complete 3 Math Lessons', progress: 2, total: 3, reward: '50 coins' },
+  { title: 'Read for 15 minutes', progress: 10, total: 15, reward: '30 coins' },
+  { title: 'Try a new subject', progress: 0, total: 1, reward: '100 coins' },
 ];
 
 export default function DashboardPage() {
+  const [selectedModule, setSelectedModule] = useState<string | null>(null);
+  const [selectedLevel, setSelectedLevel] = useState<Level>('קל');
+  const [sessionStats, setSessionStats] = useState({ correct: 0, total: 0 });
+
+  const mathModules = getAllModules();
+  const levels: Level[] = ['קל', 'בינוני', 'קשה'];
+
+  const handleModuleSelect = (moduleId: string) => {
+    setSelectedModule(moduleId);
+    setSessionStats({ correct: 0, total: 0 }); // Reset stats when changing module
+  };
+
+  const handleBackToDashboard = () => {
+    setSelectedModule(null);
+  };
+
+  // If a module is selected, show the practice interface
+  if (selectedModule) {
+    const currentModule = mathModules.find((m) => m.id === selectedModule);
+    const accuracy = sessionStats.total > 0 ? Math.round((sessionStats.correct / sessionStats.total) * 100) : 0;
+
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-green-100 via-blue-100 to-purple-100">
+        <div className="container mx-auto px-4 py-8">
+          {/* Practice Header */}
+          <div className="bg-white rounded-3xl p-6 shadow-xl mb-8">
+            <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+              <div className="flex items-center gap-4">
+                <button
+                  onClick={handleBackToDashboard}
+                  className="bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-xl font-medium transition-colors"
+                >
+                  ← חזרה
+                </button>
+                <div>
+                  <h1 className="text-3xl font-bold text-purple-600">
+                    {currentModule?.icon} {currentModule?.name}
+                  </h1>
+                  <p className="text-gray-600 text-sm" dir="rtl">
+                    {currentModule?.description}
+                  </p>
+                </div>
+              </div>
+
+              {/* Session Stats */}
+              <div className="flex gap-4">
+                <div className="text-center bg-purple-50 rounded-xl px-4 py-2">
+                  <div className="text-2xl font-bold text-purple-600">{sessionStats.total}</div>
+                  <div className="text-xs text-gray-600">Questions</div>
+                </div>
+                <div className="text-center bg-green-50 rounded-xl px-4 py-2">
+                  <div className="text-2xl font-bold text-green-600">{sessionStats.correct}</div>
+                  <div className="text-xs text-gray-600">Correct</div>
+                </div>
+                <div className="text-center bg-blue-50 rounded-xl px-4 py-2">
+                  <div className="text-2xl font-bold text-blue-600">{accuracy}%</div>
+                  <div className="text-xs text-gray-600">Accuracy</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Level Selector */}
+            <div className="mt-6 flex items-center gap-3">
+              <span className="text-sm font-medium text-gray-700">Level:</span>
+              <div className="flex gap-2">
+                {levels.map((level) => (
+                  <button
+                    key={level}
+                    onClick={() => setSelectedLevel(level)}
+                    className={`px-4 py-2 rounded-xl font-medium transition-all ${
+                      selectedLevel === level
+                        ? 'bg-purple-500 text-white'
+                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                    }`}
+                  >
+                    {level}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Math Question Component */}
+          <MathQuestion
+            key={`${selectedModule}-${selectedLevel}`}
+            moduleName={selectedModule}
+            level={selectedLevel}
+          />
+        </div>
+      </div>
+    );
+  }
+
+  // Default dashboard view
   return (
     <div className="min-h-screen bg-gradient-to-b from-green-100 via-blue-100 to-purple-100">
       <div className="container mx-auto px-4 py-8">
@@ -44,12 +130,8 @@ export default function DashboardPage() {
         <div className="bg-white rounded-3xl p-8 shadow-xl mb-8">
           <div className="flex flex-col md:flex-row items-center justify-between">
             <div>
-              <h1 className="text-4xl font-bold text-purple-600 mb-2">
-                Welcome back, Super Star! 🌟
-              </h1>
-              <p className="text-gray-600 text-lg">
-                You&apos;re on a 5-day learning streak! Keep it up!
-              </p>
+              <h1 className="text-4xl font-bold text-purple-600 mb-2">Welcome back, Super Star! 🌟</h1>
+              <p className="text-gray-600 text-lg">You&apos;re on a 5-day learning streak! Keep it up!</p>
             </div>
             <div className="mt-4 md:mt-0 text-center">
               <div className="text-5xl mb-2">🔥</div>
@@ -61,48 +143,46 @@ export default function DashboardPage() {
         </div>
 
         <div className="grid md:grid-cols-3 gap-8">
-          {/* Main Content - Subjects */}
+          {/* Main Content - Math Modules */}
           <div className="md:col-span-2">
-            {/* Continue Learning */}
+            {/* Math Practice Modules */}
             <div className="bg-white rounded-3xl p-8 shadow-xl mb-8">
-              <h2 className="text-2xl font-bold text-gray-800 mb-6">
-                Continue Learning 📚
-              </h2>
+              <h2 className="text-2xl font-bold text-gray-800 mb-6">Math Practice 🧮</h2>
 
               <div className="grid sm:grid-cols-2 gap-4">
-                {subjects.map((subject) => (
-                  <div
-                    key={subject.name}
-                    className={`${subject.bgColor} rounded-2xl p-6 hover:shadow-lg transition-shadow cursor-pointer`}
+                {mathModules.map((module) => (
+                  <button
+                    key={module.id}
+                    onClick={() => handleModuleSelect(module.id)}
+                    className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl p-6 hover:shadow-lg transition-all transform hover:scale-105 text-left"
                   >
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="flex items-center">
-                        <span className="text-3xl mr-3">{subject.emoji}</span>
-                        <span className="font-bold text-gray-800">{subject.name}</span>
+                    <div className="flex items-center justify-between mb-3">
+                      <div className="flex items-center gap-3">
+                        <span className="text-4xl">{module.icon}</span>
+                        <div>
+                          <span className="font-bold text-gray-800 block" dir="rtl">
+                            {module.name}
+                          </span>
+                          <span className="text-xs text-gray-500">{module.id}</span>
+                        </div>
                       </div>
-                      <span className="text-sm font-medium text-gray-600">
-                        {subject.progress}%
+                    </div>
+                    <p className="text-sm text-gray-600 mb-3" dir="rtl">
+                      {module.description}
+                    </p>
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs bg-purple-100 text-purple-600 px-3 py-1 rounded-full font-medium">
+                        Start Practice →
                       </span>
                     </div>
-                    <div className="w-full bg-white rounded-full h-3">
-                      <div
-                        className={`${subject.color} h-3 rounded-full transition-all`}
-                        style={{ width: `${subject.progress}%` }}
-                      ></div>
-                    </div>
-                    <button className="mt-4 w-full bg-white text-gray-700 py-2 rounded-xl font-medium hover:bg-gray-50 transition-colors">
-                      Continue →
-                    </button>
-                  </div>
+                  </button>
                 ))}
               </div>
             </div>
 
             {/* Daily Challenges */}
             <div className="bg-white rounded-3xl p-8 shadow-xl">
-              <h2 className="text-2xl font-bold text-gray-800 mb-6">
-                Daily Challenges 🎯
-              </h2>
+              <h2 className="text-2xl font-bold text-gray-800 mb-6">Daily Challenges 🎯</h2>
 
               <div className="space-y-4">
                 {dailyChallenges.map((challenge, index) => (
@@ -111,9 +191,7 @@ export default function DashboardPage() {
                     className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-2xl p-4"
                   >
                     <div className="flex items-center justify-between mb-2">
-                      <span className="font-medium text-gray-800">
-                        {challenge.title}
-                      </span>
+                      <span className="font-medium text-gray-800">{challenge.title}</span>
                       <span className="text-sm bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full">
                         🪙 {challenge.reward}
                       </span>
@@ -141,9 +219,7 @@ export default function DashboardPage() {
           <div className="space-y-8">
             {/* Stats */}
             <div className="bg-white rounded-3xl p-6 shadow-xl">
-              <h2 className="text-xl font-bold text-gray-800 mb-4">
-                Your Stats 📊
-              </h2>
+              <h2 className="text-xl font-bold text-gray-800 mb-4">Your Stats 📊</h2>
               <div className="space-y-4">
                 <div className="flex justify-between items-center">
                   <span className="text-gray-600">Total Lessons</span>
@@ -166,17 +242,13 @@ export default function DashboardPage() {
 
             {/* Achievements */}
             <div className="bg-white rounded-3xl p-6 shadow-xl">
-              <h2 className="text-xl font-bold text-gray-800 mb-4">
-                Achievements 🏆
-              </h2>
+              <h2 className="text-xl font-bold text-gray-800 mb-4">Achievements 🏆</h2>
               <div className="grid grid-cols-3 gap-3">
                 {achievements.map((achievement) => (
                   <div
                     key={achievement.name}
                     className={`text-center p-3 rounded-xl ${
-                      achievement.earned
-                        ? "bg-yellow-100"
-                        : "bg-gray-100 opacity-50"
+                      achievement.earned ? 'bg-yellow-100' : 'bg-gray-100 opacity-50'
                     }`}
                     title={achievement.name}
                   >
@@ -193,12 +265,18 @@ export default function DashboardPage() {
             <div className="bg-gradient-to-r from-purple-500 to-pink-500 rounded-3xl p-6 shadow-xl text-white">
               <h2 className="text-xl font-bold mb-4">Quick Start ⚡</h2>
               <div className="space-y-3">
-                <button className="w-full bg-white/20 hover:bg-white/30 py-3 rounded-xl font-medium transition-colors">
+                <button
+                  onClick={() => handleModuleSelect(mathModules[Math.floor(Math.random() * mathModules.length)].id)}
+                  className="w-full bg-white/20 hover:bg-white/30 py-3 rounded-xl font-medium transition-colors"
+                >
                   Random Quiz 🎲
                 </button>
-                <button className="w-full bg-white/20 hover:bg-white/30 py-3 rounded-xl font-medium transition-colors">
+                <Link
+                  href="/math-test"
+                  className="block w-full bg-white/20 hover:bg-white/30 py-3 rounded-xl font-medium transition-colors text-center"
+                >
                   Practice Mode 🎯
-                </button>
+                </Link>
                 <Link
                   href="/parent-portal"
                   className="block w-full bg-white/20 hover:bg-white/30 py-3 rounded-xl font-medium transition-colors text-center"
