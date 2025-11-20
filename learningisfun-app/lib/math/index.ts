@@ -9,6 +9,7 @@ import { fractionModule } from './modules/fraction';
 import { distributiveModule } from './modules/distributive';
 import { orderOperationsModule } from './modules/order-operations';
 import { decimalModule } from './modules/decimal';
+import { numberLineModule } from './modules/number-line';
 import { MathModule } from './types';
 
 export * from './types';
@@ -19,6 +20,7 @@ export {
   distributiveModule,
   orderOperationsModule,
   decimalModule,
+  numberLineModule,
 };
 
 // Module registry
@@ -29,6 +31,7 @@ export const modules: Record<string, MathModule> = {
   distributive: distributiveModule,
   'order-operations': orderOperationsModule,
   decimal: decimalModule,
+  'number-line': numberLineModule,
 };
 
 export function getModule(moduleName: string): MathModule | null {

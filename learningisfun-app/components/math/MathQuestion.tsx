@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { Question } from '@/lib/math';
+import NumberLineRenderer from './NumberLineRenderer';
 
 interface MathQuestionProps {
   moduleName: string;
@@ -112,6 +113,13 @@ export default function MathQuestion({ moduleName, level }: MathQuestionProps) {
         </div>
       </div>
 
+      {/* Visual Component (if present) */}
+      {question.visualData && (
+        <div className="mb-6">
+          <NumberLineRenderer data={question.visualData} />
+        </div>
+      )}
+
       {/* Question */}
       <div className="mb-6 p-6 bg-gradient-to-r from-yellow-50 to-orange-50 rounded-xl">
         <h3 className="text-3xl font-bold text-center text-gray-800">
@@ -119,19 +127,38 @@ export default function MathQuestion({ moduleName, level }: MathQuestionProps) {
         </h3>
       </div>
 
-      {/* Input */}
-      <div className="mb-4">
-        <input
-          type="text"
-          value={userAnswer}
-          onChange={(e) => setUserAnswer(e.target.value)}
-          onKeyPress={(e) => e.key === 'Enter' && !feedback?.show && handleSubmit()}
-          className="w-full px-6 py-4 text-xl border-3 border-gray-300 rounded-xl focus:border-purple-500 focus:outline-none text-center font-bold"
-          placeholder="הכניסי את התשובה כאן..."
-          disabled={feedback?.show}
-          autoFocus
-        />
-      </div>
+      {/* Input or Choice Buttons */}
+      {question.type === 'choice' || question.type === 'visual-choice' ? (
+        <div className="mb-4 flex gap-4 justify-center">
+          {question.choices?.map((choice, index) => (
+            <button
+              key={index}
+              onClick={() => setUserAnswer(choice.toString())}
+              disabled={feedback?.show}
+              className={`px-8 py-4 text-xl font-bold rounded-xl transition-all transform hover:scale-105 ${
+                userAnswer === choice.toString()
+                  ? 'bg-purple-500 text-white'
+                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+              } ${feedback?.show ? 'opacity-50 cursor-not-allowed' : ''}`}
+            >
+              {choice}
+            </button>
+          ))}
+        </div>
+      ) : (
+        <div className="mb-4">
+          <input
+            type="text"
+            value={userAnswer}
+            onChange={(e) => setUserAnswer(e.target.value)}
+            onKeyPress={(e) => e.key === 'Enter' && !feedback?.show && handleSubmit()}
+            className="w-full px-6 py-4 text-xl border-3 border-gray-300 rounded-xl focus:border-purple-500 focus:outline-none text-center font-bold"
+            placeholder="הכניסי את התשובה כאן..."
+            disabled={feedback?.show}
+            autoFocus
+          />
+        </div>
+      )}
 
       {/* Feedback */}
       {feedback?.show && (

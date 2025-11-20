@@ -7,6 +7,13 @@ export type Level = 'קל' | 'בינוני' | 'קשה';
 
 export type QuestionType = 'input' | 'choice' | 'visual-input' | 'visual-choice';
 
+export interface NumberLineVisualData {
+  min: number;
+  max: number;
+  interval: number;
+  arrowPosition?: number;
+}
+
 export interface Question {
   question: string;
   type: QuestionType;
@@ -15,6 +22,7 @@ export interface Question {
   explanation?: string;
   difficulty: Level;
   metadata?: Record<string, any>;
+  visualData?: NumberLineVisualData;
 }
 
 export interface MathModule {
