@@ -10,7 +10,8 @@
     "test:fraction": "node tests/console-tests/fraction-console.js",
     "test:multiplication": "node tests/console-tests/multiplication-console.js",
     "test:order": "node tests/console-tests/order-console.js",
-    "test:distributive": "node tests/console-tests/distributive-console.js"
+    "test:distributive": "node tests/console-tests/distributive-console.js",
+    "test:numberline": "node tests/console-tests/numberline-console.js"
   },
   "keywords": ["math", "education", "headless", "nextjs"],
   "author": "",
