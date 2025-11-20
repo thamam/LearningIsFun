@@ -10,7 +10,7 @@ export default function MathTestPage() {
   const [moduleName, setModuleName] = useState('division');
   const [level, setLevel] = useState<Level>('קל');
 
-  const modules = getModuleNames();
+  const allModules = getAllModules();
   const levels: Level[] = ['קל', 'בינוני', 'קשה'];
 
   return (
@@ -39,9 +39,9 @@ export default function MathTestPage() {
                 onChange={(e) => setModuleName(e.target.value)}
                 className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:border-purple-500 focus:outline-none text-lg"
               >
-                {modules.map((mod) => (
-                  <option key={mod} value={mod}>
-                    {mod}
+                {allModules.map((mod) => (
+                  <option key={mod.id} value={mod.id}>
+                    {mod.icon} {mod.name}
                   </option>
                 ))}
               </select>
@@ -65,6 +65,13 @@ export default function MathTestPage() {
               </select>
             </div>
           </div>
+
+          {/* Module Description */}
+          <div className="mt-6 p-4 bg-blue-50 rounded-xl" dir="rtl">
+            <p className="text-sm text-blue-700">
+              {allModules.find((m) => m.id === moduleName)?.description}
+            </p>
+          </div>
         </div>
 
         {/* Math Question Component */}
@@ -85,11 +92,25 @@ export default function MathTestPage() {
           </div>
 
           <div className="mt-6 p-4 bg-purple-50 rounded-xl">
-            <p className="text-sm text-purple-700">
-              <strong>Available Modules:</strong> {modules.join(', ')}
+            <p className="text-sm text-purple-700 mb-2">
+              <strong>Available Modules ({allModules.length}):</strong>
             </p>
-            <p className="text-sm text-purple-700 mt-2">
-              <strong>Current Selection:</strong> {moduleName} @ {level}
+            <div className="grid grid-cols-2 gap-2">
+              {allModules.map((mod) => (
+                <div
+                  key={mod.id}
+                  className={`text-sm px-3 py-2 rounded-lg ${
+                    mod.id === moduleName
+                      ? 'bg-purple-200 text-purple-800 font-bold'
+                      : 'bg-purple-100 text-purple-600'
+                  }`}
+                >
+                  {mod.icon} {mod.name}
+                </div>
+              ))}
+            </div>
+            <p className="text-sm text-purple-700 mt-4">
+              <strong>Current Level:</strong> {level}
             </p>
           </div>
         </div>
