@@ -52,13 +52,13 @@
   },
   "dashboard": {
     "welcome": "Welcome back, Super Star! 🌟",
-    "streak": "You're on a {days}-day learning streak! Keep it up!",
-    "dayStreak": "{days} Day Streak!",
+    "streak": "You're on a 5-day learning streak! Keep it up!",
+    "dayStreak": "5 Day Streak!",
     "mathPractice": "Math Practice 🧮",
     "startPractice": "Start Practice →",
     "dailyChallenges": "Daily Challenges 🎯",
     "yourStats": "Your Stats 📊",
-    "achievements": "Achievements 🏆",
+    "achievementsTitle": "Achievements 🏆",
     "quickStart": "Quick Start ⚡",
     "backButton": "← Back",
     "questions": "Questions",
@@ -176,9 +176,9 @@
       "lessonsDone": "Lessons Done",
       "avgAccuracy": "Avg. Accuracy",
       "currentStreak": "Current Streak",
-      "thisWeek": "↑ {percent}% this week",
-      "lessonsThisWeek": "↑ {count} this week",
-      "improvement": "↑ {percent}% improvement",
+      "thisWeek": "↑ 15% this week",
+      "lessonsThisWeek": "↑ 8 this week",
+      "improvement": "↑ 3% improvement",
       "keepGoing": "🔥 Keep it going!"
     },
     "weeklyActivity": "Weekly Activity 📅",
@@ -201,9 +201,9 @@
       "weekStreakMaster": "Week Streak Master",
       "storyComprehension": "Story Comprehension",
       "plantsPhotosynthesis": "Plants & Photosynthesis",
-      "hoursAgo": "{count} hours ago",
+      "hoursAgo": "2 hours ago",
       "yesterday": "Yesterday",
-      "daysAgo": "{count} days ago"
+      "daysAgo": "2 days ago"
     },
     "recommendationsList": {
       "science": "Consider more Science practice - accuracy could improve",
@@ -216,8 +216,7 @@
       "notifications": "Notification Settings 🔔",
       "viewAsChild": "View as Child 👁️"
     },
-    "lessonsProgress": "{completed}/{total} lessons",
-    "accuracyPercent": "{percent}% accuracy",
-    "minutes": "{count}m"
+    "lessonsLabel": "lessons",
+    "accuracyLabel": "accuracy"
   }
 }

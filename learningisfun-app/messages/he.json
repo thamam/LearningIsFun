@@ -52,13 +52,13 @@
   },
   "dashboard": {
     "welcome": "שלום חוזר, כוכב על! 🌟",
-    "streak": "אתם ברצף למידה של {days} ימים! תמשיכו כך!",
-    "dayStreak": "רצף של {days} ימים!",
+    "streak": "אתם ברצף למידה של 5 ימים! תמשיכו כך!",
+    "dayStreak": "רצף של 5 ימים!",
     "mathPractice": "תרגול מתמטיקה 🧮",
     "startPractice": "התחל תרגול ←",
     "dailyChallenges": "אתגרים יומיים 🎯",
     "yourStats": "הנתונים שלך 📊",
-    "achievements": "הישגים 🏆",
+    "achievementsTitle": "הישגים 🏆",
     "quickStart": "התחלה מהירה ⚡",
     "backButton": "חזרה ←",
     "questions": "שאלות",
@@ -176,9 +176,9 @@
       "lessonsDone": "שיעורים שבוצעו",
       "avgAccuracy": "דיוק ממוצע",
       "currentStreak": "רצף נוכחי",
-      "thisWeek": "↑ {percent}% השבוע",
-      "lessonsThisWeek": "↑ {count} השבוע",
-      "improvement": "↑ שיפור של {percent}%",
+      "thisWeek": "↑ 15% השבוע",
+      "lessonsThisWeek": "↑ 8 השבוע",
+      "improvement": "↑ שיפור של 3%",
       "keepGoing": "🔥 תמשיכו כך!"
     },
     "weeklyActivity": "פעילות שבועית 📅",
@@ -201,9 +201,9 @@
       "weekStreakMaster": "אמן רצף שבועי",
       "storyComprehension": "הבנת סיפור",
       "plantsPhotosynthesis": "צמחים ופוטוסינתזה",
-      "hoursAgo": "לפני {count} שעות",
+      "hoursAgo": "לפני 2 שעות",
       "yesterday": "אתמול",
-      "daysAgo": "לפני {count} ימים"
+      "daysAgo": "לפני יומיים"
     },
     "recommendationsList": {
       "science": "כדאי להתמקד יותר בתרגול מדעים - הדיוק יכול להשתפר",
@@ -216,8 +216,7 @@
       "notifications": "הגדרות התראות 🔔",
       "viewAsChild": "צפייה כילד 👁️"
     },
-    "lessonsProgress": "{completed}/{total} שיעורים",
-    "accuracyPercent": "דיוק {percent}%",
-    "minutes": "{count} דק׳"
+    "lessonsLabel": "שיעורים",
+    "accuracyLabel": "דיוק"
   }
 }

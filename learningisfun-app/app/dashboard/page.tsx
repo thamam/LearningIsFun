@@ -141,12 +141,12 @@ export default function DashboardPage() {
           <div className="flex flex-col md:flex-row items-center justify-between">
             <div>
               <h1 className="text-4xl font-bold text-purple-600 mb-2">{t('dashboard.welcome')}</h1>
-              <p className="text-gray-600 text-lg">{t('dashboard.streak', { days: '5' })}</p>
+              <p className="text-gray-600 text-lg">{t('dashboard.streak')}</p>
             </div>
             <div className="mt-4 md:mt-0 text-center">
               <div className="text-5xl mb-2">🔥</div>
               <span className="bg-orange-100 text-orange-600 px-4 py-2 rounded-full font-bold">
-                {t('dashboard.dayStreak', { days: '5' })}
+                {t('dashboard.dayStreak')}
               </span>
             </div>
           </div>
@@ -252,7 +252,7 @@ export default function DashboardPage() {
 
             {/* Achievements */}
             <div className="bg-white rounded-3xl p-6 shadow-xl">
-              <h2 className="text-xl font-bold text-gray-800 mb-4">{t('dashboard.achievements')}</h2>
+              <h2 className="text-xl font-bold text-gray-800 mb-4">{t('dashboard.achievementsTitle')}</h2>
               <div className="grid grid-cols-3 gap-3">
                 {achievements.map((achievement) => (
                   <div

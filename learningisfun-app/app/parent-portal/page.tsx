@@ -69,7 +69,7 @@ export default function ParentPortalPage() {
     {
       action: t('parentPortal.activity.completedMath'),
       subject: t('parentPortal.activity.multiplicationTables'),
-      time: t('parentPortal.activity.hoursAgo', { count: '2' }),
+      time: t('parentPortal.activity.hoursAgo'),
       score: "9/10",
     },
     {
@@ -87,7 +87,7 @@ export default function ParentPortalPage() {
     {
       action: t('parentPortal.activity.completedQuiz'),
       subject: t('parentPortal.activity.plantsPhotosynthesis'),
-      time: t('parentPortal.activity.daysAgo', { count: '2' }),
+      time: t('parentPortal.activity.daysAgo'),
       score: "7/10",
     },
   ];
@@ -136,17 +136,17 @@ export default function ParentPortalPage() {
           <div className="bg-white rounded-2xl p-6 shadow-lg">
             <p className="text-gray-500 text-sm mb-1">{t('parentPortal.stats.totalTime')}</p>
             <p className="text-3xl font-bold text-indigo-600">8h 30m</p>
-            <p className="text-green-500 text-sm mt-1">{t('parentPortal.stats.thisWeek', { percent: '15' })}</p>
+            <p className="text-green-500 text-sm mt-1">{t('parentPortal.stats.thisWeek')}</p>
           </div>
           <div className="bg-white rounded-2xl p-6 shadow-lg">
             <p className="text-gray-500 text-sm mb-1">{t('parentPortal.stats.lessonsDone')}</p>
             <p className="text-3xl font-bold text-green-600">62</p>
-            <p className="text-green-500 text-sm mt-1">{t('parentPortal.stats.lessonsThisWeek', { count: '8' })}</p>
+            <p className="text-green-500 text-sm mt-1">{t('parentPortal.stats.lessonsThisWeek')}</p>
           </div>
           <div className="bg-white rounded-2xl p-6 shadow-lg">
             <p className="text-gray-500 text-sm mb-1">{t('parentPortal.stats.avgAccuracy')}</p>
             <p className="text-3xl font-bold text-blue-600">86%</p>
-            <p className="text-green-500 text-sm mt-1">{t('parentPortal.stats.improvement', { percent: '3' })}</p>
+            <p className="text-green-500 text-sm mt-1">{t('parentPortal.stats.improvement')}</p>
           </div>
           <div className="bg-white rounded-2xl p-6 shadow-lg">
             <p className="text-gray-500 text-sm mb-1">{t('parentPortal.stats.currentStreak')}</p>
@@ -195,10 +195,10 @@ export default function ParentPortalPage() {
                       </div>
                       <div className="text-right">
                         <span className="text-sm text-gray-600">
-                          {t('parentPortal.lessonsProgress', { completed: subject.lessonsCompleted, total: subject.totalLessons })}
+                          {subject.lessonsCompleted}/{subject.totalLessons} {t('parentPortal.lessonsLabel')}
                         </span>
                         <span className="ml-3 text-sm font-medium text-green-600">
-                          {t('parentPortal.accuracyPercent', { percent: subject.accuracy })}
+                          {subject.accuracy}% {t('parentPortal.accuracyLabel')}
                         </span>
                       </div>
                     </div>
