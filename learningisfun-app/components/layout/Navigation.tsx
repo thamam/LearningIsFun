@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { useTranslation } from '@/lib/i18n/LanguageContext';
+import { useTranslation } from '@/lib/i18n';
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
@@ -58,8 +58,8 @@ export default function Navigation() {
             <button
               onClick={toggleLanguage}
               className="text-2xl hover:scale-110 transition-transform"
-              aria-label="Toggle language"
-              title={language === 'en' ? 'Switch to Hebrew' : 'Switch to English'}
+              aria-label={t('nav.toggleLanguage')}
+              title={language === 'en' ? t('nav.switchToHebrew') : t('nav.switchToEnglish')}
             >
               {language === 'en' ? '🇮🇱' : '🇺🇸'}
             </button>
@@ -82,7 +82,7 @@ export default function Navigation() {
           <button
             onClick={() => setIsOpen(!isOpen)}
             className="md:hidden text-gray-600 hover:text-purple-600"
-            aria-label="Toggle menu"
+            aria-label={t('nav.toggleMenu')}
           >
             <svg
               className="w-6 h-6"
@@ -90,7 +90,7 @@ export default function Navigation() {
               stroke="currentColor"
               viewBox="0 0 24 24"
             >
-              <title>Open menu</title>
+              <title>{t('nav.openMenu')}</title>
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"

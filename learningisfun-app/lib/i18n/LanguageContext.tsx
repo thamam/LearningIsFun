@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, ReactNode, useMemo, useCallback } from 'react';
 import en from '@/messages/en.json';
 import he from '@/messages/he.json';
 
@@ -22,35 +22,36 @@ const messages: Record<Language, Messages> = {
   he,
 };
 
+// Helper to validate language keys
+const isValidLanguage = (lang: string | null): lang is Language => {
+  return lang !== null && lang in messages;
+};
+
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [language, setLanguageState] = useState<Language>('en');
-  const [mounted, setMounted] = useState(false);
 
   // Load language from localStorage on mount
   useEffect(() => {
-    const savedLanguage = localStorage.getItem('language') as Language | null;
-    if (savedLanguage && (savedLanguage === 'en' || savedLanguage === 'he')) {
+    const savedLanguage = localStorage.getItem('language');
+    if (isValidLanguage(savedLanguage)) {
       setLanguageState(savedLanguage);
     }
-    setMounted(true);
   }, []);
 
   // Update document dir and save to localStorage when language changes
   useEffect(() => {
-    if (mounted) {
-      const isRTL = language === 'he';
-      document.documentElement.dir = isRTL ? 'rtl' : 'ltr';
-      document.documentElement.lang = language;
-      localStorage.setItem('language', language);
-    }
-  }, [language, mounted]);
+    const isRTL = language === 'he';
+    document.documentElement.dir = isRTL ? 'rtl' : 'ltr';
+    document.documentElement.lang = language;
+    localStorage.setItem('language', language);
+  }, [language]);
 
-  const setLanguage = (lang: Language) => {
+  const setLanguage = useCallback((lang: Language) => {
     setLanguageState(lang);
-  };
+  }, []);
 
   // Translation function with nested key support (e.g., "nav.home")
-  const t = (key: string): string => {
+  const t = useCallback((key: string): string => {
     const keys = key.split('.');
     let value: any = messages[language];
 
@@ -58,22 +59,26 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
       if (value && typeof value === 'object') {
         value = value[k];
       } else {
+        if (process.env.NODE_ENV === 'development') {
+          console.warn(`Missing translation for key: ${key}`);
+        }
         return key; // Return key if translation not found
       }
     }
 
     return typeof value === 'string' ? value : key;
-  };
+  }, [language]);
 
   const isRTL = language === 'he';
 
-  // Prevent hydration mismatch by not rendering until mounted
-  if (!mounted) {
-    return null;
-  }
+  // Memoize context value to prevent unnecessary re-renders
+  const contextValue = useMemo(
+    () => ({ language, setLanguage, t, isRTL }),
+    [language, setLanguage, t, isRTL]
+  );
 
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, t, isRTL }}>
+    <LanguageContext.Provider value={contextValue}>
       {children}
     </LanguageContext.Provider>
   );

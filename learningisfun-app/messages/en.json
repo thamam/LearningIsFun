@@ -5,7 +5,12 @@
     "dashboard": "Dashboard",
     "parentPortal": "Parent Portal",
     "logIn": "Log In",
-    "signUp": "Sign Up"
+    "signUp": "Sign Up",
+    "toggleLanguage": "Toggle language",
+    "switchToHebrew": "Switch to Hebrew",
+    "switchToEnglish": "Switch to English",
+    "toggleMenu": "Toggle menu",
+    "openMenu": "Open menu"
   },
   "hero": {
     "title": "LearningIsFun! 🎉",

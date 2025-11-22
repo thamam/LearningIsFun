@@ -1,7 +1,7 @@
 'use client';
 
 import Link from "next/link";
-import { useTranslation } from "@/lib/i18n/LanguageContext";
+import { useTranslation } from "@/lib/i18n";
 
 export default function Home() {
   const { t } = useTranslation();
