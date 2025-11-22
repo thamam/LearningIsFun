@@ -129,7 +129,9 @@ export default function MathQuestion({ moduleName, level, onAnswerChecked }: Mat
       {/* Question */}
       <div className="mb-6 p-6 bg-gradient-to-r from-yellow-50 to-orange-50 rounded-xl">
         <h3 className="text-3xl font-bold text-center text-gray-800">
-          {question.question}
+          <div dir="ltr" className="inline-block text-left">
+            {question.question}
+          </div>
         </h3>
       </div>
 

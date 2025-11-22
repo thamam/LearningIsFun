@@ -23,9 +23,9 @@ const achievements: Achievement[] = [
 ];
 
 const dailyChallenges = [
-  { title: 'Complete 3 Math Lessons', progress: 2, total: 3, reward: '50 coins' },
-  { title: 'Read for 15 minutes', progress: 10, total: 15, reward: '30 coins' },
-  { title: 'Try a new subject', progress: 0, total: 1, reward: '100 coins' },
+  { id: 'math-lessons', title: 'Complete 3 Math Lessons', progress: 2, total: 3, reward: '50 coins' },
+  { id: 'reading-time', title: 'Read for 15 minutes', progress: 10, total: 15, reward: '30 coins' },
+  { id: 'new-subject', title: 'Try a new subject', progress: 0, total: 1, reward: '100 coins' },
 ];
 
 export default function DashboardPage() {
@@ -193,9 +193,9 @@ export default function DashboardPage() {
               <h2 className="text-2xl font-bold text-gray-800 mb-6">Daily Challenges 🎯</h2>
 
               <div className="space-y-4">
-                {dailyChallenges.map((challenge, index) => (
+                {dailyChallenges.map((challenge) => (
                   <div
-                    key={index}
+                    key={challenge.id}
                     className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-2xl p-4"
                   >
                     <div className="flex items-center justify-between mb-2">
