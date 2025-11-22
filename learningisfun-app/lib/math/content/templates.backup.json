@@ -1,0 +1,170 @@
+{
+  "division": {
+    "wordProblems": {
+      "he": [
+        {
+          "text": "לאמה יש {total} עוגיות. היא רוצה לחלק אותן שווה ב-{groups} קבוצות. כמה עוגיות בכל קבוצה?",
+          "vars": ["total", "groups"]
+        },
+        {
+          "text": "יש {total} תפוחים ו-{groups} סלים. כמה תפוחים יהיו בכל סל אם נחלק שווה?",
+          "vars": ["total", "groups"]
+        },
+        {
+          "text": "אמה קראה {total} עמודים ב-{groups} ימים. כמה עמודים היום בממוצע?",
+          "vars": ["total", "groups"]
+        }
+      ],
+      "en": [
+        {
+          "text": "Emma has {total} cookies. She wants to divide them equally into {groups} groups. How many cookies in each group?",
+          "vars": ["total", "groups"]
+        },
+        {
+          "text": "There are {total} apples and {groups} baskets. How many apples will be in each basket if we divide equally?",
+          "vars": ["total", "groups"]
+        },
+        {
+          "text": "Emma read {total} pages in {groups} days. How many pages per day on average?",
+          "vars": ["total", "groups"]
+        }
+      ]
+    }
+  },
+  "multiplication": {
+    "wordProblems": {
+      "he": [
+        {
+          "text": "לאמה יש {groups} קבוצות של {items} עוגיות. כמה עוגיות יש לה בסך הכל?",
+          "vars": ["groups", "items"]
+        },
+        {
+          "text": "בכל קופסה יש {items} עפרונות. אם יש {groups} קופסאות, כמה עפרונות יש בסך הכל?",
+          "vars": ["items", "groups"]
+        },
+        {
+          "text": "אמה קוראת {items} עמודים בכל יום. כמה עמודים היא תקרא ב-{groups} ימים?",
+          "vars": ["items", "groups"]
+        }
+      ],
+      "en": [
+        {
+          "text": "Emma has {groups} groups of {items} cookies. How many cookies does she have in total?",
+          "vars": ["groups", "items"]
+        },
+        {
+          "text": "Each box has {items} pencils. If there are {groups} boxes, how many pencils in total?",
+          "vars": ["items", "groups"]
+        },
+        {
+          "text": "Emma reads {items} pages every day. How many pages will she read in {groups} days?",
+          "vars": ["items", "groups"]
+        }
+      ]
+    }
+  },
+  "fraction": {
+    "wordProblems": {
+      "he": [
+        {
+          "text": "לאמה יש עוגה. היא אכלה {numerator}/{denominator} מהעוגה. איזה חלק נשאר?",
+          "vars": ["numerator", "denominator"]
+        },
+        {
+          "text": "בכיתה יש {total} תלמידים. {numerator}/{denominator} מהם אוהבים מתמטיקה. כמה תלמידים אוהבים מתמטיקה?",
+          "vars": ["total", "numerator", "denominator"]
+        }
+      ],
+      "en": [
+        {
+          "text": "Emma has a cake. She ate {numerator}/{denominator} of the cake. What fraction is left?",
+          "vars": ["numerator", "denominator"]
+        },
+        {
+          "text": "There are {total} students in class. {numerator}/{denominator} of them like math. How many students like math?",
+          "vars": ["total", "numerator", "denominator"]
+        }
+      ]
+    }
+  },
+  "decimal": {
+    "wordProblems": {
+      "he": [
+        {
+          "text": "לאמה יש {whole}.{decimal} שקלים. כמה אגורות יש לה?",
+          "vars": ["whole", "decimal"]
+        },
+        {
+          "text": "המרחק מהבית לבית הספר הוא {whole}.{decimal} קילומטרים. כמה מטרים זה?",
+          "vars": ["whole", "decimal"]
+        }
+      ],
+      "en": [
+        {
+          "text": "Emma has {whole}.{decimal} dollars. How many cents does she have?",
+          "vars": ["whole", "decimal"]
+        },
+        {
+          "text": "The distance from home to school is {whole}.{decimal} kilometers. How many meters is that?",
+          "vars": ["whole", "decimal"]
+        }
+      ]
+    }
+  },
+  "distributive": {
+    "wordProblems": {
+      "he": [
+        {
+          "text": "אמה קנתה {groups} חבילות. בכל חבילה יש {items1} עוגיות ו-{items2} סוכריות. כמה פריטים קנתה בסך הכל?",
+          "vars": ["groups", "items1", "items2"]
+        }
+      ],
+      "en": [
+        {
+          "text": "Emma bought {groups} packages. Each package has {items1} cookies and {items2} candies. How many items did she buy in total?",
+          "vars": ["groups", "items1", "items2"]
+        }
+      ]
+    }
+  },
+  "number-line": {
+    "wordProblems": {
+      "he": [
+        {
+          "text": "אמה עומדת על המספר {start} בישר המספרים. היא קופצת {steps} צעדים ימינה. על איזה מספר היא תגיע?",
+          "vars": ["start", "steps"]
+        },
+        {
+          "text": "יש ציפור על המספר {position}. איפה הציפור על ישר המספרים?",
+          "vars": ["position"]
+        }
+      ],
+      "en": [
+        {
+          "text": "Emma is standing on number {start} on the number line. She jumps {steps} steps to the right. What number will she land on?",
+          "vars": ["start", "steps"]
+        },
+        {
+          "text": "There is a bird on number {position}. Where is the bird on the number line?",
+          "vars": ["position"]
+        }
+      ]
+    }
+  },
+  "order-operations": {
+    "wordProblems": {
+      "he": [
+        {
+          "text": "אמה קנתה {num1} עוגיות ב-{num2} שקל כל אחת, ועוד {num3} סוכריות. כמה שילמה בסך הכל?",
+          "vars": ["num1", "num2", "num3"]
+        }
+      ],
+      "en": [
+        {
+          "text": "Emma bought {num1} cookies for {num2} dollars each, and {num3} more candies. How much did she pay in total?",
+          "vars": ["num1", "num2", "num3"]
+        }
+      ]
+    }
+  }
+}

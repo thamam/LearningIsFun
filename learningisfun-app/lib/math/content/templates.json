@@ -1,0 +1,258 @@
+{
+  "division": {
+    "wordProblems": {
+      "he": [
+        {
+          "text": "לקפטן יש {total} מטבעות זהב. הוא רוצה לחלק אותן שווה ל-{groups} שודדי ים. כמה מטבעות יקבל כל שודד?",
+          "vars": [
+            "total",
+            "groups"
+          ]
+        },
+        {
+          "text": "יש {total} תותחים על {groups} ספינות. כמה תותחים בממוצע על כל ספינה?",
+          "vars": [
+            "total",
+            "groups"
+          ]
+        },
+        {
+          "text": "הקפטן מצא {total} פנינים ב-{groups} תיבות אוצר. כמה פנינים בכל תיבה אם מחלקים שווה?",
+          "vars": [
+            "total",
+            "groups"
+          ]
+        }
+      ],
+      "en": [
+        {
+          "text": "The captain has {total} gold coins. He wants to divide them equally among {groups} pirates. How many coins will each pirate get?",
+          "vars": [
+            "total",
+            "groups"
+          ]
+        },
+        {
+          "text": "There are {total} cannons on {groups} ships. How many cannons on average per ship?",
+          "vars": [
+            "total",
+            "groups"
+          ]
+        },
+        {
+          "text": "The captain found {total} pearls in {groups} treasure chests. How many pearls per chest if divided equally?",
+          "vars": [
+            "total",
+            "groups"
+          ]
+        }
+      ]
+    }
+  },
+  "multiplication": {
+    "wordProblems": {
+      "he": [
+        {
+          "text": "לקפטן יש {groups} ספינות, ובכל ספינה {items} שודדי ים. כמה שודדים יש לו בסך הכל?",
+          "vars": [
+            "groups",
+            "items"
+          ]
+        },
+        {
+          "text": "בכל תיבת אוצר יש {items} מטבעות זהב. אם יש {groups} תיבות, כמה מטבעות יש בסך הכל?",
+          "vars": [
+            "items",
+            "groups"
+          ]
+        },
+        {
+          "text": "הקפטן מפליג {items} שעות בכל יום. כמה שעות הוא יפליג ב-{groups} ימים?",
+          "vars": [
+            "items",
+            "groups"
+          ]
+        }
+      ],
+      "en": [
+        {
+          "text": "The captain has {groups} ships, and each ship has {items} pirates. How many pirates does he have in total?",
+          "vars": [
+            "groups",
+            "items"
+          ]
+        },
+        {
+          "text": "Each treasure chest has {items} gold coins. If there are {groups} chests, how many coins in total?",
+          "vars": [
+            "items",
+            "groups"
+          ]
+        },
+        {
+          "text": "The captain sails {items} hours every day. How many hours will he sail in {groups} days?",
+          "vars": [
+            "items",
+            "groups"
+          ]
+        }
+      ]
+    }
+  },
+  "fraction": {
+    "wordProblems": {
+      "he": [
+        {
+          "text": "לקפטן יש מפת אוצר. הוא חקר {numerator}/{denominator} מהמפה. איזה חלק נשאר?",
+          "vars": [
+            "numerator",
+            "denominator"
+          ]
+        },
+        {
+          "text": "בצוות יש {total} שודדי ים. {numerator}/{denominator} מהם יודעים לשחות. כמה שודדים יודעים לשחות?",
+          "vars": [
+            "total",
+            "numerator",
+            "denominator"
+          ]
+        }
+      ],
+      "en": [
+        {
+          "text": "The captain has a treasure map. He explored {numerator}/{denominator} of the map. What fraction is left?",
+          "vars": [
+            "numerator",
+            "denominator"
+          ]
+        },
+        {
+          "text": "The crew has {total} pirates. {numerator}/{denominator} of them can swim. How many pirates can swim?",
+          "vars": [
+            "total",
+            "numerator",
+            "denominator"
+          ]
+        }
+      ]
+    }
+  },
+  "decimal": {
+    "wordProblems": {
+      "he": [
+        {
+          "text": "לקפטן יש {whole}.{decimal} קילוגרם זהב. כמה גרם זה?",
+          "vars": [
+            "whole",
+            "decimal"
+          ]
+        },
+        {
+          "text": "המרחק לאי האוצר הוא {whole}.{decimal} מיילים ימיים. כמה זה במטרים?",
+          "vars": [
+            "whole",
+            "decimal"
+          ]
+        }
+      ],
+      "en": [
+        {
+          "text": "The captain has {whole}.{decimal} kilograms of gold. How many grams is that?",
+          "vars": [
+            "whole",
+            "decimal"
+          ]
+        },
+        {
+          "text": "The distance to Treasure Island is {whole}.{decimal} nautical miles. How many meters is that?",
+          "vars": [
+            "whole",
+            "decimal"
+          ]
+        }
+      ]
+    }
+  },
+  "distributive": {
+    "wordProblems": {
+      "he": [
+        {
+          "text": "הקפטן קנה {groups} תיבות. בכל תיבה יש {items1} מטבעות זהב ו-{items2} פנינים. כמה אוצרות קנה בסך הכל?",
+          "vars": [
+            "groups",
+            "items1",
+            "items2"
+          ]
+        }
+      ],
+      "en": [
+        {
+          "text": "The captain bought {groups} chests. Each chest has {items1} gold coins and {items2} pearls. How many treasures did he buy in total?",
+          "vars": [
+            "groups",
+            "items1",
+            "items2"
+          ]
+        }
+      ]
+    }
+  },
+  "number-line": {
+    "wordProblems": {
+      "he": [
+        {
+          "text": "הספינה עומדת על המיקום {start} בים. היא מפליגה {steps} קשרים קדימה. לאיזה מיקום תגיע?",
+          "vars": [
+            "start",
+            "steps"
+          ]
+        },
+        {
+          "text": "יש אי על המיקום {position}. איפה האי על המפה?",
+          "vars": [
+            "position"
+          ]
+        }
+      ],
+      "en": [
+        {
+          "text": "The ship is at position {start} at sea. It sails {steps} knots forward. What position will it reach?",
+          "vars": [
+            "start",
+            "steps"
+          ]
+        },
+        {
+          "text": "There is an island at position {position}. Where is the island on the map?",
+          "vars": [
+            "position"
+          ]
+        }
+      ]
+    }
+  },
+  "order-operations": {
+    "wordProblems": {
+      "he": [
+        {
+          "text": "הקפטן קנה {num1} מפות ב-{num2} שקלים כל אחת, ועוד {num3} משקפות. כמה שילם בסך הכל?",
+          "vars": [
+            "num1",
+            "num2",
+            "num3"
+          ]
+        }
+      ],
+      "en": [
+        {
+          "text": "The captain bought {num1} maps for {num2} dollars each, and {num3} more telescopes. How much did he pay in total?",
+          "vars": [
+            "num1",
+            "num2",
+            "num3"
+          ]
+        }
+      ]
+    }
+  }
+}
