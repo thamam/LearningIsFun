@@ -4,7 +4,7 @@
  */
 
 import { MathModule, Level, Question } from '../types';
-import { generateWordProblem } from '../content';
+import { generateWordProblem, Language } from '../content';
 
 function getDivisionRange(level: Level) {
   if (level === 'קל') {
@@ -16,7 +16,7 @@ function getDivisionRange(level: Level) {
   }
 }
 
-function generateQuestion(level: Level = 'בינוני'): Question {
+function generateQuestion(level: Level = 'בינוני', lang: Language = 'he'): Question {
   const types = ['basicDivision', 'divisionWithRemainder', 'missingDividend', 'missingDivisor', 'wordProblem'];
   const type = types[Math.floor(Math.random() * types.length)];
   const range = getDivisionRange(level);
@@ -81,7 +81,7 @@ function generateQuestion(level: Level = 'בינוני'): Question {
       const total = groups * perGroup;
 
       // Load content from templates.json instead of hardcoded strings
-      const questionText = generateWordProblem('division', { total, groups }, 'he');
+      const questionText = generateWordProblem('division', { total, groups }, lang);
 
       // Fallback to basic division if content loading fails
       if (!questionText) {

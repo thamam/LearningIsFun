@@ -4,7 +4,7 @@
  */
 
 import { MathModule, Level, Question } from '../types';
-import { generateWordProblem } from '../content';
+import { generateWordProblem, Language } from '../content';
 
 function getMultiplicationRange(level: Level) {
   if (level === 'קל') {
@@ -16,7 +16,7 @@ function getMultiplicationRange(level: Level) {
   }
 }
 
-function generateQuestion(level: Level = 'בינוני'): Question {
+function generateQuestion(level: Level = 'בינוני', lang: Language = 'he'): Question {
   const types = ['missingProduct', 'missingMultiplier', 'missingMultiplicand', 'wordProblem'];
   const type = types[Math.floor(Math.random() * types.length)];
   const range = getMultiplicationRange(level);
@@ -67,7 +67,7 @@ function generateQuestion(level: Level = 'בינוני'): Question {
       const total = groups * items;
 
       // Load content from templates.json instead of hardcoded strings
-      const questionText = generateWordProblem('multiplication', { groups, items }, 'he');
+      const questionText = generateWordProblem('multiplication', { groups, items }, lang);
 
       // Fallback to basic multiplication if content loading fails
       if (!questionText) {

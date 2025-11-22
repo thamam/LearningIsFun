@@ -17,7 +17,7 @@ function getRandomNumber(level: Level): number {
   }
 }
 
-function generateQuestion(level: Level = 'בינוני'): Question {
+function generateQuestion(level: Level = 'בינוני', lang: string = 'he'): Question {
   const types = ['decomposition', 'digitValue', 'nextPrevious', 'compare', 'missingDigit'];
   const type = types[Math.floor(Math.random() * types.length)];
   const num = getRandomNumber(level);

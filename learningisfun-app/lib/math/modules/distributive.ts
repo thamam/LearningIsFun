@@ -8,7 +8,7 @@
 
 import { MathModule, Level, Question } from '../types';
 
-function generateQuestion(level: Level = 'בינוני'): Question {
+function generateQuestion(level: Level = 'בינוני', lang: string = 'he'): Question {
   if (level === 'קל') {
     // Easy: Visual decomposition with tens and ones
     const a = Math.floor(Math.random() * 7) + 3; // 3-9

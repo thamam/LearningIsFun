@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { Question } from '@/lib/math';
 import NumberLineRenderer from './NumberLineRenderer';
 import { MathText } from '@/components/ui/MathText';
+import { useTranslation } from '@/lib/i18n';
 
 interface MathQuestionProps {
   moduleName: string;
@@ -12,6 +13,7 @@ interface MathQuestionProps {
 }
 
 export default function MathQuestion({ moduleName, level, onAnswerChecked }: MathQuestionProps) {
+  const { language } = useTranslation();
   const [question, setQuestion] = useState<Question | null>(null);
   const [userAnswer, setUserAnswer] = useState('');
   const [feedback, setFeedback] = useState<{
@@ -31,7 +33,7 @@ export default function MathQuestion({ moduleName, level, onAnswerChecked }: Mat
       const response = await fetch('/api/math/generate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ moduleName, level }),
+        body: JSON.stringify({ moduleName, level, lang: language }),
       });
 
       const data = await response.json();
@@ -49,7 +51,7 @@ export default function MathQuestion({ moduleName, level, onAnswerChecked }: Mat
 
   useEffect(() => {
     fetchQuestion();
-  }, [moduleName, level]);
+  }, [moduleName, level, language]);
 
   const handleSubmit = () => {
     if (!question || !userAnswer.trim()) return;

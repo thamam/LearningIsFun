@@ -4,6 +4,7 @@
  */
 
 export type Level = 'קל' | 'בינוני' | 'קשה';
+export type Language = 'he' | 'en';
 
 export type QuestionType = 'input' | 'choice' | 'visual-input' | 'visual-choice';
 
@@ -30,7 +31,7 @@ export interface MathModule {
   id: string;
   icon: string;
   description: string;
-  generateQuestion: (level: Level) => Question;
+  generateQuestion: (level: Level, lang?: Language) => Question;
   checkAnswer: (userAnswer: string | number, correctAnswer: string | number, questionData: Question) => boolean;
   getHint?: (questionData: Question) => string;
   getExplanation?: (questionData: Question, userAnswer: string | number) => {

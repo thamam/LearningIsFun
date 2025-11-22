@@ -24,7 +24,7 @@ function getFractionRange(level: Level) {
   }
 }
 
-function generateQuestion(level: Level = 'בינוני'): Question {
+function generateQuestion(level: Level = 'בינוני', lang: string = 'he'): Question {
   const types = ['compare', 'addSameDenominator', 'simplify', 'fractionToDecimal', 'decimalToFraction'];
   const type = types[Math.floor(Math.random() * types.length)];
   const range = getFractionRange(level);
