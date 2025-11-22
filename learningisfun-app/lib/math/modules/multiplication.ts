@@ -3,8 +3,9 @@
  * Extracted from Emma's Math Lab
  */
 
-import { MathModule, Level, Question } from '../types';
+import { MathModule, Level, Question, Language } from '../types';
 import { generateWordProblem } from '../content';
+import { getModuleHint, getModuleFeedback, getLocalizedExplanation } from '../i18n';
 
 function getMultiplicationRange(level: Level) {
   if (level === 'קל') {
@@ -16,7 +17,7 @@ function getMultiplicationRange(level: Level) {
   }
 }
 
-function generateQuestion(level: Level = 'בינוני'): Question {
+function generateQuestion(level: Level = 'בינוני', lang: Language = 'he'): Question {
   const types = ['missingProduct', 'missingMultiplier', 'missingMultiplicand', 'wordProblem'];
   const type = types[Math.floor(Math.random() * types.length)];
   const range = getMultiplicationRange(level);
@@ -32,6 +33,7 @@ function generateQuestion(level: Level = 'בינוני'): Question {
         correctAnswer: product,
         difficulty: level,
         explanation: `${a} × ${b} = ${product}`,
+        metadata: { lang },
       };
     }
 
@@ -45,6 +47,7 @@ function generateQuestion(level: Level = 'בינוני'): Question {
         correctAnswer: multiplier,
         difficulty: level,
         explanation: `${multiplicand} × ${multiplier} = ${product}`,
+        metadata: { lang },
       };
     }
 
@@ -58,6 +61,7 @@ function generateQuestion(level: Level = 'בינוני'): Question {
         correctAnswer: multiplicand,
         difficulty: level,
         explanation: `${multiplicand} × ${multiplier} = ${product}`,
+        metadata: { lang },
       };
     }
 
@@ -67,7 +71,12 @@ function generateQuestion(level: Level = 'בינוני'): Question {
       const total = groups * items;
 
       // Load content from templates.json instead of hardcoded strings
-      const questionText = generateWordProblem('multiplication', { groups, items }, 'he');
+      const questionText = generateWordProblem('multiplication', { groups, items }, lang);
+
+      // Localized explanation
+      const answerPrefix = lang === 'he' ? 'התשובה היא' : 'The answer is';
+      const becauseWord = lang === 'he' ? 'כי' : 'because';
+      const explanation = `${answerPrefix} ${total} ${becauseWord} ${groups} × ${items} = ${total}`;
 
       // Fallback to basic multiplication if content loading fails
       if (!questionText) {
@@ -76,7 +85,8 @@ function generateQuestion(level: Level = 'בינוני'): Question {
           type: 'input',
           correctAnswer: total,
           difficulty: level,
-          explanation: `התשובה היא ${total} כי ${groups} × ${items} = ${total}`,
+          explanation,
+          metadata: { lang },
         };
       }
 
@@ -85,7 +95,8 @@ function generateQuestion(level: Level = 'בינוני'): Question {
         type: 'input',
         correctAnswer: total,
         difficulty: level,
-        explanation: `התשובה היא ${total} כי ${groups} × ${items} = ${total}`,
+        explanation,
+        metadata: { lang },
       };
     }
 
@@ -103,14 +114,18 @@ function checkAnswer(
 }
 
 function getHint(questionData: Question): string {
-  return '💡 נסי להשתמש בטבלת הכפל';
+  const lang = (questionData.metadata?.lang as Language) || 'he';
+  return getModuleHint('multiplication', lang);
 }
 
 function getExplanation(questionData: Question, userAnswer: string | number) {
+  const lang = (questionData.metadata?.lang as Language) || 'he';
+  const feedback = getModuleFeedback('multiplication', lang);
+
   return {
-    detailed: questionData.explanation || 'תרגלי עוד תרגילי כפל',
-    tip: 'תרגול קבוע של טבלת הכפל עוזר מאוד',
-    nextSteps: 'המשיכי לתרגל תרגילים דומים'
+    detailed: getLocalizedExplanation(questionData.explanation || '', 'multiplication', lang),
+    tip: feedback.tip,
+    nextSteps: feedback.nextSteps
   };
 }
 

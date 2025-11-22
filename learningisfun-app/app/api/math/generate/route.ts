@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getModule, Level } from '@/lib/math';
+import { getModule, Level, Language } from '@/lib/math';
 
 export async function POST(request: NextRequest) {
   try {
-    const { moduleName, level } = await request.json();
+    const { moduleName, level, lang } = await request.json();
 
     // Validate inputs
     if (!moduleName || !level) {
@@ -22,8 +22,8 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Generate question
-    const question = module.generateQuestion(level as Level);
+    // Generate question with language (default to 'he' if not provided)
+    const question = module.generateQuestion(level as Level, (lang as Language) || 'he');
 
     return NextResponse.json({
       success: true,

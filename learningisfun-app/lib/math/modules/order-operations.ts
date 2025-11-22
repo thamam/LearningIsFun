@@ -8,7 +8,7 @@
 
 import { MathModule, Level, Question } from '../types';
 
-function generateQuestion(level: Level = 'בינוני'): Question {
+function generateQuestion(level: Level = 'בינוני', lang: string = 'he'): Question {
   if (level === 'קל') {
     // Easy: Focus on single rule application
     const types = ['parens_first', 'mult_before_add'];

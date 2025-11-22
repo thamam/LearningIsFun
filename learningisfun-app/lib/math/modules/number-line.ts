@@ -17,7 +17,7 @@ function getNumberlineRange(level: Level): NumberLineVisualData {
   }
 }
 
-function generateQuestion(level: Level = 'בינוני'): Question {
+function generateQuestion(level: Level = 'בינוני', lang: string = 'he'): Question {
   const types = ['whatIsNumber', 'betweenNumbers', 'closerTo'];
   const type = types[Math.floor(Math.random() * types.length)];
   const range = getNumberlineRange(level);
