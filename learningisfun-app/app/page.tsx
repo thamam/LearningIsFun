@@ -1,16 +1,21 @@
+'use client';
+
 import Link from "next/link";
+import { useTranslation } from "@/lib/i18n/LanguageContext";
 
 export default function Home() {
+  const { t } = useTranslation();
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-yellow-100 via-pink-100 to-purple-100">
       {/* Hero Section */}
       <section className="container mx-auto px-4 py-16 text-center">
         <div className="mb-8">
           <h1 className="text-5xl md:text-7xl font-bold text-purple-600 mb-4">
-            LearningIsFun! 🎉
+            {t('hero.title')}
           </h1>
           <p className="text-2xl md:text-3xl text-pink-500 font-medium">
-            Where Learning Feels Like Playing!
+            {t('hero.subtitle')}
           </p>
         </div>
 
@@ -19,8 +24,7 @@ export default function Home() {
         </div>
 
         <p className="text-lg md:text-xl text-gray-700 max-w-2xl mx-auto mb-8">
-          Join thousands of kids in grades 3-5 who are having a blast while
-          learning math, reading, science, and more!
+          {t('hero.description')}
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -28,13 +32,13 @@ export default function Home() {
             href="/dashboard"
             className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-8 py-4 rounded-full text-xl font-bold hover:from-purple-600 hover:to-pink-600 transform hover:scale-105 transition-all shadow-lg"
           >
-            Start Learning! 🎮
+            {t('hero.startLearning')}
           </Link>
           <Link
             href="/pricing"
             className="bg-white text-purple-600 px-8 py-4 rounded-full text-xl font-bold border-3 border-purple-500 hover:bg-purple-50 transform hover:scale-105 transition-all shadow-lg"
           >
-            See Plans 💫
+            {t('hero.seePlans')}
           </Link>
         </div>
       </section>
@@ -42,7 +46,7 @@ export default function Home() {
       {/* Features Section */}
       <section className="container mx-auto px-4 py-16">
         <h2 className="text-4xl font-bold text-center text-purple-600 mb-12">
-          Why Kids Love Us! 💖
+          {t('features.title')}
         </h2>
 
         <div className="grid md:grid-cols-3 gap-8">
@@ -50,10 +54,10 @@ export default function Home() {
           <div className="bg-white rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-shadow">
             <div className="text-5xl mb-4">🎯</div>
             <h3 className="text-2xl font-bold text-orange-500 mb-3">
-              Fun Challenges
+              {t('features.funChallenges.title')}
             </h3>
             <p className="text-gray-600">
-              Exciting quizzes and games that make learning feel like an adventure!
+              {t('features.funChallenges.description')}
             </p>
           </div>
 
@@ -61,10 +65,10 @@ export default function Home() {
           <div className="bg-white rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-shadow">
             <div className="text-5xl mb-4">🏆</div>
             <h3 className="text-2xl font-bold text-green-500 mb-3">
-              Earn Rewards
+              {t('features.earnRewards.title')}
             </h3>
             <p className="text-gray-600">
-              Collect badges, stars, and trophies as you complete lessons!
+              {t('features.earnRewards.description')}
             </p>
           </div>
 
@@ -72,10 +76,10 @@ export default function Home() {
           <div className="bg-white rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-shadow">
             <div className="text-5xl mb-4">📊</div>
             <h3 className="text-2xl font-bold text-blue-500 mb-3">
-              Track Progress
+              {t('features.trackProgress.title')}
             </h3>
             <p className="text-gray-600">
-              Parents can see how you&apos;re doing and cheer you on!
+              {t('features.trackProgress.description')}
             </p>
           </div>
         </div>
@@ -84,25 +88,25 @@ export default function Home() {
       {/* Subjects Section */}
       <section className="container mx-auto px-4 py-16">
         <h2 className="text-4xl font-bold text-center text-purple-600 mb-12">
-          What You&apos;ll Learn! 📖
+          {t('subjects.title')}
         </h2>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
           <div className="bg-red-100 rounded-2xl p-6 text-center hover:bg-red-200 transition-colors">
             <div className="text-4xl mb-2">➕</div>
-            <p className="font-bold text-red-600">Math</p>
+            <p className="font-bold text-red-600">{t('subjects.math')}</p>
           </div>
           <div className="bg-blue-100 rounded-2xl p-6 text-center hover:bg-blue-200 transition-colors">
             <div className="text-4xl mb-2">📖</div>
-            <p className="font-bold text-blue-600">Reading</p>
+            <p className="font-bold text-blue-600">{t('subjects.reading')}</p>
           </div>
           <div className="bg-green-100 rounded-2xl p-6 text-center hover:bg-green-200 transition-colors">
             <div className="text-4xl mb-2">🔬</div>
-            <p className="font-bold text-green-600">Science</p>
+            <p className="font-bold text-green-600">{t('subjects.science')}</p>
           </div>
           <div className="bg-yellow-100 rounded-2xl p-6 text-center hover:bg-yellow-200 transition-colors">
             <div className="text-4xl mb-2">✍️</div>
-            <p className="font-bold text-yellow-600">Writing</p>
+            <p className="font-bold text-yellow-600">{t('subjects.writing')}</p>
           </div>
         </div>
       </section>
@@ -111,16 +115,16 @@ export default function Home() {
       <section className="container mx-auto px-4 py-16 text-center">
         <div className="bg-gradient-to-r from-purple-500 to-pink-500 rounded-3xl p-12 text-white">
           <h2 className="text-4xl font-bold mb-4">
-            Ready to Start Your Adventure? 🚀
+            {t('cta.title')}
           </h2>
           <p className="text-xl mb-8 opacity-90">
-            Join LearningIsFun today - it&apos;s free to get started!
+            {t('cta.description')}
           </p>
           <Link
             href="/dashboard"
             className="bg-white text-purple-600 px-8 py-4 rounded-full text-xl font-bold hover:bg-gray-100 transform hover:scale-105 transition-all inline-block shadow-lg"
           >
-            Let&apos;s Go! ✨
+            {t('cta.letsGo')}
           </Link>
         </div>
       </section>
@@ -128,8 +132,8 @@ export default function Home() {
       {/* Footer */}
       <footer className="bg-purple-600 text-white py-8 mt-16">
         <div className="container mx-auto px-4 text-center">
-          <p className="text-lg mb-2">Made with ❤️ for young learners</p>
-          <p className="opacity-80">© 2024 LearningIsFun. All rights reserved.</p>
+          <p className="text-lg mb-2">{t('footer.madeWith')}</p>
+          <p className="opacity-80">{t('footer.copyright')}</p>
         </div>
       </footer>
     </div>

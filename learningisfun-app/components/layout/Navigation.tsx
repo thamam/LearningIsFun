@@ -2,9 +2,15 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { useTranslation } from '@/lib/i18n/LanguageContext';
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
+  const { language, setLanguage, t } = useTranslation();
+
+  const toggleLanguage = () => {
+    setLanguage(language === 'en' ? 'he' : 'en');
+  };
 
   return (
     <nav className="bg-white/90 backdrop-blur-sm shadow-lg sticky top-0 z-50">
@@ -24,41 +30,51 @@ export default function Navigation() {
               href="/"
               className="text-gray-600 hover:text-purple-600 font-medium transition-colors"
             >
-              Home
+              {t('nav.home')}
             </Link>
             <Link
               href="/pricing"
               className="text-gray-600 hover:text-purple-600 font-medium transition-colors"
             >
-              Pricing
+              {t('nav.pricing')}
             </Link>
             <Link
               href="/dashboard"
               className="text-gray-600 hover:text-purple-600 font-medium transition-colors"
             >
-              Dashboard
+              {t('nav.dashboard')}
             </Link>
             <Link
               href="/parent-portal"
               className="text-gray-600 hover:text-purple-600 font-medium transition-colors"
             >
-              Parent Portal
+              {t('nav.parentPortal')}
             </Link>
           </div>
 
-          {/* CTA Buttons */}
+          {/* CTA Buttons + Language Toggle */}
           <div className="flex items-center space-x-3">
+            {/* Language Toggle */}
+            <button
+              onClick={toggleLanguage}
+              className="text-2xl hover:scale-110 transition-transform"
+              aria-label="Toggle language"
+              title={language === 'en' ? 'Switch to Hebrew' : 'Switch to English'}
+            >
+              {language === 'en' ? '🇮🇱' : '🇺🇸'}
+            </button>
+
             <Link
               href="/dashboard"
               className="hidden sm:inline-block bg-purple-100 text-purple-600 px-4 py-2 rounded-full font-medium hover:bg-purple-200 transition-colors"
             >
-              Log In
+              {t('nav.logIn')}
             </Link>
             <Link
               href="/pricing"
               className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-4 py-2 rounded-full font-medium hover:from-purple-600 hover:to-pink-600 transition-all"
             >
-              Sign Up
+              {t('nav.signUp')}
             </Link>
           </div>
 
@@ -94,28 +110,28 @@ export default function Navigation() {
                 className="text-gray-600 hover:text-purple-600 font-medium transition-colors"
                 onClick={() => setIsOpen(false)}
               >
-                Home
+                {t('nav.home')}
               </Link>
               <Link
                 href="/pricing"
                 className="text-gray-600 hover:text-purple-600 font-medium transition-colors"
                 onClick={() => setIsOpen(false)}
               >
-                Pricing
+                {t('nav.pricing')}
               </Link>
               <Link
                 href="/dashboard"
                 className="text-gray-600 hover:text-purple-600 font-medium transition-colors"
                 onClick={() => setIsOpen(false)}
               >
-                Dashboard
+                {t('nav.dashboard')}
               </Link>
               <Link
                 href="/parent-portal"
                 className="text-gray-600 hover:text-purple-600 font-medium transition-colors"
                 onClick={() => setIsOpen(false)}
               >
-                Parent Portal
+                {t('nav.parentPortal')}
               </Link>
             </div>
           </div>
