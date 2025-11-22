@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { Question } from '@/lib/math';
 import NumberLineRenderer from './NumberLineRenderer';
+import { MathText } from '@/components/ui/MathText';
 
 interface MathQuestionProps {
   moduleName: string;
@@ -69,7 +70,7 @@ export default function MathQuestion({ moduleName, level, onAnswerChecked }: Mat
       isCorrect,
       message: isCorrect
         ? '🎉 נכון מאוד! כל הכבוד!'
-        : `😞 לא נכון. התשובה הנכונה היא: ${question.correctAnswer}`,
+        : `😞 לא נכון. התשובה הנכונה היא: `,
     });
   };
 
@@ -129,9 +130,9 @@ export default function MathQuestion({ moduleName, level, onAnswerChecked }: Mat
       {/* Question */}
       <div className="mb-6 p-6 bg-gradient-to-r from-yellow-50 to-orange-50 rounded-xl">
         <h3 className="text-3xl font-bold text-center text-gray-800">
-          <div dir="ltr" className="inline-block text-left">
+          <MathText className="text-3xl">
             {question.question}
-          </div>
+          </MathText>
         </h3>
       </div>
 
@@ -149,7 +150,7 @@ export default function MathQuestion({ moduleName, level, onAnswerChecked }: Mat
                   : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
               } ${feedback?.show ? 'opacity-50 cursor-not-allowed' : ''}`}
             >
-              {choice}
+              <MathText>{choice}</MathText>
             </button>
           ))}
         </div>
@@ -160,7 +161,8 @@ export default function MathQuestion({ moduleName, level, onAnswerChecked }: Mat
             value={userAnswer}
             onChange={(e) => setUserAnswer(e.target.value)}
             onKeyPress={(e) => e.key === 'Enter' && !feedback?.show && handleSubmit()}
-            className="w-full px-6 py-4 text-xl border-3 border-gray-300 rounded-xl focus:border-purple-500 focus:outline-none text-center font-bold"
+            dir="ltr"
+            className="w-full px-6 py-4 text-xl border-3 border-gray-300 rounded-xl focus:border-purple-500 focus:outline-none text-center font-bold font-mono"
             placeholder="הכניסי את התשובה כאן..."
             disabled={feedback?.show}
             autoFocus
@@ -178,6 +180,9 @@ export default function MathQuestion({ moduleName, level, onAnswerChecked }: Mat
           }`}
         >
           {feedback.message}
+          {!feedback.isCorrect && (
+            <MathText className="text-lg">{question.correctAnswer}</MathText>
+          )}
           {question.explanation && !feedback.isCorrect && (
             <div className="mt-3 text-sm opacity-80">
               💡 {question.explanation}
