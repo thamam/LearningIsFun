@@ -1,4 +1,7 @@
+'use client';
+
 import Link from "next/link";
+import { useTranslation } from '@/lib/i18n';
 
 interface WeeklyActivity {
   day: string;
@@ -14,79 +17,80 @@ interface SubjectProgress {
   color: string;
 }
 
-const weeklyActivity: WeeklyActivity[] = [
-  { day: "Mon", minutes: 45 },
-  { day: "Tue", minutes: 30 },
-  { day: "Wed", minutes: 60 },
-  { day: "Thu", minutes: 25 },
-  { day: "Fri", minutes: 50 },
-  { day: "Sat", minutes: 15 },
-  { day: "Sun", minutes: 40 },
-];
-
-const subjectProgress: SubjectProgress[] = [
-  {
-    name: "Math",
-    emoji: "➕",
-    lessonsCompleted: 24,
-    totalLessons: 32,
-    accuracy: 85,
-    color: "bg-red-500",
-  },
-  {
-    name: "Reading",
-    emoji: "📖",
-    lessonsCompleted: 18,
-    totalLessons: 30,
-    accuracy: 92,
-    color: "bg-blue-500",
-  },
-  {
-    name: "Science",
-    emoji: "🔬",
-    lessonsCompleted: 12,
-    totalLessons: 28,
-    accuracy: 78,
-    color: "bg-green-500",
-  },
-  {
-    name: "Writing",
-    emoji: "✍️",
-    lessonsCompleted: 8,
-    totalLessons: 25,
-    accuracy: 88,
-    color: "bg-yellow-500",
-  },
-];
-
-const recentActivity = [
-  {
-    action: "Completed Math Lesson",
-    subject: "Multiplication Tables",
-    time: "2 hours ago",
-    score: "9/10",
-  },
-  {
-    action: "Earned Badge",
-    subject: "Week Streak Master",
-    time: "Yesterday",
-    score: null,
-  },
-  {
-    action: "Completed Reading Lesson",
-    subject: "Story Comprehension",
-    time: "Yesterday",
-    score: "8/10",
-  },
-  {
-    action: "Completed Science Quiz",
-    subject: "Plants & Photosynthesis",
-    time: "2 days ago",
-    score: "7/10",
-  },
-];
-
 export default function ParentPortalPage() {
+  const { t } = useTranslation();
+
+  const weeklyActivity: WeeklyActivity[] = [
+    { day: "Mon", minutes: 45 },
+    { day: "Tue", minutes: 30 },
+    { day: "Wed", minutes: 60 },
+    { day: "Thu", minutes: 25 },
+    { day: "Fri", minutes: 50 },
+    { day: "Sat", minutes: 15 },
+    { day: "Sun", minutes: 40 },
+  ];
+
+  const subjectProgress: SubjectProgress[] = [
+    {
+      name: t('parentPortal.subjects.math'),
+      emoji: "➕",
+      lessonsCompleted: 24,
+      totalLessons: 32,
+      accuracy: 85,
+      color: "bg-red-500",
+    },
+    {
+      name: t('parentPortal.subjects.reading'),
+      emoji: "📖",
+      lessonsCompleted: 18,
+      totalLessons: 30,
+      accuracy: 92,
+      color: "bg-blue-500",
+    },
+    {
+      name: t('parentPortal.subjects.science'),
+      emoji: "🔬",
+      lessonsCompleted: 12,
+      totalLessons: 28,
+      accuracy: 78,
+      color: "bg-green-500",
+    },
+    {
+      name: t('parentPortal.subjects.writing'),
+      emoji: "✍️",
+      lessonsCompleted: 8,
+      totalLessons: 25,
+      accuracy: 88,
+      color: "bg-yellow-500",
+    },
+  ];
+
+  const recentActivity = [
+    {
+      action: t('parentPortal.activity.completedMath'),
+      subject: t('parentPortal.activity.multiplicationTables'),
+      time: t('parentPortal.activity.hoursAgo', { count: '2' }),
+      score: "9/10",
+    },
+    {
+      action: t('parentPortal.activity.earnedBadge'),
+      subject: t('parentPortal.activity.weekStreakMaster'),
+      time: t('parentPortal.activity.yesterday'),
+      score: null,
+    },
+    {
+      action: t('parentPortal.activity.completedReading'),
+      subject: t('parentPortal.activity.storyComprehension'),
+      time: t('parentPortal.activity.yesterday'),
+      score: "8/10",
+    },
+    {
+      action: t('parentPortal.activity.completedQuiz'),
+      subject: t('parentPortal.activity.plantsPhotosynthesis'),
+      time: t('parentPortal.activity.daysAgo', { count: '2' }),
+      score: "7/10",
+    },
+  ];
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-100 via-blue-50 to-indigo-100">
       <div className="container mx-auto px-4 py-8">
@@ -95,18 +99,18 @@ export default function ParentPortalPage() {
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between">
             <div>
               <h1 className="text-4xl font-bold text-indigo-600 mb-2">
-                Parent Portal 👨‍👩‍👧
+                {t('parentPortal.title')}
               </h1>
               <p className="text-gray-600 text-lg">
-                Track your child&apos;s learning journey and progress
+                {t('parentPortal.subtitle')}
               </p>
             </div>
             <div className="mt-4 md:mt-0 flex gap-3">
               <button className="bg-indigo-100 text-indigo-600 px-4 py-2 rounded-xl font-medium hover:bg-indigo-200 transition-colors">
-                Settings ⚙️
+                {t('parentPortal.settings')}
               </button>
               <button className="bg-indigo-600 text-white px-4 py-2 rounded-xl font-medium hover:bg-indigo-700 transition-colors">
-                Export Report 📄
+                {t('parentPortal.exportReport')}
               </button>
             </div>
           </div>
@@ -118,10 +122,10 @@ export default function ParentPortalPage() {
             <span className="text-2xl mr-3">🔐</span>
             <div>
               <p className="font-medium text-yellow-800">
-                Secure Access Required
+                {t('parentPortal.secureAccess.title')}
               </p>
               <p className="text-sm text-yellow-700">
-                This page requires re-authentication for security purposes.
+                {t('parentPortal.secureAccess.message')}
               </p>
             </div>
           </div>
@@ -130,24 +134,24 @@ export default function ParentPortalPage() {
         {/* Overview Stats */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
           <div className="bg-white rounded-2xl p-6 shadow-lg">
-            <p className="text-gray-500 text-sm mb-1">Total Time</p>
+            <p className="text-gray-500 text-sm mb-1">{t('parentPortal.stats.totalTime')}</p>
             <p className="text-3xl font-bold text-indigo-600">8h 30m</p>
-            <p className="text-green-500 text-sm mt-1">↑ 15% this week</p>
+            <p className="text-green-500 text-sm mt-1">{t('parentPortal.stats.thisWeek', { percent: '15' })}</p>
           </div>
           <div className="bg-white rounded-2xl p-6 shadow-lg">
-            <p className="text-gray-500 text-sm mb-1">Lessons Done</p>
+            <p className="text-gray-500 text-sm mb-1">{t('parentPortal.stats.lessonsDone')}</p>
             <p className="text-3xl font-bold text-green-600">62</p>
-            <p className="text-green-500 text-sm mt-1">↑ 8 this week</p>
+            <p className="text-green-500 text-sm mt-1">{t('parentPortal.stats.lessonsThisWeek', { count: '8' })}</p>
           </div>
           <div className="bg-white rounded-2xl p-6 shadow-lg">
-            <p className="text-gray-500 text-sm mb-1">Avg. Accuracy</p>
+            <p className="text-gray-500 text-sm mb-1">{t('parentPortal.stats.avgAccuracy')}</p>
             <p className="text-3xl font-bold text-blue-600">86%</p>
-            <p className="text-green-500 text-sm mt-1">↑ 3% improvement</p>
+            <p className="text-green-500 text-sm mt-1">{t('parentPortal.stats.improvement', { percent: '3' })}</p>
           </div>
           <div className="bg-white rounded-2xl p-6 shadow-lg">
-            <p className="text-gray-500 text-sm mb-1">Current Streak</p>
+            <p className="text-gray-500 text-sm mb-1">{t('parentPortal.stats.currentStreak')}</p>
             <p className="text-3xl font-bold text-orange-600">5 days</p>
-            <p className="text-orange-500 text-sm mt-1">🔥 Keep it going!</p>
+            <p className="text-orange-500 text-sm mt-1">{t('parentPortal.stats.keepGoing')}</p>
           </div>
         </div>
 
@@ -157,7 +161,7 @@ export default function ParentPortalPage() {
             {/* Weekly Activity */}
             <div className="bg-white rounded-3xl p-8 shadow-xl">
               <h2 className="text-2xl font-bold text-gray-800 mb-6">
-                Weekly Activity 📅
+                {t('parentPortal.weeklyActivity')}
               </h2>
               <div className="flex items-end justify-between h-48 gap-2">
                 {weeklyActivity.map((day) => (
@@ -177,7 +181,7 @@ export default function ParentPortalPage() {
             {/* Subject Progress */}
             <div className="bg-white rounded-3xl p-8 shadow-xl">
               <h2 className="text-2xl font-bold text-gray-800 mb-6">
-                Subject Progress 📊
+                {t('parentPortal.subjectProgress')}
               </h2>
               <div className="space-y-6">
                 {subjectProgress.map((subject) => (
@@ -191,10 +195,10 @@ export default function ParentPortalPage() {
                       </div>
                       <div className="text-right">
                         <span className="text-sm text-gray-600">
-                          {subject.lessonsCompleted}/{subject.totalLessons} lessons
+                          {t('parentPortal.lessonsProgress', { completed: subject.lessonsCompleted, total: subject.totalLessons })}
                         </span>
                         <span className="ml-3 text-sm font-medium text-green-600">
-                          {subject.accuracy}% accuracy
+                          {t('parentPortal.accuracyPercent', { percent: subject.accuracy })}
                         </span>
                       </div>
                     </div>
@@ -217,7 +221,7 @@ export default function ParentPortalPage() {
             {/* Recent Activity */}
             <div className="bg-white rounded-3xl p-6 shadow-xl">
               <h2 className="text-xl font-bold text-gray-800 mb-4">
-                Recent Activity 🕐
+                {t('parentPortal.recentActivity')}
               </h2>
               <div className="space-y-4">
                 {recentActivity.map((activity, index) => (
@@ -244,19 +248,19 @@ export default function ParentPortalPage() {
 
             {/* Recommendations */}
             <div className="bg-gradient-to-r from-indigo-500 to-purple-500 rounded-3xl p-6 shadow-xl text-white">
-              <h2 className="text-xl font-bold mb-4">Recommendations 💡</h2>
+              <h2 className="text-xl font-bold mb-4">{t('parentPortal.recommendations')}</h2>
               <ul className="space-y-3 text-sm">
                 <li className="flex items-start">
                   <span className="mr-2">•</span>
-                  Consider more Science practice - accuracy could improve
+                  {t('parentPortal.recommendationsList.science')}
                 </li>
                 <li className="flex items-start">
                   <span className="mr-2">•</span>
-                  Great progress in Reading! Keep encouraging this subject
+                  {t('parentPortal.recommendationsList.reading')}
                 </li>
                 <li className="flex items-start">
                   <span className="mr-2">•</span>
-                  Weekend activity is lower - maybe add a fun challenge?
+                  {t('parentPortal.recommendationsList.weekend')}
                 </li>
               </ul>
             </div>
@@ -264,23 +268,23 @@ export default function ParentPortalPage() {
             {/* Quick Actions */}
             <div className="bg-white rounded-3xl p-6 shadow-xl">
               <h2 className="text-xl font-bold text-gray-800 mb-4">
-                Parent Controls ⚙️
+                {t('parentPortal.parentControls')}
               </h2>
               <div className="space-y-3">
                 <button className="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 py-3 rounded-xl font-medium transition-colors text-left px-4">
-                  Set Learning Goals 🎯
+                  {t('parentPortal.controls.setGoals')}
                 </button>
                 <button className="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 py-3 rounded-xl font-medium transition-colors text-left px-4">
-                  Manage Screen Time ⏰
+                  {t('parentPortal.controls.manageScreenTime')}
                 </button>
                 <button className="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 py-3 rounded-xl font-medium transition-colors text-left px-4">
-                  Notification Settings 🔔
+                  {t('parentPortal.controls.notifications')}
                 </button>
                 <Link
                   href="/dashboard"
                   className="block w-full bg-indigo-100 hover:bg-indigo-200 text-indigo-600 py-3 rounded-xl font-medium transition-colors text-center"
                 >
-                  View as Child 👁️
+                  {t('parentPortal.controls.viewAsChild')}
                 </Link>
               </div>
             </div>

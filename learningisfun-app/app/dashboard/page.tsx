@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { getAllModules } from '@/lib/math';
 import MathQuestion from '@/components/math/MathQuestion';
+import { useTranslation } from '@/lib/i18n';
 
 type Level = 'קל' | 'בינוני' | 'קשה';
 
@@ -13,25 +14,26 @@ interface Achievement {
   earned: boolean;
 }
 
-const achievements: Achievement[] = [
-  { name: 'First Lesson', emoji: '🌟', earned: true },
-  { name: 'Week Streak', emoji: '🔥', earned: true },
-  { name: 'Math Master', emoji: '🧮', earned: true },
-  { name: 'Bookworm', emoji: '📚', earned: false },
-  { name: 'Science Star', emoji: '⭐', earned: false },
-  { name: 'Perfect Score', emoji: '💯', earned: false },
-];
-
-const dailyChallenges = [
-  { id: 'math-lessons', title: 'Complete 3 Math Lessons', progress: 2, total: 3, reward: '50 coins' },
-  { id: 'reading-time', title: 'Read for 15 minutes', progress: 10, total: 15, reward: '30 coins' },
-  { id: 'new-subject', title: 'Try a new subject', progress: 0, total: 1, reward: '100 coins' },
-];
-
 export default function DashboardPage() {
+  const { t } = useTranslation();
   const [selectedModule, setSelectedModule] = useState<string | null>(null);
   const [selectedLevel, setSelectedLevel] = useState<Level>('קל');
   const [sessionStats, setSessionStats] = useState({ correct: 0, total: 0 });
+
+  const achievements: Achievement[] = [
+    { name: t('dashboard.achievements.firstLesson'), emoji: '🌟', earned: true },
+    { name: t('dashboard.achievements.weekStreak'), emoji: '🔥', earned: true },
+    { name: t('dashboard.achievements.mathMaster'), emoji: '🧮', earned: true },
+    { name: t('dashboard.achievements.bookworm'), emoji: '📚', earned: false },
+    { name: t('dashboard.achievements.scienceStar'), emoji: '⭐', earned: false },
+    { name: t('dashboard.achievements.perfectScore'), emoji: '💯', earned: false },
+  ];
+
+  const dailyChallenges = [
+    { id: 'math-lessons', title: t('dashboard.challenges.mathLessons'), progress: 2, total: 3, reward: '50 coins' },
+    { id: 'reading-time', title: t('dashboard.challenges.readingTime'), progress: 10, total: 15, reward: '30 coins' },
+    { id: 'new-subject', title: t('dashboard.challenges.newSubject'), progress: 0, total: 1, reward: '100 coins' },
+  ];
 
   const mathModules = getAllModules();
   const levels: Level[] = ['קל', 'בינוני', 'קשה'];
@@ -68,7 +70,7 @@ export default function DashboardPage() {
                   onClick={handleBackToDashboard}
                   className="bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-xl font-medium transition-colors"
                 >
-                  ← חזרה
+                  {t('dashboard.backButton')}
                 </button>
                 <div>
                   <h1 className="text-3xl font-bold text-purple-600">
@@ -84,22 +86,22 @@ export default function DashboardPage() {
               <div className="flex gap-4">
                 <div className="text-center bg-purple-50 rounded-xl px-4 py-2">
                   <div className="text-2xl font-bold text-purple-600">{sessionStats.total}</div>
-                  <div className="text-xs text-gray-600">Questions</div>
+                  <div className="text-xs text-gray-600">{t('dashboard.questions')}</div>
                 </div>
                 <div className="text-center bg-green-50 rounded-xl px-4 py-2">
                   <div className="text-2xl font-bold text-green-600">{sessionStats.correct}</div>
-                  <div className="text-xs text-gray-600">Correct</div>
+                  <div className="text-xs text-gray-600">{t('dashboard.correct')}</div>
                 </div>
                 <div className="text-center bg-blue-50 rounded-xl px-4 py-2">
                   <div className="text-2xl font-bold text-blue-600">{accuracy}%</div>
-                  <div className="text-xs text-gray-600">Accuracy</div>
+                  <div className="text-xs text-gray-600">{t('dashboard.accuracy')}</div>
                 </div>
               </div>
             </div>
 
             {/* Level Selector */}
             <div className="mt-6 flex items-center gap-3">
-              <span className="text-sm font-medium text-gray-700">Level:</span>
+              <span className="text-sm font-medium text-gray-700">{t('dashboard.level')}</span>
               <div className="flex gap-2">
                 {levels.map((level) => (
                   <button
@@ -138,13 +140,13 @@ export default function DashboardPage() {
         <div className="bg-white rounded-3xl p-8 shadow-xl mb-8">
           <div className="flex flex-col md:flex-row items-center justify-between">
             <div>
-              <h1 className="text-4xl font-bold text-purple-600 mb-2">Welcome back, Super Star! 🌟</h1>
-              <p className="text-gray-600 text-lg">You&apos;re on a 5-day learning streak! Keep it up!</p>
+              <h1 className="text-4xl font-bold text-purple-600 mb-2">{t('dashboard.welcome')}</h1>
+              <p className="text-gray-600 text-lg">{t('dashboard.streak', { days: '5' })}</p>
             </div>
             <div className="mt-4 md:mt-0 text-center">
               <div className="text-5xl mb-2">🔥</div>
               <span className="bg-orange-100 text-orange-600 px-4 py-2 rounded-full font-bold">
-                5 Day Streak!
+                {t('dashboard.dayStreak', { days: '5' })}
               </span>
             </div>
           </div>
@@ -155,7 +157,7 @@ export default function DashboardPage() {
           <div className="md:col-span-2">
             {/* Math Practice Modules */}
             <div className="bg-white rounded-3xl p-8 shadow-xl mb-8">
-              <h2 className="text-2xl font-bold text-gray-800 mb-6">Math Practice 🧮</h2>
+              <h2 className="text-2xl font-bold text-gray-800 mb-6">{t('dashboard.mathPractice')}</h2>
 
               <div className="grid sm:grid-cols-2 gap-4">
                 {mathModules.map((module) => (
@@ -180,7 +182,7 @@ export default function DashboardPage() {
                     </p>
                     <div className="flex items-center justify-between">
                       <span className="text-xs bg-purple-100 text-purple-600 px-3 py-1 rounded-full font-medium">
-                        Start Practice →
+                        {t('dashboard.startPractice')}
                       </span>
                     </div>
                   </button>
@@ -190,7 +192,7 @@ export default function DashboardPage() {
 
             {/* Daily Challenges */}
             <div className="bg-white rounded-3xl p-8 shadow-xl">
-              <h2 className="text-2xl font-bold text-gray-800 mb-6">Daily Challenges 🎯</h2>
+              <h2 className="text-2xl font-bold text-gray-800 mb-6">{t('dashboard.dailyChallenges')}</h2>
 
               <div className="space-y-4">
                 {dailyChallenges.map((challenge) => (
@@ -227,22 +229,22 @@ export default function DashboardPage() {
           <div className="space-y-8">
             {/* Stats */}
             <div className="bg-white rounded-3xl p-6 shadow-xl">
-              <h2 className="text-xl font-bold text-gray-800 mb-4">Your Stats 📊</h2>
+              <h2 className="text-xl font-bold text-gray-800 mb-4">{t('dashboard.yourStats')}</h2>
               <div className="space-y-4">
                 <div className="flex justify-between items-center">
-                  <span className="text-gray-600">Total Lessons</span>
+                  <span className="text-gray-600">{t('dashboard.totalLessons')}</span>
                   <span className="font-bold text-purple-600">47</span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-gray-600">Coins Earned</span>
+                  <span className="text-gray-600">{t('dashboard.coinsEarned')}</span>
                   <span className="font-bold text-yellow-600">🪙 1,250</span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-gray-600">Badges</span>
+                  <span className="text-gray-600">{t('dashboard.badges')}</span>
                   <span className="font-bold text-green-600">12</span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-gray-600">Time Spent</span>
+                  <span className="text-gray-600">{t('dashboard.timeSpent')}</span>
                   <span className="font-bold text-blue-600">8h 30m</span>
                 </div>
               </div>
@@ -250,7 +252,7 @@ export default function DashboardPage() {
 
             {/* Achievements */}
             <div className="bg-white rounded-3xl p-6 shadow-xl">
-              <h2 className="text-xl font-bold text-gray-800 mb-4">Achievements 🏆</h2>
+              <h2 className="text-xl font-bold text-gray-800 mb-4">{t('dashboard.achievements')}</h2>
               <div className="grid grid-cols-3 gap-3">
                 {achievements.map((achievement) => (
                   <div
@@ -265,31 +267,31 @@ export default function DashboardPage() {
                 ))}
               </div>
               <button className="mt-4 w-full text-purple-600 font-medium hover:text-purple-700">
-                View All →
+                {t('dashboard.viewAll')}
               </button>
             </div>
 
             {/* Quick Actions */}
             <div className="bg-gradient-to-r from-purple-500 to-pink-500 rounded-3xl p-6 shadow-xl text-white">
-              <h2 className="text-xl font-bold mb-4">Quick Start ⚡</h2>
+              <h2 className="text-xl font-bold mb-4">{t('dashboard.quickStart')}</h2>
               <div className="space-y-3">
                 <button
                   onClick={() => handleModuleSelect(mathModules[Math.floor(Math.random() * mathModules.length)].id)}
                   className="w-full bg-white/20 hover:bg-white/30 py-3 rounded-xl font-medium transition-colors"
                 >
-                  Random Quiz 🎲
+                  {t('dashboard.randomQuiz')}
                 </button>
                 <Link
                   href="/math-test"
                   className="block w-full bg-white/20 hover:bg-white/30 py-3 rounded-xl font-medium transition-colors text-center"
                 >
-                  Practice Mode 🎯
+                  {t('dashboard.practiceMode')}
                 </Link>
                 <Link
                   href="/parent-portal"
                   className="block w-full bg-white/20 hover:bg-white/30 py-3 rounded-xl font-medium transition-colors text-center"
                 >
-                  Parent Portal 👨‍👩‍👧
+                  {t('dashboard.parentPortalLink')}
                 </Link>
               </div>
             </div>

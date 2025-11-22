@@ -1,4 +1,7 @@
+'use client';
+
 import Link from "next/link";
+import { useTranslation } from '@/lib/i18n';
 
 interface PlanFeature {
   text: string;
@@ -17,79 +20,79 @@ interface PricingPlan {
   emoji: string;
 }
 
-const plans: PricingPlan[] = [
-  {
-    name: "Free Explorer",
-    price: "$0",
-    period: "forever",
-    description: "Perfect for trying things out!",
-    emoji: "🌟",
-    features: [
-      { text: "3 subjects available", included: true },
-      { text: "5 lessons per week", included: true },
-      { text: "Basic progress tracking", included: true },
-      { text: "Earn starter badges", included: true },
-      { text: "Unlimited lessons", included: false },
-      { text: "All subjects unlocked", included: false },
-      { text: "Parent dashboard", included: false },
-      { text: "Printable worksheets", included: false },
-    ],
-    buttonText: "Start Free",
-    buttonColor: "bg-gray-500 hover:bg-gray-600",
-  },
-  {
-    name: "Super Learner",
-    price: "$9.99",
-    period: "per month",
-    description: "Our most popular choice!",
-    emoji: "🚀",
-    popular: true,
-    features: [
-      { text: "All subjects unlocked", included: true },
-      { text: "Unlimited lessons", included: true },
-      { text: "Advanced progress tracking", included: true },
-      { text: "Earn all badges & trophies", included: true },
-      { text: "Parent dashboard", included: true },
-      { text: "Printable worksheets", included: true },
-      { text: "Ad-free experience", included: true },
-      { text: "Priority support", included: false },
-    ],
-    buttonText: "Choose Super",
-    buttonColor: "bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600",
-  },
-  {
-    name: "Family Champions",
-    price: "$19.99",
-    period: "per month",
-    description: "Best for families with multiple kids!",
-    emoji: "👨‍👩‍👧‍👦",
-    features: [
-      { text: "Everything in Super Learner", included: true },
-      { text: "Up to 4 kid profiles", included: true },
-      { text: "Family progress reports", included: true },
-      { text: "Sibling challenges", included: true },
-      { text: "Custom learning paths", included: true },
-      { text: "1-on-1 tutor sessions", included: true },
-      { text: "Priority support", included: true },
-      { text: "Early access to new content", included: true },
-    ],
-    buttonText: "Go Family",
-    buttonColor: "bg-gradient-to-r from-orange-500 to-yellow-500 hover:from-orange-600 hover:to-yellow-600",
-  },
-];
-
 export default function PricingPage() {
+  const { t } = useTranslation();
+
+  const plans: PricingPlan[] = [
+    {
+      name: t('pricing.plans.free.name'),
+      price: t('pricing.plans.free.price'),
+      period: t('pricing.plans.free.period'),
+      description: t('pricing.plans.free.description'),
+      emoji: "🌟",
+      features: [
+        { text: t('pricing.plans.free.features.subjects'), included: true },
+        { text: t('pricing.plans.free.features.lessons'), included: true },
+        { text: t('pricing.plans.free.features.tracking'), included: true },
+        { text: t('pricing.plans.free.features.badges'), included: true },
+        { text: t('pricing.plans.free.features.unlimited'), included: false },
+        { text: t('pricing.plans.free.features.allSubjects'), included: false },
+        { text: t('pricing.plans.free.features.parentDashboard'), included: false },
+        { text: t('pricing.plans.free.features.worksheets'), included: false },
+      ],
+      buttonText: t('pricing.plans.free.buttonText'),
+      buttonColor: "bg-gray-500 hover:bg-gray-600",
+    },
+    {
+      name: t('pricing.plans.super.name'),
+      price: t('pricing.plans.super.price'),
+      period: t('pricing.plans.super.period'),
+      description: t('pricing.plans.super.description'),
+      emoji: "🚀",
+      popular: true,
+      features: [
+        { text: t('pricing.plans.super.features.allSubjects'), included: true },
+        { text: t('pricing.plans.super.features.unlimited'), included: true },
+        { text: t('pricing.plans.super.features.advancedTracking'), included: true },
+        { text: t('pricing.plans.super.features.allBadges'), included: true },
+        { text: t('pricing.plans.super.features.parentDashboard'), included: true },
+        { text: t('pricing.plans.super.features.worksheets'), included: true },
+        { text: t('pricing.plans.super.features.adFree'), included: true },
+        { text: t('pricing.plans.super.features.prioritySupport'), included: false },
+      ],
+      buttonText: t('pricing.plans.super.buttonText'),
+      buttonColor: "bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600",
+    },
+    {
+      name: t('pricing.plans.family.name'),
+      price: t('pricing.plans.family.price'),
+      period: t('pricing.plans.family.period'),
+      description: t('pricing.plans.family.description'),
+      emoji: "👨‍👩‍👧‍👦",
+      features: [
+        { text: t('pricing.plans.family.features.everything'), included: true },
+        { text: t('pricing.plans.family.features.profiles'), included: true },
+        { text: t('pricing.plans.family.features.familyReports'), included: true },
+        { text: t('pricing.plans.family.features.siblingChallenges'), included: true },
+        { text: t('pricing.plans.family.features.customPaths'), included: true },
+        { text: t('pricing.plans.family.features.tutorSessions'), included: true },
+        { text: t('pricing.plans.family.features.prioritySupport'), included: true },
+        { text: t('pricing.plans.family.features.earlyAccess'), included: true },
+      ],
+      buttonText: t('pricing.plans.family.buttonText'),
+      buttonColor: "bg-gradient-to-r from-orange-500 to-yellow-500 hover:from-orange-600 hover:to-yellow-600",
+    },
+  ];
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-100 via-purple-100 to-pink-100 py-16">
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-16">
           <h1 className="text-5xl md:text-6xl font-bold text-purple-600 mb-4">
-            Pick Your Plan! 🎁
+            {t('pricing.title')}
           </h1>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Choose the perfect plan for your learning adventure.
-            Start free and upgrade anytime!
+            {t('pricing.subtitle')}
           </p>
         </div>
 
@@ -105,7 +108,7 @@ export default function PricingPage() {
               {plan.popular && (
                 <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
                   <span className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-4 py-1 rounded-full text-sm font-bold">
-                    Most Popular! ⭐
+                    {t('pricing.mostPopular')}
                   </span>
                 </div>
               )}
@@ -149,34 +152,34 @@ export default function PricingPage() {
         {/* FAQ Section */}
         <div className="mt-20 max-w-3xl mx-auto">
           <h2 className="text-3xl font-bold text-center text-purple-600 mb-8">
-            Questions? We Got Answers! 🤔
+            {t('pricing.faq.title')}
           </h2>
 
           <div className="space-y-4">
             <div className="bg-white rounded-2xl p-6 shadow-lg">
               <h3 className="font-bold text-lg text-gray-800 mb-2">
-                Can I cancel anytime?
+                {t('pricing.faq.cancel.question')}
               </h3>
               <p className="text-gray-600">
-                Yes! You can cancel your subscription anytime. No hidden fees or tricks!
+                {t('pricing.faq.cancel.answer')}
               </p>
             </div>
 
             <div className="bg-white rounded-2xl p-6 shadow-lg">
               <h3 className="font-bold text-lg text-gray-800 mb-2">
-                Is the free plan really free?
+                {t('pricing.faq.free.question')}
               </h3>
               <p className="text-gray-600">
-                Absolutely! The Free Explorer plan is free forever with no credit card required.
+                {t('pricing.faq.free.answer')}
               </p>
             </div>
 
             <div className="bg-white rounded-2xl p-6 shadow-lg">
               <h3 className="font-bold text-lg text-gray-800 mb-2">
-                Can I switch plans later?
+                {t('pricing.faq.switch.question')}
               </h3>
               <p className="text-gray-600">
-                Of course! Upgrade or downgrade anytime. Your progress is always saved!
+                {t('pricing.faq.switch.answer')}
               </p>
             </div>
           </div>
@@ -185,13 +188,13 @@ export default function PricingPage() {
         {/* Bottom CTA */}
         <div className="text-center mt-16">
           <p className="text-gray-600 mb-4">
-            Not sure which plan is right for you?
+            {t('pricing.notSure')}
           </p>
           <Link
             href="/"
             className="text-purple-600 font-bold hover:text-purple-700 underline"
           >
-            Learn more about our features →
+            {t('pricing.learnMore')}
           </Link>
         </div>
       </div>

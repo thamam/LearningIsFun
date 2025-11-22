@@ -49,5 +49,175 @@
   "footer": {
     "madeWith": "נוצר באהבה ❤️ עבור לומדים צעירים",
     "copyright": "© 2024 ללמוד זה כיף. כל הזכויות שמורות."
+  },
+  "dashboard": {
+    "welcome": "שלום חוזר, כוכב על! 🌟",
+    "streak": "אתם ברצף למידה של {days} ימים! תמשיכו כך!",
+    "dayStreak": "רצף של {days} ימים!",
+    "mathPractice": "תרגול מתמטיקה 🧮",
+    "startPractice": "התחל תרגול ←",
+    "dailyChallenges": "אתגרים יומיים 🎯",
+    "yourStats": "הנתונים שלך 📊",
+    "achievements": "הישגים 🏆",
+    "quickStart": "התחלה מהירה ⚡",
+    "backButton": "חזרה ←",
+    "questions": "שאלות",
+    "correct": "נכונות",
+    "accuracy": "דיוק",
+    "level": "רמה:",
+    "totalLessons": "סה״כ שיעורים",
+    "coinsEarned": "מטבעות שנצברו",
+    "badges": "תגים",
+    "timeSpent": "זמן למידה",
+    "viewAll": "← הצג הכל",
+    "randomQuiz": "חידון אקראי 🎲",
+    "practiceMode": "מצב תרגול 🎯",
+    "parentPortalLink": "פורטל הורים 👨‍👩‍👧",
+    "challenges": {
+      "mathLessons": "השלימו 3 שיעורי מתמטיקה",
+      "readingTime": "קראו למשך 15 דקות",
+      "newSubject": "נסו נושא חדש"
+    },
+    "achievements": {
+      "firstLesson": "שיעור ראשון",
+      "weekStreak": "רצף שבועי",
+      "mathMaster": "אמן מתמטיקה",
+      "bookworm": "תולעת ספרים",
+      "scienceStar": "כוכב מדעים",
+      "perfectScore": "ציון מושלם"
+    }
+  },
+  "pricing": {
+    "title": "בחרו את המסלול שלכם! 🎁",
+    "subtitle": "בחרו את המסלול המושלם עבור הרפתקת הלמידה שלכם. התחילו בחינם ושדרגו בכל עת!",
+    "mostPopular": "הכי פופולרי! ⭐",
+    "faq": {
+      "title": "יש לכם שאלות? יש לנו תשובות! 🤔",
+      "cancel": {
+        "question": "האם אפשר לבטל בכל עת?",
+        "answer": "כן! אפשר לבטל את המנוי בכל עת. אין עמלות נסתרות או טריקים!"
+      },
+      "free": {
+        "question": "האם המסלול החינמי באמת חינמי?",
+        "answer": "בהחלט! מסלול החוקר החינמי הוא חינמי לתמיד ללא צורך בכרטיס אשראי."
+      },
+      "switch": {
+        "question": "האם אפשר להחליף מסלול מאוחר יותר?",
+        "answer": "בהחלט! שדרגו או הורידו דרגה בכל עת. ההתקדמות שלכם תמיד נשמרת!"
+      }
+    },
+    "notSure": "לא בטוחים איזה מסלול מתאים לכם?",
+    "learnMore": "← למדו עוד על התכונות שלנו",
+    "plans": {
+      "free": {
+        "name": "חוקר חינמי",
+        "price": "₪0",
+        "period": "לתמיד",
+        "description": "מושלם לניסיון ראשוני!",
+        "buttonText": "התחל בחינם",
+        "features": {
+          "subjects": "3 נושאים זמינים",
+          "lessons": "5 שיעורים בשבוע",
+          "tracking": "מעקב התקדמות בסיסי",
+          "badges": "הרוויחו תגי התחלה",
+          "unlimited": "שיעורים ללא הגבלה",
+          "allSubjects": "כל הנושאים פתוחים",
+          "parentDashboard": "לוח בקרה הורים",
+          "worksheets": "דפי עבודה להדפסה"
+        }
+      },
+      "super": {
+        "name": "לומד על",
+        "price": "₪39.99",
+        "period": "לחודש",
+        "description": "הבחירה הפופולרית ביותר!",
+        "buttonText": "בחרו ב-על",
+        "features": {
+          "allSubjects": "כל הנושאים פתוחים",
+          "unlimited": "שיעורים ללא הגבלה",
+          "advancedTracking": "מעקב התקדמות מתקדם",
+          "allBadges": "הרוויחו את כל התגים והגביעים",
+          "parentDashboard": "לוח בקרה הורים",
+          "worksheets": "דפי עבודה להדפסה",
+          "adFree": "ללא פרסומות",
+          "prioritySupport": "תמיכה עדיפה"
+        }
+      },
+      "family": {
+        "name": "משפחת אלופים",
+        "price": "₪79.99",
+        "period": "לחודש",
+        "description": "הכי טוב למשפחות עם כמה ילדים!",
+        "buttonText": "בחרו משפחה",
+        "features": {
+          "everything": "כל מה שיש בלומד על",
+          "profiles": "עד 4 פרופילי ילדים",
+          "familyReports": "דוחות התקדמות משפחתיים",
+          "siblingChallenges": "אתגרי אחים",
+          "customPaths": "מסלולי למידה מותאמים אישית",
+          "tutorSessions": "שיעורי פרטניים 1-על-1",
+          "prioritySupport": "תמיכה עדיפה",
+          "earlyAccess": "גישה מוקדמת לתכנים חדשים"
+        }
+      }
+    }
+  },
+  "parentPortal": {
+    "title": "פורטל הורים 👨‍👩‍👧",
+    "subtitle": "עקבו אחר מסע הלמידה וההתקדמות של ילדכם",
+    "settings": "הגדרות ⚙️",
+    "exportReport": "ייצוא דוח 📄",
+    "secureAccess": {
+      "title": "נדרשת גישה מאובטחת",
+      "message": "דף זה דורש אימות מחדש למטרות אבטחה."
+    },
+    "stats": {
+      "totalTime": "סה״כ זמן",
+      "lessonsDone": "שיעורים שבוצעו",
+      "avgAccuracy": "דיוק ממוצע",
+      "currentStreak": "רצף נוכחי",
+      "thisWeek": "↑ {percent}% השבוע",
+      "lessonsThisWeek": "↑ {count} השבוע",
+      "improvement": "↑ שיפור של {percent}%",
+      "keepGoing": "🔥 תמשיכו כך!"
+    },
+    "weeklyActivity": "פעילות שבועית 📅",
+    "subjectProgress": "התקדמות לפי נושאים 📊",
+    "recentActivity": "פעילות אחרונה 🕐",
+    "recommendations": "המלצות 💡",
+    "parentControls": "בקרת הורים ⚙️",
+    "subjects": {
+      "math": "מתמטיקה",
+      "reading": "קריאה",
+      "science": "מדעים",
+      "writing": "כתיבה"
+    },
+    "activity": {
+      "completedMath": "השלים שיעור מתמטיקה",
+      "earnedBadge": "הרוויח תג",
+      "completedReading": "השלים שיעור קריאה",
+      "completedQuiz": "השלים חידון מדעים",
+      "multiplicationTables": "לוחות כפל",
+      "weekStreakMaster": "אמן רצף שבועי",
+      "storyComprehension": "הבנת סיפור",
+      "plantsPhotosynthesis": "צמחים ופוטוסינתזה",
+      "hoursAgo": "לפני {count} שעות",
+      "yesterday": "אתמול",
+      "daysAgo": "לפני {count} ימים"
+    },
+    "recommendationsList": {
+      "science": "כדאי להתמקד יותר בתרגול מדעים - הדיוק יכול להשתפר",
+      "reading": "התקדמות מעולה בקריאה! המשיכו לעודד נושא זה",
+      "weekend": "פעילות בסוף השבוע נמוכה יותר - אולי להוסיף אתגר מהנה?"
+    },
+    "controls": {
+      "setGoals": "הגדירו יעדי למידה 🎯",
+      "manageScreenTime": "ניהול זמן מסך ⏰",
+      "notifications": "הגדרות התראות 🔔",
+      "viewAsChild": "צפייה כילד 👁️"
+    },
+    "lessonsProgress": "{completed}/{total} שיעורים",
+    "accuracyPercent": "דיוק {percent}%",
+    "minutes": "{count} דק׳"
   }
 }

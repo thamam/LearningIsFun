@@ -57,11 +57,13 @@ export default function Navigation() {
             {/* Language Toggle */}
             <button
               onClick={toggleLanguage}
-              className="text-2xl hover:scale-110 transition-transform"
+              className="flex items-center gap-1 text-sm font-medium hover:opacity-70 transition-opacity"
               aria-label={t('nav.toggleLanguage')}
               title={language === 'en' ? t('nav.switchToHebrew') : t('nav.switchToEnglish')}
             >
-              {language === 'en' ? '🇮🇱' : '🇺🇸'}
+              <span className={language === 'en' ? 'text-purple-600 font-bold' : 'text-gray-400'}>EN</span>
+              <span className="text-gray-400">|</span>
+              <span className={language === 'he' ? 'text-purple-600 font-bold' : 'text-gray-400'}>HE</span>
             </button>
 
             <Link
