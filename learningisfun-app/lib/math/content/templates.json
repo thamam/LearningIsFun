@@ -100,6 +100,36 @@
     }
   },
   "fraction": {
+    "instructions": {
+      "he": {
+        "comparePrompt": "מה הסימן הנכון?",
+        "calculate": "חשבי:",
+        "calculateAndSimplify": "חשבי וצמצמי:",
+        "simplify": "צמצמי:",
+        "fractionToDecimal": "כתבי כעשרוני:",
+        "decimalToFraction": "כתבי כשבר:",
+        "inputPlaceholder": "הכניסי תשובה",
+        "validationError": "אנא הכניסי תשובה!",
+        "correctAnswerPrefix": "התשובה הנכונה:",
+        "correctFeedback": "תשובה נכונה!",
+        "tip": "טיפ: תרגלי צמצום שברים!",
+        "voiceCorrect": "כל הכבוד אמה!"
+      },
+      "en": {
+        "comparePrompt": "What is the correct sign?",
+        "calculate": "Calculate:",
+        "calculateAndSimplify": "Calculate and simplify:",
+        "simplify": "Simplify:",
+        "fractionToDecimal": "Write as a decimal:",
+        "decimalToFraction": "Write as a fraction:",
+        "inputPlaceholder": "Enter your answer",
+        "validationError": "Please enter an answer!",
+        "correctAnswerPrefix": "The correct answer:",
+        "correctFeedback": "Correct answer!",
+        "tip": "Tip: Practice simplifying fractions!",
+        "voiceCorrect": "Great job Emma!"
+      }
+    },
     "wordProblems": {
       "he": [
         {
@@ -138,6 +168,26 @@
     }
   },
   "decimal": {
+    "instructions": {
+      "he": {
+        "digitValue": "מה ערך הספרה {digit} במספר {number}?",
+        "nextNumber": "מהו המספר העוקב של {number}?",
+        "previousNumber": "מהו המספר הקודם של {number}?",
+        "missingDigit": "מהי הספרה החסרה? {pattern}\n(המספר נמצא בין {lowerBound} ל-{upperBound})",
+        "inputPlaceholder": "הכניסי תשובה",
+        "answerRange": "בין {min} ל-{max}",
+        "correctAnswer": "התשובה הנכונה: {answer}"
+      },
+      "en": {
+        "digitValue": "What is the value of the digit {digit} in the number {number}?",
+        "nextNumber": "What is the next number after {number}?",
+        "previousNumber": "What is the previous number before {number}?",
+        "missingDigit": "What is the missing digit? {pattern}\n(The number is between {lowerBound} and {upperBound})",
+        "inputPlaceholder": "Enter your answer",
+        "answerRange": "between {min} and {max}",
+        "correctAnswer": "The correct answer: {answer}"
+      }
+    },
     "wordProblems": {
       "he": [
         {
@@ -174,6 +224,28 @@
     }
   },
   "distributive": {
+    "instructions": {
+      "he": {
+        "missingNumber": "מהו המספר החסר?",
+        "calculatePrompt": "חשב בעזרת חוק הפילוג:",
+        "hint": "רמז:",
+        "inputPlaceholder": "הכניסי תשובה",
+        "explanationPrefix": "הסבר:",
+        "solutionPrefix": "פתרון:",
+        "connectionNote": "💡 זה בדיוק מה שקורה באלגוריתם הכפל המאונך!",
+        "subtractionTip": "💡 שימוש בחיסור עוזר כשהמספר קרוב לעשרת עגולה!"
+      },
+      "en": {
+        "missingNumber": "What is the missing number?",
+        "calculatePrompt": "Calculate using the distributive property:",
+        "hint": "Hint:",
+        "inputPlaceholder": "Enter your answer",
+        "explanationPrefix": "Explanation:",
+        "solutionPrefix": "Solution:",
+        "connectionNote": "💡 This is exactly what happens in the vertical multiplication algorithm!",
+        "subtractionTip": "💡 Using subtraction helps when the number is close to a round ten!"
+      }
+    },
     "wordProblems": {
       "he": [
         {
@@ -198,6 +270,38 @@
     }
   },
   "number-line": {
+    "instructions": {
+      "he": {
+        "whatNumberExact": "איזה מספר מסומן בחץ? (מסתיים ב-{lastDigit})",
+        "whatNumberApprox": "איזה מספר מסומן בחץ? ({hint})",
+        "betweenNumbers": "איזה מספר נמצא בדיוק באמצע בין {num1} ל-{num2}?",
+        "closerTo": "המספר {testNum} קרוב יותר ל-{option1} או ל-{option2}?",
+        "inputPlaceholder": "הכניסי מספר",
+        "answerPlaceholder": "הכניסי תשובה",
+        "validationErrorEmpty": "אנא הכניסי תשובה!",
+        "validationErrorNumber": "אנא הכניסי מספר!",
+        "correctAnswerPrefix": "התשובה הנכונה:",
+        "voiceCorrect": "כל הכבוד אמה!",
+        "hintDivisibleBy10": "מתחלק ב-10",
+        "hintEndsIn5": "מסתיים ב-5",
+        "hintEndsIn": "מסתיים ב-{digit}"
+      },
+      "en": {
+        "whatNumberExact": "What number is marked by the arrow? (ends in {lastDigit})",
+        "whatNumberApprox": "What number is marked by the arrow? ({hint})",
+        "betweenNumbers": "What number is exactly in the middle between {num1} and {num2}?",
+        "closerTo": "Is the number {testNum} closer to {option1} or {option2}?",
+        "inputPlaceholder": "Enter a number",
+        "answerPlaceholder": "Enter your answer",
+        "validationErrorEmpty": "Please enter an answer!",
+        "validationErrorNumber": "Please enter a number!",
+        "correctAnswerPrefix": "The correct answer:",
+        "voiceCorrect": "Great job Emma!",
+        "hintDivisibleBy10": "divisible by 10",
+        "hintEndsIn5": "ends in 5",
+        "hintEndsIn": "ends in {digit}"
+      }
+    },
     "wordProblems": {
       "he": [
         {
@@ -232,6 +336,26 @@
     }
   },
   "order-operations": {
+    "instructions": {
+      "he": {
+        "calculate": "חשבי:",
+        "solveInOneExpression": "פתרי ע\"י תרגיל אחד.",
+        "inputPlaceholder": "הכניסי תשובה",
+        "validationError": "אנא הכניסי מספר!",
+        "correctAnswerPrefix": "התשובה הנכונה:",
+        "solutionLabel": "פתרון:",
+        "explanationLabel": "הסבר:"
+      },
+      "en": {
+        "calculate": "Calculate:",
+        "solveInOneExpression": "Solve with one expression.",
+        "inputPlaceholder": "Enter your answer",
+        "validationError": "Please enter a number!",
+        "correctAnswerPrefix": "The correct answer:",
+        "solutionLabel": "Solution:",
+        "explanationLabel": "Explanation:"
+      }
+    },
     "wordProblems": {
       "he": [
         {
@@ -240,6 +364,49 @@
             "num1",
             "num2",
             "num3"
+          ]
+        },
+        {
+          "text": "בחנות יש {total} שקלים. קנו {items} ספרים ב-{price} שקלים כל אחד. כמה כסף נשאר?",
+          "vars": [
+            "total",
+            "items",
+            "price"
+          ]
+        },
+        {
+          "text": "יש {children} ילדים בכיתה. כל ילד קיבל {pencils} עפרונות. הוסיפו עוד {additional} עפרונות. כמה עפרונות יש בסך הכל?",
+          "vars": [
+            "children",
+            "pencils",
+            "additional"
+          ]
+        },
+        {
+          "text": "אמה יצאה לקניות עם {total} שקלים. היא קנה {items} חולצות ב-{price} שקלים כל אחת, ומכנסיים ב-{pants} שקלים. כמה כסף נשאר לה?",
+          "vars": [
+            "total",
+            "items",
+            "price",
+            "pants"
+          ]
+        },
+        {
+          "text": "באולם יש {rows} שורות של {cols} כיסאות. בכל כיסא {perSeat} ספרים. הושאלו {borrowed} ספרים. כמה ספרים נשארו?",
+          "vars": [
+            "rows",
+            "cols",
+            "perSeat",
+            "borrowed"
+          ]
+        },
+        {
+          "text": "בגן יש {groups} קבוצות של {perGroup} ילדים, ועוד {additional} ילדים. מחלקים אותם ל-{divisor} כיתות שווים. כמה ילדים בכל כיתה?",
+          "vars": [
+            "groups",
+            "perGroup",
+            "additional",
+            "divisor"
           ]
         }
       ],
@@ -250,6 +417,49 @@
             "num1",
             "num2",
             "num3"
+          ]
+        },
+        {
+          "text": "The store has {total} dollars. They bought {items} books for {price} dollars each. How much money is left?",
+          "vars": [
+            "total",
+            "items",
+            "price"
+          ]
+        },
+        {
+          "text": "There are {children} children in class. Each child got {pencils} pencils. They added {additional} more pencils. How many pencils in total?",
+          "vars": [
+            "children",
+            "pencils",
+            "additional"
+          ]
+        },
+        {
+          "text": "Emma went shopping with {total} dollars. She bought {items} shirts for {price} dollars each, and pants for {pants} dollars. How much money does she have left?",
+          "vars": [
+            "total",
+            "items",
+            "price",
+            "pants"
+          ]
+        },
+        {
+          "text": "In the auditorium there are {rows} rows of {cols} seats. Each seat has {perSeat} books. {borrowed} books were borrowed. How many books are left?",
+          "vars": [
+            "rows",
+            "cols",
+            "perSeat",
+            "borrowed"
+          ]
+        },
+        {
+          "text": "In the kindergarten there are {groups} groups of {perGroup} children, and {additional} more children. They are divided into {divisor} equal classes. How many children in each class?",
+          "vars": [
+            "groups",
+            "perGroup",
+            "additional",
+            "divisor"
           ]
         }
       ]

@@ -3,7 +3,8 @@
  * Extracted from Emma's Math Lab
  */
 
-import { MathModule, Level, Question } from '../types';
+import { MathModule, Level, Question, Language } from '../types';
+import { getInstruction } from '../content';
 
 function gcd(a: number, b: number): number {
   return b === 0 ? a : gcd(b, a % b);
@@ -24,7 +25,7 @@ function getFractionRange(level: Level) {
   }
 }
 
-function generateQuestion(level: Level = 'בינוני', lang: string = 'he'): Question {
+function generateQuestion(level: Level = 'בינוני', lang: Language = 'he'): Question {
   const types = ['compare', 'addSameDenominator', 'simplify', 'fractionToDecimal', 'decimalToFraction'];
   const type = types[Math.floor(Math.random() * types.length)];
   const range = getFractionRange(level);
@@ -39,13 +40,20 @@ function generateQuestion(level: Level = 'בינוני', lang: string = 'he'): Q
       if (num1 > num2) answer = '>';
       else if (num1 < num2) answer = '<';
       else answer = '=';
+
+      const promptText = getInstruction('fraction', 'comparePrompt', lang);
+      const explanationText = lang === 'he'
+        ? `${num1}/${den1} ${answer} ${num2}/${den1} כי ${num1} ${answer} ${num2}`
+        : `${num1}/${den1} ${answer} ${num2}/${den1} because ${num1} ${answer} ${num2}`;
+
       return {
-        question: `מה הסימן הנכון? ${num1}/${den1} ___ ${num2}/${den1}`,
+        question: `${promptText} ${num1}/${den1} ___ ${num2}/${den1}`,
         type: 'choice',
         correctAnswer: answer,
         choices: choices,
         difficulty: level,
-        explanation: `${num1}/${den1} ${answer} ${num2}/${den1} כי ${num1} ${answer} ${num2}`,
+        explanation: explanationText,
+        metadata: { lang },
       };
     }
 
@@ -56,29 +64,45 @@ function generateQuestion(level: Level = 'בינוני', lang: string = 'he'): Q
       const sum = n1 + n2;
       const simplified = simplifyFraction(sum, den);
 
+      const calculateText = getInstruction('fraction', 'calculate', lang);
+      const calculateAndSimplifyText = getInstruction('fraction', 'calculateAndSimplify', lang);
+
       if (simplified.den === 1) {
+        const explanationText = lang === 'he'
+          ? `${n1}/${den} + ${n2}/${den} = ${sum}/${den} = ${simplified.num}`
+          : `${n1}/${den} + ${n2}/${den} = ${sum}/${den} = ${simplified.num}`;
         return {
-          question: `${n1}/${den} + ${n2}/${den} = ___`,
+          question: `${calculateText} ${n1}/${den} + ${n2}/${den} = ___`,
           type: 'input',
           correctAnswer: simplified.num,
           difficulty: level,
-          explanation: `${n1}/${den} + ${n2}/${den} = ${sum}/${den} = ${simplified.num}`,
+          explanation: explanationText,
+          metadata: { lang },
         };
       } else if (simplified.num === sum && simplified.den === den) {
+        const explanationText = lang === 'he'
+          ? `${n1} + ${n2} = ${sum}, לכן התשובה היא ${sum}/${den}`
+          : `${n1} + ${n2} = ${sum}, so the answer is ${sum}/${den}`;
         return {
-          question: `${n1}/${den} + ${n2}/${den} = ___/${den}`,
+          question: `${calculateText} ${n1}/${den} + ${n2}/${den} = ___/${den}`,
           type: 'input',
           correctAnswer: `${sum}/${den}`,
           difficulty: level,
-          explanation: `${n1} + ${n2} = ${sum}, לכן התשובה היא ${sum}/${den}`,
+          explanation: explanationText,
+          metadata: { lang },
         };
       } else {
+        const simplifyNote = lang === 'he' ? '(צמצמי!)' : '(simplify!)';
+        const explanationText = lang === 'he'
+          ? `${n1}/${den} + ${n2}/${den} = ${sum}/${den} = ${simplified.num}/${simplified.den}`
+          : `${n1}/${den} + ${n2}/${den} = ${sum}/${den} = ${simplified.num}/${simplified.den}`;
         return {
-          question: `${n1}/${den} + ${n2}/${den} = ___ (צמצמי!)`,
+          question: `${calculateAndSimplifyText} ${n1}/${den} + ${n2}/${den} = ___ ${simplifyNote}`,
           type: 'input',
           correctAnswer: `${simplified.num}/${simplified.den}`,
           difficulty: level,
-          explanation: `${n1}/${den} + ${n2}/${den} = ${sum}/${den} = ${simplified.num}/${simplified.den}`,
+          explanation: explanationText,
+          metadata: { lang },
         };
       }
     }
@@ -89,12 +113,19 @@ function generateQuestion(level: Level = 'בינוני', lang: string = 'he'): Q
       const numToSimplify = (Math.floor(Math.random() * (baseDen - 1)) + 1) * multiplier;
       const denToSimplify = baseDen * multiplier;
       const result = simplifyFraction(numToSimplify, denToSimplify);
+
+      const simplifyText = getInstruction('fraction', 'simplify', lang);
+      const explanationText = lang === 'he'
+        ? `המחלק המשותף הגדול של ${numToSimplify} ו-${denToSimplify} הוא ${multiplier}, לכן ${numToSimplify}/${denToSimplify} = ${result.num}/${result.den}`
+        : `The greatest common divisor of ${numToSimplify} and ${denToSimplify} is ${multiplier}, so ${numToSimplify}/${denToSimplify} = ${result.num}/${result.den}`;
+
       return {
-        question: `צמצמי: ${numToSimplify}/${denToSimplify} = ___`,
+        question: `${simplifyText} ${numToSimplify}/${denToSimplify} = ___`,
         type: 'input',
         correctAnswer: `${result.num}/${result.den}`,
         difficulty: level,
-        explanation: `המחלק המשותף הגדול של ${numToSimplify} ו-${denToSimplify} הוא ${multiplier}, לכן ${numToSimplify}/${denToSimplify} = ${result.num}/${result.den}`,
+        explanation: explanationText,
+        metadata: { lang },
       };
     }
 
@@ -111,12 +142,16 @@ function generateQuestion(level: Level = 'בינוני', lang: string = 'he'): Q
         { num: 3, den: 10, decimal: 0.3 },
       ];
       const pair = fractionPairs[Math.floor(Math.random() * fractionPairs.length)];
+
+      const promptText = getInstruction('fraction', 'fractionToDecimal', lang);
+
       return {
-        question: `כתבי כעשרוני: ${pair.num}/${pair.den} = ___`,
+        question: `${promptText} ${pair.num}/${pair.den} = ___`,
         type: 'input',
         correctAnswer: pair.decimal,
         difficulty: level,
         explanation: `${pair.num}/${pair.den} = ${pair.decimal}`,
+        metadata: { lang },
       };
     }
 
@@ -129,12 +164,16 @@ function generateQuestion(level: Level = 'בינוני', lang: string = 'he'): Q
         { decimal: 0.4, num: 2, den: 5 },
       ];
       const decPair = decimalOptions[Math.floor(Math.random() * decimalOptions.length)];
+
+      const promptText = getInstruction('fraction', 'decimalToFraction', lang);
+
       return {
-        question: `כתבי כשבר: ${decPair.decimal} = ___`,
+        question: `${promptText} ${decPair.decimal} = ___`,
         type: 'input',
         correctAnswer: `${decPair.num}/${decPair.den}`,
         difficulty: level,
         explanation: `${decPair.decimal} = ${decPair.num}/${decPair.den}`,
+        metadata: { lang },
       };
     }
 
@@ -158,14 +197,22 @@ function checkAnswer(
 }
 
 function getHint(questionData: Question): string {
-  return '💡 תרגלי צמצום שברים ושימי לב למכנה המשותף';
+  const lang = questionData.metadata?.lang || 'he';
+  return lang === 'he'
+    ? '💡 תרגלי צמצום שברים ושימי לב למכנה המשותף'
+    : '💡 Practice simplifying fractions and pay attention to the common denominator';
 }
 
 function getExplanation(questionData: Question, userAnswer: string | number) {
+  const lang = questionData.metadata?.lang || 'he';
   return {
-    detailed: questionData.explanation || 'תרגלי עוד תרגילי שברים',
-    tip: 'כדי לצמצם שבר, חלקי את המונה והמכנה באותו מספר',
-    nextSteps: 'המשיכי לתרגל השוואת שברים וחיבור שברים',
+    detailed: questionData.explanation || (lang === 'he' ? 'תרגלי עוד תרגילי שברים' : 'Practice more fraction exercises'),
+    tip: lang === 'he'
+      ? 'כדי לצמצם שבר, חלקי את המונה והמכנה באותו מספר'
+      : 'To simplify a fraction, divide both numerator and denominator by the same number',
+    nextSteps: lang === 'he'
+      ? 'המשיכי לתרגל השוואת שברים וחיבור שברים'
+      : 'Continue practicing comparing and adding fractions',
   };
 }
 
