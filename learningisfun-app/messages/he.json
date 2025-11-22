@@ -186,6 +186,15 @@
     "recentActivity": "פעילות אחרונה 🕐",
     "recommendations": "המלצות 💡",
     "parentControls": "בקרת הורים ⚙️",
+    "weekDays": {
+      "mon": "ב׳",
+      "tue": "ג׳",
+      "wed": "ד׳",
+      "thu": "ה׳",
+      "fri": "ו׳",
+      "sat": "ש׳",
+      "sun": "א׳"
+    },
     "subjects": {
       "math": "מתמטיקה",
       "reading": "קריאה",

@@ -21,13 +21,13 @@ export default function ParentPortalPage() {
   const { t } = useTranslation();
 
   const weeklyActivity: WeeklyActivity[] = [
-    { day: "Mon", minutes: 45 },
-    { day: "Tue", minutes: 30 },
-    { day: "Wed", minutes: 60 },
-    { day: "Thu", minutes: 25 },
-    { day: "Fri", minutes: 50 },
-    { day: "Sat", minutes: 15 },
-    { day: "Sun", minutes: 40 },
+    { day: "mon", minutes: 45 },
+    { day: "tue", minutes: 30 },
+    { day: "wed", minutes: 60 },
+    { day: "thu", minutes: 25 },
+    { day: "fri", minutes: 50 },
+    { day: "sat", minutes: 15 },
+    { day: "sun", minutes: 40 },
   ];
 
   const subjectProgress: SubjectProgress[] = [
@@ -171,7 +171,7 @@ export default function ParentPortalPage() {
                       style={{ height: `${(day.minutes / 60) * 100}%` }}
                       title={`${day.minutes} minutes`}
                     ></div>
-                    <span className="text-sm text-gray-600 mt-2">{day.day}</span>
+                    <span className="text-sm text-gray-600 mt-2">{t(`parentPortal.weekDays.${day.day}`)}</span>
                     <span className="text-xs text-gray-400">{day.minutes}m</span>
                   </div>
                 ))}

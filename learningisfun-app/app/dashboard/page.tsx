@@ -3,10 +3,9 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { getAllModules } from '@/lib/math';
+import type { Level } from '@/lib/math/types';
 import MathQuestion from '@/components/math/MathQuestion';
 import { useTranslation } from '@/lib/i18n';
-
-type Level = 'קל' | 'בינוני' | 'קשה';
 
 interface Achievement {
   name: string;

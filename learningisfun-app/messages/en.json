@@ -186,6 +186,15 @@
     "recentActivity": "Recent Activity 🕐",
     "recommendations": "Recommendations 💡",
     "parentControls": "Parent Controls ⚙️",
+    "weekDays": {
+      "mon": "Mon",
+      "tue": "Tue",
+      "wed": "Wed",
+      "thu": "Thu",
+      "fri": "Fri",
+      "sat": "Sat",
+      "sun": "Sun"
+    },
     "subjects": {
       "math": "Math",
       "reading": "Reading",
