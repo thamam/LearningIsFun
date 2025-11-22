@@ -6,7 +6,7 @@
  */
 
 import { MathModule, Level, Question, Language } from '../types';
-import { getInstruction } from '../content';
+import { getInstruction, getHint as getHintFromContent } from '../content';
 
 function getRandomNumber(level: Level): number {
   if (level === 'קל') {
@@ -221,9 +221,7 @@ function checkAnswer(
 
 function getHint(questionData: Question): string {
   const lang = questionData.metadata?.lang || 'he';
-  return lang === 'he'
-    ? '💡 חשבי על ערך כל ספרה לפי מקומה'
-    : '💡 Think about the value of each digit by its place';
+  return getHintFromContent('decimal', lang as Language);
 }
 
 function getExplanation(questionData: Question, userAnswer: string | number) {

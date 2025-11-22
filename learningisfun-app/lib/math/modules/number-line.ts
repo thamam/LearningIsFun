@@ -5,7 +5,8 @@
  * Visual number line exercises - understanding position and intervals
  */
 
-import { MathModule, Level, Question, NumberLineVisualData } from '../types';
+import { MathModule, Level, Question, NumberLineVisualData, Language } from '../types';
+import { getHint as getHintFromContent } from '../content';
 
 function getNumberlineRange(level: Level): NumberLineVisualData {
   if (level === 'קל') {
@@ -86,7 +87,8 @@ function checkAnswer(
 }
 
 function getHint(questionData: Question): string {
-  return '💡 שימי לב למיקום המספרים על הישר ולמרווחים ביניהם';
+  const lang = questionData.metadata?.lang || 'he';
+  return getHintFromContent('number-line', lang as Language);
 }
 
 function getExplanation(questionData: Question, userAnswer: string | number) {

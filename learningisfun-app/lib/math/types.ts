@@ -5,6 +5,7 @@
 
 export type Level = 'קל' | 'בינוני' | 'קשה';
 export type Language = 'he' | 'en';
+export type ModuleName = 'division' | 'multiplication' | 'fraction' | 'decimal' | 'distributive' | 'order-operations' | 'number-line';
 
 export type QuestionType = 'input' | 'choice' | 'visual-input' | 'visual-choice';
 

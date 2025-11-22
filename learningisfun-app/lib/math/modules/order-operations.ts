@@ -6,7 +6,8 @@
  * demonstrate WHY the rules exist - not arbitrary rules to memorize.
  */
 
-import { MathModule, Level, Question } from '../types';
+import { MathModule, Level, Question, Language } from '../types';
+import { generateWordProblem, getHint as getHintFromContent } from '../content';
 
 function generateQuestion(level: Level = 'בינוני', lang: string = 'he'): Question {
   if (level === 'קל') {
@@ -115,14 +116,14 @@ function generateQuestion(level: Level = 'בינוני', lang: string = 'he'): Q
       // Simple word problem
       const scenarios = [
         {
-          setup: (a: number, b: number, c: number) =>
-            `בחנות יש ${a} שקלים. קנו ${b} ספרים ב-${c} שקלים כל אחד. כמה כסף נשאר?`,
+          template: 'order-operations-subtraction',
+          variables: (a: number, b: number, c: number) => ({ total: a, items: b, price: c }),
           expr: (a: number, b: number, c: number) => `${a} - ${b} × ${c}`,
           calc: (a: number, b: number, c: number) => a - b * c,
         },
         {
-          setup: (a: number, b: number, c: number) =>
-            `יש ${a} ילדים בכיתה. כל ילד קיבל ${b} עפרונות. הוסיפו עוד ${c} עפרונות. כמה עפרונות יש בסך הכל?`,
+          template: 'order-operations-addition',
+          variables: (a: number, b: number, c: number) => ({ children: a, pencils: b, additional: c }),
           expr: (a: number, b: number, c: number) => `${a} × ${b} + ${c}`,
           calc: (a: number, b: number, c: number) => a * b + c,
         },
@@ -133,9 +134,16 @@ function generateQuestion(level: Level = 'בינוני', lang: string = 'he'): Q
       const b = Math.floor(Math.random() * 8) + 2;
       const c = Math.floor(Math.random() * 15) + 5;
 
+      // Generate word problem from template
+      const wordProblem = generateWordProblem(
+        'order-operations',
+        scenario.variables(a, b, c),
+        lang as Language
+      );
+
       const answer = scenario.calc(a, b, c);
       return {
-        question: scenario.setup(a, b, c) + `\n\nפתרי ע"י תרגיל אחד.`,
+        question: (wordProblem || scenario.expr(a, b, c)) + `\n\nפתרי ע"י תרגיל אחד.`,
         type: 'input',
         correctAnswer: answer,
         difficulty: level,
@@ -146,13 +154,20 @@ function generateQuestion(level: Level = 'בינוני', lang: string = 'he'): Q
     // Hard: Complex multi-step word problems
     const scenarios = [
       {
-        setup: () => {
+        setup: (lang: Language) => {
           const total = Math.floor(Math.random() * 30) + 50;
           const shirts = Math.floor(Math.random() * 3) + 2;
           const pricePerShirt = Math.floor(Math.random() * 15) + 10;
           const pants = Math.floor(Math.random() * 20) + 15;
+
+          const text = generateWordProblem(
+            'order-operations',
+            { total, items: shirts, price: pricePerShirt, pants },
+            lang
+          );
+
           return {
-            text: `אמה יצאה לקניות עם ${total} שקלים. היא קנה ${shirts} חולצות ב-${pricePerShirt} שקלים כל אחת, ומכנסיים ב-${pants} שקלים. כמה כסף נשאר לה?`,
+            text: text || `${total} - (${shirts} × ${pricePerShirt} + ${pants})`,
             expr: `${total} - (${shirts} × ${pricePerShirt} + ${pants})`,
             answer: total - (shirts * pricePerShirt + pants),
             explanation: `1) עלות חולצות: ${shirts} × ${pricePerShirt} = ${shirts * pricePerShirt}\n2) סה"כ קניות: ${shirts * pricePerShirt} + ${pants} = ${shirts * pricePerShirt + pants}\n3) יתרה: ${total} - ${shirts * pricePerShirt + pants} = ${total - (shirts * pricePerShirt + pants)}`,
@@ -160,13 +175,20 @@ function generateQuestion(level: Level = 'בינוני', lang: string = 'he'): Q
         },
       },
       {
-        setup: () => {
+        setup: (lang: Language) => {
           const rows = Math.floor(Math.random() * 5) + 5;
           const cols = Math.floor(Math.random() * 6) + 4;
           const perSeat = Math.floor(Math.random() * 3) + 6;
           const borrowed = Math.floor(Math.random() * 10) + 5;
+
+          const text = generateWordProblem(
+            'order-operations',
+            { rows, cols, perSeat, borrowed },
+            lang
+          );
+
           return {
-            text: `באולם יש ${rows} שורות של ${cols} כיסאות. בכל כיסא ${perSeat} ספרים. הושאלו ${borrowed} ספרים. כמה ספרים נשארו?`,
+            text: text || `${rows} × ${cols} × ${perSeat} - ${borrowed}`,
             expr: `${rows} × ${cols} × ${perSeat} - ${borrowed}`,
             answer: rows * cols * perSeat - borrowed,
             explanation: `1) כיסאות: ${rows} × ${cols} = ${rows * cols}\n2) ספרים: ${rows * cols} × ${perSeat} = ${rows * cols * perSeat}\n3) נשארו: ${rows * cols * perSeat} - ${borrowed} = ${rows * cols * perSeat - borrowed}`,
@@ -174,14 +196,21 @@ function generateQuestion(level: Level = 'בינוני', lang: string = 'he'): Q
         },
       },
       {
-        setup: () => {
+        setup: (lang: Language) => {
           const groups = Math.floor(Math.random() * 5) + 4;
           const perGroup = Math.floor(Math.random() * 6) + 5;
           const additional = Math.floor(Math.random() * 8) + 3;
           const divisor = Math.floor(Math.random() * 4) + 2;
           const total = groups * perGroup + additional;
+
+          const text = generateWordProblem(
+            'order-operations',
+            { groups, perGroup, additional, divisor },
+            lang
+          );
+
           return {
-            text: `בגן יש ${groups} קבוצות של ${perGroup} ילדים, ועוד ${additional} ילדים. מחלקים אותם ל-${divisor} כיתות שווים. כמה ילדים בכל כיתה?`,
+            text: text || `(${groups} × ${perGroup} + ${additional}) ÷ ${divisor}`,
             expr: `(${groups} × ${perGroup} + ${additional}) ÷ ${divisor}`,
             answer: Math.floor(total / divisor),
             explanation: `1) ילדים בקבוצות: ${groups} × ${perGroup} = ${groups * perGroup}\n2) סה"כ ילדים: ${groups * perGroup} + ${additional} = ${total}\n3) בכל כיתה: ${total} ÷ ${divisor} = ${Math.floor(total / divisor)}`,
@@ -191,7 +220,7 @@ function generateQuestion(level: Level = 'בינוני', lang: string = 'he'): Q
     ];
 
     const scenario = scenarios[Math.floor(Math.random() * scenarios.length)];
-    const problem = scenario.setup();
+    const problem = scenario.setup(lang as Language);
 
     return {
       question: problem.text + `\n\nפתרי ע"י תרגיל אחד.`,
@@ -215,7 +244,8 @@ function checkAnswer(
 }
 
 function getHint(questionData: Question): string {
-  return '💡 זכרי: סוגריים ← כפל/חילוק ← חיבור/חיסור';
+  const lang = questionData.metadata?.lang || 'he';
+  return getHintFromContent('order-operations', lang as Language);
 }
 
 function getExplanation(questionData: Question, userAnswer: string | number) {

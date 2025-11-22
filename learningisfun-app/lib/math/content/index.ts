@@ -131,6 +131,23 @@ export function getInstruction(
 }
 
 /**
+ * Get hint text for a specific module
+ */
+export function getHint(
+  moduleName: string,
+  language: Language = 'he'
+): string {
+  const moduleContent = templates[moduleName as keyof typeof templates] as any;
+
+  if (!moduleContent || !moduleContent.hints) {
+    console.warn(`No hints found for module: ${moduleName}`);
+    return '💡'; // Fallback emoji
+  }
+
+  return moduleContent.hints[language] || moduleContent.hints['he'] || '💡';
+}
+
+/**
  * Export all templates (useful for AI generation scripts)
  */
 export function getAllTemplates() {

@@ -6,7 +6,8 @@
  * Example: 7 × 13 = 7 × (10 + 3) = (7 × 10) + (7 × 3) = 70 + 21 = 91
  */
 
-import { MathModule, Level, Question } from '../types';
+import { MathModule, Level, Question, Language } from '../types';
+import { getHint as getHintFromContent } from '../content';
 
 function generateQuestion(level: Level = 'בינוני', lang: string = 'he'): Question {
   if (level === 'קל') {
@@ -142,7 +143,8 @@ function checkAnswer(
 }
 
 function getHint(questionData: Question): string {
-  return '💡 פרקי את המספר לפי מבנה עשרוני והכפל כל חלק בנפרד';
+  const lang = questionData.metadata?.lang || 'he';
+  return getHintFromContent('distributive', lang as Language);
 }
 
 function getExplanation(questionData: Question, userAnswer: string | number) {

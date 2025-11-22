@@ -4,7 +4,7 @@
  */
 
 import { MathModule, Level, Question, Language } from '../types';
-import { getInstruction } from '../content';
+import { getInstruction, getHint as getHintFromContent } from '../content';
 
 function gcd(a: number, b: number): number {
   return b === 0 ? a : gcd(b, a % b);
@@ -198,9 +198,7 @@ function checkAnswer(
 
 function getHint(questionData: Question): string {
   const lang = questionData.metadata?.lang || 'he';
-  return lang === 'he'
-    ? '💡 תרגלי צמצום שברים ושימי לב למכנה המשותף'
-    : '💡 Practice simplifying fractions and pay attention to the common denominator';
+  return getHintFromContent('fraction', lang as Language);
 }
 
 function getExplanation(questionData: Question, userAnswer: string | number) {

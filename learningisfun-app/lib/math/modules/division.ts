@@ -4,8 +4,8 @@
  */
 
 import { MathModule, Level, Question, Language } from '../types';
-import { generateWordProblem } from '../content';
-import { getModuleHint, getModuleFeedback, getLocalizedExplanation } from '../i18n';
+import { generateWordProblem, getHint as getHintFromContent } from '../content';
+import { getModuleFeedback, getLocalizedExplanation } from '../i18n';
 
 function getDivisionRange(level: Level) {
   if (level === 'קל') {
@@ -144,7 +144,7 @@ function checkAnswer(
 
 function getHint(questionData: Question): string {
   const lang = (questionData.metadata?.lang as Language) || 'he';
-  return getModuleHint('division', lang);
+  return getHintFromContent('division', lang);
 }
 
 function getExplanation(questionData: Question, userAnswer: string | number) {

@@ -1,5 +1,9 @@
 {
   "division": {
+    "hints": {
+      "he": "💡 חלקי את המספר הגדול למספר הקבוצות",
+      "en": "💡 Divide the larger number by the number of groups"
+    },
     "wordProblems": {
       "he": [
         {
@@ -50,6 +54,10 @@
     }
   },
   "multiplication": {
+    "hints": {
+      "he": "💡 כפלי את מספר הקבוצות במספר הפריטים בכל קבוצה",
+      "en": "💡 Multiply the number of groups by the items per group"
+    },
     "wordProblems": {
       "he": [
         {
@@ -100,6 +108,10 @@
     }
   },
   "fraction": {
+    "hints": {
+      "he": "💡 תרגלי צמצום שברים ושימי לב למכנה המשותף",
+      "en": "💡 Practice simplifying fractions and pay attention to the common denominator"
+    },
     "instructions": {
       "he": {
         "comparePrompt": "מה הסימן הנכון?",
@@ -168,6 +180,10 @@
     }
   },
   "decimal": {
+    "hints": {
+      "he": "💡 חשבי על ערך כל ספרה לפי מקומה",
+      "en": "💡 Think about the value of each digit by its place"
+    },
     "instructions": {
       "he": {
         "digitValue": "מה ערך הספרה {digit} במספר {number}?",
@@ -224,6 +240,10 @@
     }
   },
   "distributive": {
+    "hints": {
+      "he": "💡 פרקי את המספר לפי מבנה עשרוני והכפל כל חלק בנפרד",
+      "en": "💡 Decompose the number by place value and multiply each part separately"
+    },
     "instructions": {
       "he": {
         "missingNumber": "מהו המספר החסר?",
@@ -270,6 +290,10 @@
     }
   },
   "number-line": {
+    "hints": {
+      "he": "💡 שימי לב לסימנים על הישר ולמרחקים ביניהם",
+      "en": "💡 Pay attention to the marks on the line and the distances between them"
+    },
     "instructions": {
       "he": {
         "whatNumberExact": "איזה מספר מסומן בחץ? (מסתיים ב-{lastDigit})",
@@ -336,6 +360,10 @@
     }
   },
   "order-operations": {
+    "hints": {
+      "he": "💡 זכרי: סוגריים ← כפל/חילוק ← חיבור/חיסור",
+      "en": "💡 Remember: Parentheses ← Multiply/Divide ← Add/Subtract"
+    },
     "instructions": {
       "he": {
         "calculate": "חשבי:",
