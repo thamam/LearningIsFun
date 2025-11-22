@@ -1,4 +1,5 @@
 import templates from './templates.json';
+import type { Language } from '../types';
 
 /**
  * Content template structure
@@ -14,8 +15,6 @@ export interface ModuleContent {
     en: ContentTemplate[];
   };
 }
-
-export type Language = 'he' | 'en';
 
 /**
  * Get word problem templates for a specific module and language

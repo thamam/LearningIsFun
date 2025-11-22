@@ -3,8 +3,9 @@
  * Extracted from Emma's Math Lab
  */
 
-import { MathModule, Level, Question } from '../types';
-import { generateWordProblem, Language } from '../content';
+import { MathModule, Level, Question, Language } from '../types';
+import { generateWordProblem } from '../content';
+import { getModuleHint, getModuleFeedback, getLocalizedExplanation } from '../i18n';
 
 function getDivisionRange(level: Level) {
   if (level === 'קל') {
@@ -26,12 +27,14 @@ function generateQuestion(level: Level = 'בינוני', lang: Language = 'he'):
       const divisor = range.divisors[Math.floor(Math.random() * range.divisors.length)];
       const quotient = Math.floor(Math.random() * range.maxQuotient) + 1;
       const dividend = divisor * quotient;
+      const becauseWord = lang === 'he' ? 'כי' : 'because';
       return {
         question: `${dividend} ÷ ${divisor} = ___`,
         type: 'input',
         correctAnswer: quotient,
         difficulty: level,
-        explanation: `${dividend} ÷ ${divisor} = ${quotient} כי ${divisor} × ${quotient} = ${dividend}`,
+        explanation: `${dividend} ÷ ${divisor} = ${quotient} ${becauseWord} ${divisor} × ${quotient} = ${dividend}`,
+        metadata: { lang },
       };
     }
 
@@ -40,12 +43,17 @@ function generateQuestion(level: Level = 'בינוני', lang: Language = 'he'):
       const quotient = Math.floor(Math.random() * range.maxQuotient) + 1;
       const remainder = Math.floor(Math.random() * (divisor - 1)) + 1;
       const dividend = (divisor * quotient) + remainder;
+      const withRemainderText = lang === 'he' ? 'כולל שארית' : 'with remainder';
+      const remainderWord = lang === 'he' ? 'שארית' : 'remainder';
+      const becauseWord = lang === 'he' ? 'כי' : 'because';
+      const andWord = lang === 'he' ? 'ועוד' : 'plus';
       return {
-        question: `${dividend} ÷ ${divisor} = ___ (כולל שארית)`,
+        question: `${dividend} ÷ ${divisor} = ___ (${withRemainderText})`,
         type: 'input',
-        correctAnswer: `${quotient} שארית ${remainder}`,
+        correctAnswer: `${quotient} ${remainderWord} ${remainder}`,
         difficulty: level,
-        explanation: `${dividend} ÷ ${divisor} = ${quotient} שארית ${remainder} כי ${divisor} × ${quotient} = ${divisor * quotient} ועוד ${remainder}`,
+        explanation: `${dividend} ÷ ${divisor} = ${quotient} ${remainderWord} ${remainder} ${becauseWord} ${divisor} × ${quotient} = ${divisor * quotient} ${andWord} ${remainder}`,
+        metadata: { lang },
       };
     }
 
@@ -53,12 +61,15 @@ function generateQuestion(level: Level = 'בינוני', lang: Language = 'he'):
       const divisor = range.divisors[Math.floor(Math.random() * range.divisors.length)];
       const quotient = Math.floor(Math.random() * range.maxQuotient) + 1;
       const dividend = divisor * quotient;
+      const answerPrefix = lang === 'he' ? 'התשובה היא' : 'The answer is';
+      const becauseWord = lang === 'he' ? 'כי' : 'because';
       return {
         question: `___ ÷ ${divisor} = ${quotient}`,
         type: 'input',
         correctAnswer: dividend,
         difficulty: level,
-        explanation: `התשובה היא ${dividend} כי ${divisor} × ${quotient} = ${dividend}`,
+        explanation: `${answerPrefix} ${dividend} ${becauseWord} ${divisor} × ${quotient} = ${dividend}`,
+        metadata: { lang },
       };
     }
 
@@ -66,12 +77,15 @@ function generateQuestion(level: Level = 'בינוני', lang: Language = 'he'):
       const divisor = range.divisors[Math.floor(Math.random() * range.divisors.length)];
       const quotient = Math.floor(Math.random() * range.maxQuotient) + 1;
       const dividend = divisor * quotient;
+      const answerPrefix = lang === 'he' ? 'התשובה היא' : 'The answer is';
+      const becauseWord = lang === 'he' ? 'כי' : 'because';
       return {
         question: `${dividend} ÷ ___ = ${quotient}`,
         type: 'input',
         correctAnswer: divisor,
         difficulty: level,
-        explanation: `התשובה היא ${divisor} כי ${dividend} ÷ ${divisor} = ${quotient}`,
+        explanation: `${answerPrefix} ${divisor} ${becauseWord} ${dividend} ÷ ${divisor} = ${quotient}`,
+        metadata: { lang },
       };
     }
 
@@ -83,6 +97,11 @@ function generateQuestion(level: Level = 'בינוני', lang: Language = 'he'):
       // Load content from templates.json instead of hardcoded strings
       const questionText = generateWordProblem('division', { total, groups }, lang);
 
+      // Localized explanation
+      const answerPrefix = lang === 'he' ? 'התשובה היא' : 'The answer is';
+      const becauseWord = lang === 'he' ? 'כי' : 'because';
+      const explanation = `${answerPrefix} ${perGroup} ${becauseWord} ${total} ÷ ${groups} = ${perGroup}`;
+
       // Fallback to basic division if content loading fails
       if (!questionText) {
         return {
@@ -90,7 +109,8 @@ function generateQuestion(level: Level = 'בינוני', lang: Language = 'he'):
           type: 'input',
           correctAnswer: perGroup,
           difficulty: level,
-          explanation: `התשובה היא ${perGroup} כי ${total} ÷ ${groups} = ${perGroup}`,
+          explanation,
+          metadata: { lang },
         };
       }
 
@@ -99,7 +119,8 @@ function generateQuestion(level: Level = 'בינוני', lang: Language = 'he'):
         type: 'input',
         correctAnswer: perGroup,
         difficulty: level,
-        explanation: `התשובה היא ${perGroup} כי ${total} ÷ ${groups} = ${perGroup}`,
+        explanation,
+        metadata: { lang },
       };
     }
 
@@ -122,14 +143,18 @@ function checkAnswer(
 }
 
 function getHint(questionData: Question): string {
-  return '💡 נסי לחשוב על טבלאות הכפל שאת מכירה';
+  const lang = (questionData.metadata?.lang as Language) || 'he';
+  return getModuleHint('division', lang);
 }
 
 function getExplanation(questionData: Question, userAnswer: string | number) {
+  const lang = (questionData.metadata?.lang as Language) || 'he';
+  const feedback = getModuleFeedback('division', lang);
+
   return {
-    detailed: questionData.explanation || 'תרגלי עוד תרגילי חילוק',
-    tip: 'חילוק הוא הפוך של כפל',
-    nextSteps: 'המשיכי לתרגל תרגילים דומים'
+    detailed: getLocalizedExplanation(questionData.explanation || '', 'division', lang),
+    tip: feedback.tip,
+    nextSteps: feedback.nextSteps
   };
 }
 
