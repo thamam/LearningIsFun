@@ -4,6 +4,7 @@
  */
 
 import { MathModule, Level, Question } from '../types';
+import { generateWordProblem } from '../content';
 
 function getDivisionRange(level: Level) {
   if (level === 'קל') {
@@ -75,17 +76,26 @@ function generateQuestion(level: Level = 'בינוני'): Question {
     }
 
     case 'wordProblem': {
-      const problems = [
-        'לאמה יש {total} עוגיות. היא רוצה לחלק אותן שווה ב-{groups} קבוצות. כמה עוגיות בכל קבוצה?',
-        'יש {total} תפוחים ו-{groups} סלים. כמה תפוחים יהיו בכל סל אם נחלק שווה?',
-        'אמה קראה {total} עמודים ב-{groups} ימים. כמה עמודים ביום בממוצע?'
-      ];
-      const problem = problems[Math.floor(Math.random() * problems.length)];
       const groups = range.divisors[Math.floor(Math.random() * range.divisors.length)];
       const perGroup = Math.floor(Math.random() * range.maxQuotient) + 1;
       const total = groups * perGroup;
+
+      // Load content from templates.json instead of hardcoded strings
+      const questionText = generateWordProblem('division', { total, groups }, 'he');
+
+      // Fallback to basic division if content loading fails
+      if (!questionText) {
+        return {
+          question: `${total} ÷ ${groups} = ___`,
+          type: 'input',
+          correctAnswer: perGroup,
+          difficulty: level,
+          explanation: `התשובה היא ${perGroup} כי ${total} ÷ ${groups} = ${perGroup}`,
+        };
+      }
+
       return {
-        question: problem.replace('{total}', total.toString()).replace('{groups}', groups.toString()),
+        question: questionText,
         type: 'input',
         correctAnswer: perGroup,
         difficulty: level,

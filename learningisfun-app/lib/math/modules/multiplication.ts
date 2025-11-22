@@ -4,6 +4,7 @@
  */
 
 import { MathModule, Level, Question } from '../types';
+import { generateWordProblem } from '../content';
 
 function getMultiplicationRange(level: Level) {
   if (level === 'קל') {
@@ -61,17 +62,26 @@ function generateQuestion(level: Level = 'בינוני'): Question {
     }
 
     case 'wordProblem': {
-      const problems = [
-        'לאמה יש {groups} קבוצות של {items} עוגיות. כמה עוגיות יש לה בסך הכל?',
-        'בכל קופסה יש {items} עפרונות. אם יש {groups} קופסאות, כמה עפרונות יש בסך הכל?',
-        'אמה קוראת {items} עמודים בכל יום. כמה עמודים היא תקרא ב-{groups} ימים?'
-      ];
-      const problem = problems[Math.floor(Math.random() * problems.length)];
       const groups = Math.floor(Math.random() * (range.max - range.min + 1)) + range.min;
       const items = Math.floor(Math.random() * (range.max - range.min + 1)) + range.min;
       const total = groups * items;
+
+      // Load content from templates.json instead of hardcoded strings
+      const questionText = generateWordProblem('multiplication', { groups, items }, 'he');
+
+      // Fallback to basic multiplication if content loading fails
+      if (!questionText) {
+        return {
+          question: `${groups} × ${items} = ___`,
+          type: 'input',
+          correctAnswer: total,
+          difficulty: level,
+          explanation: `התשובה היא ${total} כי ${groups} × ${items} = ${total}`,
+        };
+      }
+
       return {
-        question: problem.replace('{groups}', groups.toString()).replace('{items}', items.toString()),
+        question: questionText,
         type: 'input',
         correctAnswer: total,
         difficulty: level,
