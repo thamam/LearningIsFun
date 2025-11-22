@@ -1,0 +1,53 @@
+{
+  "nav": {
+    "home": "Home",
+    "pricing": "Pricing",
+    "dashboard": "Dashboard",
+    "parentPortal": "Parent Portal",
+    "logIn": "Log In",
+    "signUp": "Sign Up",
+    "toggleLanguage": "Toggle language",
+    "switchToHebrew": "Switch to Hebrew",
+    "switchToEnglish": "Switch to English",
+    "toggleMenu": "Toggle menu",
+    "openMenu": "Open menu"
+  },
+  "hero": {
+    "title": "LearningIsFun! 🎉",
+    "subtitle": "Where Learning Feels Like Playing!",
+    "description": "Join thousands of kids in grades 3-5 who are having a blast while learning math, reading, science, and more!",
+    "startLearning": "Start Learning! 🎮",
+    "seePlans": "See Plans 💫"
+  },
+  "features": {
+    "title": "Why Kids Love Us! 💖",
+    "funChallenges": {
+      "title": "Fun Challenges",
+      "description": "Exciting quizzes and games that make learning feel like an adventure!"
+    },
+    "earnRewards": {
+      "title": "Earn Rewards",
+      "description": "Collect badges, stars, and trophies as you complete lessons!"
+    },
+    "trackProgress": {
+      "title": "Track Progress",
+      "description": "Parents can see how you're doing and cheer you on!"
+    }
+  },
+  "subjects": {
+    "title": "What You'll Learn! 📖",
+    "math": "Math",
+    "reading": "Reading",
+    "science": "Science",
+    "writing": "Writing"
+  },
+  "cta": {
+    "title": "Ready to Start Your Adventure? 🚀",
+    "description": "Join LearningIsFun today - it's free to get started!",
+    "letsGo": "Let's Go! ✨"
+  },
+  "footer": {
+    "madeWith": "Made with ❤️ for young learners",
+    "copyright": "© 2024 LearningIsFun. All rights reserved."
+  }
+}

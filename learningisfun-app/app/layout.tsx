@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Navigation from "@/components/layout/Navigation";
+import { LanguageProvider } from "@/lib/i18n";
 
 export const metadata: Metadata = {
   title: "LearningIsFun - Where Learning Feels Like Playing!",
@@ -13,10 +14,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className="antialiased font-sans">
-        <Navigation />
-        {children}
+        <LanguageProvider>
+          <Navigation />
+          {children}
+        </LanguageProvider>
       </body>
     </html>
   );
