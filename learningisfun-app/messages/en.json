@@ -49,5 +49,183 @@
   "footer": {
     "madeWith": "Made with ❤️ for young learners",
     "copyright": "© 2024 LearningIsFun. All rights reserved."
+  },
+  "dashboard": {
+    "welcome": "Welcome back, Super Star! 🌟",
+    "streak": "You're on a 5-day learning streak! Keep it up!",
+    "dayStreak": "5 Day Streak!",
+    "mathPractice": "Math Practice 🧮",
+    "startPractice": "Start Practice →",
+    "dailyChallenges": "Daily Challenges 🎯",
+    "yourStats": "Your Stats 📊",
+    "achievementsTitle": "Achievements 🏆",
+    "quickStart": "Quick Start ⚡",
+    "backButton": "← Back",
+    "questions": "Questions",
+    "correct": "Correct",
+    "accuracy": "Accuracy",
+    "level": "Level:",
+    "totalLessons": "Total Lessons",
+    "coinsEarned": "Coins Earned",
+    "badges": "Badges",
+    "timeSpent": "Time Spent",
+    "viewAll": "View All →",
+    "randomQuiz": "Random Quiz 🎲",
+    "practiceMode": "Practice Mode 🎯",
+    "parentPortalLink": "Parent Portal 👨‍👩‍👧",
+    "challenges": {
+      "mathLessons": "Complete 3 Math Lessons",
+      "readingTime": "Read for 15 minutes",
+      "newSubject": "Try a new subject"
+    },
+    "achievements": {
+      "firstLesson": "First Lesson",
+      "weekStreak": "Week Streak",
+      "mathMaster": "Math Master",
+      "bookworm": "Bookworm",
+      "scienceStar": "Science Star",
+      "perfectScore": "Perfect Score"
+    }
+  },
+  "pricing": {
+    "title": "Pick Your Plan! 🎁",
+    "subtitle": "Choose the perfect plan for your learning adventure. Start free and upgrade anytime!",
+    "mostPopular": "Most Popular! ⭐",
+    "faq": {
+      "title": "Questions? We Got Answers! 🤔",
+      "cancel": {
+        "question": "Can I cancel anytime?",
+        "answer": "Yes! You can cancel your subscription anytime. No hidden fees or tricks!"
+      },
+      "free": {
+        "question": "Is the free plan really free?",
+        "answer": "Absolutely! The Free Explorer plan is free forever with no credit card required."
+      },
+      "switch": {
+        "question": "Can I switch plans later?",
+        "answer": "Of course! Upgrade or downgrade anytime. Your progress is always saved!"
+      }
+    },
+    "notSure": "Not sure which plan is right for you?",
+    "learnMore": "Learn more about our features →",
+    "plans": {
+      "free": {
+        "name": "Free Explorer",
+        "price": "$0",
+        "period": "forever",
+        "description": "Perfect for trying things out!",
+        "buttonText": "Start Free",
+        "features": {
+          "subjects": "3 subjects available",
+          "lessons": "5 lessons per week",
+          "tracking": "Basic progress tracking",
+          "badges": "Earn starter badges",
+          "unlimited": "Unlimited lessons",
+          "allSubjects": "All subjects unlocked",
+          "parentDashboard": "Parent dashboard",
+          "worksheets": "Printable worksheets"
+        }
+      },
+      "super": {
+        "name": "Super Learner",
+        "price": "$9.99",
+        "period": "per month",
+        "description": "Our most popular choice!",
+        "buttonText": "Choose Super",
+        "features": {
+          "allSubjects": "All subjects unlocked",
+          "unlimited": "Unlimited lessons",
+          "advancedTracking": "Advanced progress tracking",
+          "allBadges": "Earn all badges & trophies",
+          "parentDashboard": "Parent dashboard",
+          "worksheets": "Printable worksheets",
+          "adFree": "Ad-free experience",
+          "prioritySupport": "Priority support"
+        }
+      },
+      "family": {
+        "name": "Family Champions",
+        "price": "$19.99",
+        "period": "per month",
+        "description": "Best for families with multiple kids!",
+        "buttonText": "Go Family",
+        "features": {
+          "everything": "Everything in Super Learner",
+          "profiles": "Up to 4 kid profiles",
+          "familyReports": "Family progress reports",
+          "siblingChallenges": "Sibling challenges",
+          "customPaths": "Custom learning paths",
+          "tutorSessions": "1-on-1 tutor sessions",
+          "prioritySupport": "Priority support",
+          "earlyAccess": "Early access to new content"
+        }
+      }
+    }
+  },
+  "parentPortal": {
+    "title": "Parent Portal 👨‍👩‍👧",
+    "subtitle": "Track your child's learning journey and progress",
+    "settings": "Settings ⚙️",
+    "exportReport": "Export Report 📄",
+    "secureAccess": {
+      "title": "Secure Access Required",
+      "message": "This page requires re-authentication for security purposes."
+    },
+    "stats": {
+      "totalTime": "Total Time",
+      "lessonsDone": "Lessons Done",
+      "avgAccuracy": "Avg. Accuracy",
+      "currentStreak": "Current Streak",
+      "thisWeek": "↑ 15% this week",
+      "lessonsThisWeek": "↑ 8 this week",
+      "improvement": "↑ 3% improvement",
+      "keepGoing": "🔥 Keep it going!"
+    },
+    "weeklyActivity": "Weekly Activity 📅",
+    "subjectProgress": "Subject Progress 📊",
+    "recentActivity": "Recent Activity 🕐",
+    "recommendations": "Recommendations 💡",
+    "parentControls": "Parent Controls ⚙️",
+    "weekDays": {
+      "mon": "Mon",
+      "tue": "Tue",
+      "wed": "Wed",
+      "thu": "Thu",
+      "fri": "Fri",
+      "sat": "Sat",
+      "sun": "Sun"
+    },
+    "subjects": {
+      "math": "Math",
+      "reading": "Reading",
+      "science": "Science",
+      "writing": "Writing"
+    },
+    "activity": {
+      "completedMath": "Completed Math Lesson",
+      "earnedBadge": "Earned Badge",
+      "completedReading": "Completed Reading Lesson",
+      "completedQuiz": "Completed Science Quiz",
+      "multiplicationTables": "Multiplication Tables",
+      "weekStreakMaster": "Week Streak Master",
+      "storyComprehension": "Story Comprehension",
+      "plantsPhotosynthesis": "Plants & Photosynthesis",
+      "hoursAgo": "2 hours ago",
+      "yesterday": "Yesterday",
+      "daysAgo": "2 days ago"
+    },
+    "recommendationsList": {
+      "science": "Consider more Science practice - accuracy could improve",
+      "reading": "Great progress in Reading! Keep encouraging this subject",
+      "weekend": "Weekend activity is lower - maybe add a fun challenge?"
+    },
+    "controls": {
+      "setGoals": "Set Learning Goals 🎯",
+      "manageScreenTime": "Manage Screen Time ⏰",
+      "notifications": "Notification Settings 🔔",
+      "viewAsChild": "View as Child 👁️"
+    },
+    "lessonsLabel": "lessons",
+    "accuracyLabel": "accuracy"
   }
 }
