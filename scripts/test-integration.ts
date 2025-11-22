@@ -5,12 +5,12 @@
  * Tests that the division module loads and uses pirate-themed content
  */
 
-import { divisionModule } from '../learningisfun-app/lib/math/modules/division.js';
+import { divisionModule } from '../learningisfun-app/lib/math/modules/division';
 
 console.log('🧪 Story 15 Integration Test\n');
 
-// Generate 10 word problems and check for pirate keywords
-console.log('Generating 10 division questions...\n');
+// Generate 50 word problems and check for pirate keywords
+console.log('Generating 50 division questions...\n');
 
 const pirateKeywords = ['קפטן', 'מטבעות', 'זהב', 'שודד', 'ספינ', 'תותח', 'אוצר', 'פנינ'];
 let pirateQuestions = 0;
@@ -44,7 +44,8 @@ for (let i = 0; i < 50; i++) {
 console.log(`\n📊 Results:`);
 console.log(`   Total word problems generated: ${totalWordProblems}`);
 console.log(`   Pirate-themed questions: ${pirateQuestions}`);
-console.log(`   Success rate: ${Math.round((pirateQuestions / totalWordProblems) * 100)}%\n`);
+const successRate = totalWordProblems === 0 ? 0 : Math.round((pirateQuestions / totalWordProblems) * 100);
+console.log(`   Success rate: ${successRate}%\n`);
 
 if (pirateQuestions > 0) {
   console.log('✅ TEST PASSED: API is serving pirate-themed content!');
