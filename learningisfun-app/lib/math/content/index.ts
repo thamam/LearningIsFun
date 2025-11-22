@@ -10,6 +10,10 @@ export interface ContentTemplate {
 }
 
 export interface ModuleContent {
+  instructions?: {
+    he: Record<string, string>;
+    en: Record<string, string>;
+  };
   wordProblems: {
     he: ContentTemplate[];
     en: ContentTemplate[];
@@ -91,6 +95,39 @@ export function generateWordProblem(
   }
 
   return fillTemplate(template.text, variables);
+}
+
+/**
+ * Get instruction text for a specific module and key
+ */
+export function getInstruction(
+  moduleName: string,
+  instructionKey: string,
+  language: Language = 'he',
+  variables?: Record<string, string | number>
+): string {
+  const moduleContent = templates[moduleName as keyof typeof templates] as ModuleContent | undefined;
+
+  if (!moduleContent || !moduleContent.instructions) {
+    console.warn(`No instructions found for module: ${moduleName}`);
+    return instructionKey; // Fallback to key itself
+  }
+
+  const instructions = moduleContent.instructions[language];
+
+  if (!instructions || !instructions[instructionKey]) {
+    console.warn(`No instruction found for module: ${moduleName}, key: ${instructionKey}, language: ${language}`);
+    return instructionKey; // Fallback to key itself
+  }
+
+  const template = instructions[instructionKey];
+
+  // If variables provided, fill the template
+  if (variables) {
+    return fillTemplate(template, variables);
+  }
+
+  return template;
 }
 
 /**

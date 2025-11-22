@@ -5,7 +5,8 @@
  * Place value understanding - decomposition, digit value, comparison
  */
 
-import { MathModule, Level, Question } from '../types';
+import { MathModule, Level, Question, Language } from '../types';
+import { getInstruction } from '../content';
 
 function getRandomNumber(level: Level): number {
   if (level === 'קל') {
@@ -17,7 +18,7 @@ function getRandomNumber(level: Level): number {
   }
 }
 
-function generateQuestion(level: Level = 'בינוני', lang: string = 'he'): Question {
+function generateQuestion(level: Level = 'בינוני', lang: Language = 'he'): Question {
   const types = ['decomposition', 'digitValue', 'nextPrevious', 'compare', 'missingDigit'];
   const type = types[Math.floor(Math.random() * types.length)];
   const num = getRandomNumber(level);
@@ -40,12 +41,18 @@ function generateQuestion(level: Level = 'בינוני', lang: string = 'he'): Q
       }
 
       const formattedNum = num.toLocaleString('en-US');
+
+      const explanationText = lang === 'he'
+        ? `המספר ${formattedNum} מתפרק ל: ${placeValues.join(' + ')}, כאשר ? = ${answer}`
+        : `The number ${formattedNum} decomposes to: ${placeValues.join(' + ')}, where ? = ${answer}`;
+
       return {
         question: `${formattedNum} = ${placeValues.join(' + ')}`,
         type: 'input',
         correctAnswer: answer,
         difficulty: level,
-        explanation: `המספר ${formattedNum} מתפרק ל: ${placeValues.join(' + ')}, כאשר ? = ${answer}`,
+        explanation: explanationText,
+        metadata: { lang },
       };
     }
 
@@ -56,12 +63,22 @@ function generateQuestion(level: Level = 'בינוני', lang: string = 'he'): Q
       const value = digit * Math.pow(10, digitStr.length - 1 - digitPos);
       const formattedNum = num.toLocaleString('en-US');
 
+      const questionText = getInstruction('decimal', 'digitValue', lang, {
+        digit,
+        number: formattedNum
+      });
+
+      const explanationText = lang === 'he'
+        ? `הספרה ${digit} במספר ${formattedNum} שווה ${value}`
+        : `The digit ${digit} in the number ${formattedNum} equals ${value}`;
+
       return {
-        question: `מה ערך הספרה ${digit} במספר ${formattedNum}?`,
+        question: questionText,
         type: 'input',
         correctAnswer: value,
         difficulty: level,
-        explanation: `הספרה ${digit} במספר ${formattedNum} שווה ${value}`,
+        explanation: explanationText,
+        metadata: { lang },
       };
     }
 
@@ -70,16 +87,26 @@ function generateQuestion(level: Level = 'בינוני', lang: string = 'he'): Q
       const formattedNum = num.toLocaleString('en-US');
       const answer = isNext ? num + 1 : num - 1;
 
+      const instructionKey = isNext ? 'nextNumber' : 'previousNumber';
+      const questionText = getInstruction('decimal', instructionKey, lang, {
+        number: formattedNum
+      });
+
+      const explanationText = isNext
+        ? (lang === 'he'
+            ? `המספר העוקב של ${formattedNum} הוא ${answer.toLocaleString('en-US')}`
+            : `The next number after ${formattedNum} is ${answer.toLocaleString('en-US')}`)
+        : (lang === 'he'
+            ? `המספר הקודם של ${formattedNum} הוא ${answer.toLocaleString('en-US')}`
+            : `The previous number before ${formattedNum} is ${answer.toLocaleString('en-US')}`);
+
       return {
-        question: isNext
-          ? `מהו המספר העוקב של ${formattedNum}?`
-          : `מהו המספר הקודם של ${formattedNum}?`,
+        question: questionText,
         type: 'input',
         correctAnswer: answer,
         difficulty: level,
-        explanation: isNext
-          ? `המספר העוקב של ${formattedNum} הוא ${answer.toLocaleString('en-US')}`
-          : `המספר הקודם של ${formattedNum} הוא ${answer.toLocaleString('en-US')}`,
+        explanation: explanationText,
+        metadata: { lang },
       };
     }
 
@@ -100,6 +127,7 @@ function generateQuestion(level: Level = 'בינוני', lang: string = 'he'): Q
         choices: ['<', '=', '>'],
         difficulty: level,
         explanation: `${formattedNum1} ${correctSymbol} ${formattedNum2}`,
+        metadata: { lang },
       };
     }
 
@@ -134,19 +162,30 @@ function generateQuestion(level: Level = 'בינוני', lang: string = 'he'): Q
       const formattedLowerBound = lowerBound.toLocaleString('en-US');
       const formattedUpperBound = upperBound.toLocaleString('en-US');
 
+      const questionText = getInstruction('decimal', 'missingDigit', lang, {
+        pattern: numWithMissing,
+        lowerBound: formattedLowerBound,
+        upperBound: formattedUpperBound
+      });
+
+      const explanationText = lang === 'he'
+        ? `הספרה החסרה היא ${missingDigit}, והמספר המלא הוא ${num.toLocaleString('en-US')}`
+        : `The missing digit is ${missingDigit}, and the full number is ${num.toLocaleString('en-US')}`;
+
       // For answer checking, we'll store the full answer info
       return {
-        question: `מהי הספרה החסרה? ${numWithMissing}\n(המספר נמצא בין ${formattedLowerBound} ל-${formattedUpperBound})`,
+        question: questionText,
         type: 'input',
         correctAnswer: parseInt(missingDigit),
         difficulty: level,
-        explanation: `הספרה החסרה היא ${missingDigit}, והמספר המלא הוא ${num.toLocaleString('en-US')}`,
+        explanation: explanationText,
         metadata: {
           type: 'range',
           min: lowerBound,
           max: upperBound,
           pattern: numStr,
           missingPos: missingPos,
+          lang,
         },
       };
     }
@@ -181,14 +220,22 @@ function checkAnswer(
 }
 
 function getHint(questionData: Question): string {
-  return '💡 חשבי על ערך כל ספרה לפי מקומה';
+  const lang = questionData.metadata?.lang || 'he';
+  return lang === 'he'
+    ? '💡 חשבי על ערך כל ספרה לפי מקומה'
+    : '💡 Think about the value of each digit by its place';
 }
 
 function getExplanation(questionData: Question, userAnswer: string | number) {
+  const lang = questionData.metadata?.lang || 'he';
   return {
-    detailed: questionData.explanation || 'תרגלי עוד תרגילי מבנה עשרוני',
-    tip: 'ערך הספרה תלוי במקומה: אחדות, עשרות, מאות, אלפים',
-    nextSteps: 'המשיכי לתרגל עם מספרים גדולים יותר',
+    detailed: questionData.explanation || (lang === 'he' ? 'תרגלי עוד תרגילי מבנה עשרוני' : 'Practice more place value exercises'),
+    tip: lang === 'he'
+      ? 'ערך הספרה תלוי במקומה: אחדות, עשרות, מאות, אלפים'
+      : 'Digit value depends on its place: ones, tens, hundreds, thousands',
+    nextSteps: lang === 'he'
+      ? 'המשיכי לתרגל עם מספרים גדולים יותר'
+      : 'Continue practicing with larger numbers',
   };
 }
 
